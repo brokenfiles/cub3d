@@ -24,6 +24,32 @@ void display_pixel(t_game *game, t_vector *vector, int color)
 	mlx_pixel_put(game->ptr, game->win, vector->x, vector->y, color);
 }
 
+
+
+int display_cir(t_game *game, t_form *form)
+{
+	int r;
+	float teta;
+	
+	teta = 0;
+	while (teta <= (float) (2 * M_PI))
+	{
+		r = 0;
+		while (r <= form->dim->x)
+		{
+			display_pixel(game, init_vector(r * cos(teta) + form->vector->x, r * sin(teta) + form->vector->y), form->color);
+			r++;
+		}
+		teta += (float)M_PI / (form->dim->x * game->map->tex.size);
+	}
+
+	free(form->vector);
+	free(form->dim);
+	free(form);
+}
+int display_view(t_game *game, t_form *form)
+{}
+
 /**
  * used to display a triangle
  * TODO: change pixelput to images
@@ -111,6 +137,7 @@ int centered_line(t_game *game, t_form *form)
 	float	y_im;
 
 	x = form->vector->x;
+
 	x_im = 0;
 	while (form->vector->x + form->dim->x > x)
 	{
@@ -132,6 +159,47 @@ int centered_line(t_game *game, t_form *form)
 	return (1);
 }
 
+float sq_dist(t_vector *origin, t_vector *point)
+{
+	return (pow(point->x - origin->x, 2) + pow(point->y - origin->y, 2));
+}
+
+t_vector next_inter(t_vector *p, t_vector *vec, float teta, int *wall)
+{
+	float c;
+	float alpha;
+	t_vector x;
+	t_vector y;
+	t_vector res; //variable supprimable
+
+	alpha = (teta / 360) * (float)(2 * M_PI);
+	c = vec->y + tan(alpha) * vec->x;
+	x.x = (int) vec->x + (cos(alpha) > 0 ? 1 : 0);
+	x.y = -tan(alpha) * (float) x.x + c;
+	y.y = (int) vec->y + (sin(alpha) > 0 ? 0 : 1);
+	y.x = (y.y - c) / -tan(alpha);
+	res = (sq_dist(p, &y) > sq_dist(p, &x) ? x : y); //ligne a mettre dans le return
+//	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
+//			wall = 1;
+//	else if (res.x == x.x && res.y == x.y)
+//			wall = 3;
+//	else if (sin(alpha) > 0)
+//			wall = 2;
+//	else
+//			wall = 4;
+	return (res);
+}
+
+t_vector next_hit(t_vector *p, float teta, int *wall)
+{
+	t_vector res;
+	
+	res = *p;
+	while ((res = next_inter(p, &res, teta, wall) != 1)){}
+	return (res);
+}
+
+
 
 /**
  * used to display a line
@@ -151,8 +219,7 @@ int display_line(t_game *game, int x, float teta)
 	len_y = 0;
 	while (game->map->map[(int) (game->p->pos->y + len_y)][(int) (game->p->pos->x + len_x)] != '1')
 	{
-		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) /
-				 200; //en realité on prendra une variable teta passée en parametre pour l'angle
+		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) / 200;
 		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 200;
 	}
 	dist = sqrt((pow(len_y, 2) + pow(len_x, 2)));

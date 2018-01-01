@@ -58,12 +58,9 @@ int	get_position(char **map, t_player *p)
 				p->pos->y = index;
 				p->pos->x = index2;
 				p->yaw = 90.0;
-				if (map[index][index2] == 'S')
-					p->yaw = 270.0;
-				else if (map[index][index2] == 'E')
-					p->yaw = 360.0;
-				else if (map[index][index2] == 'W')
-					p->yaw = 180.0;
+				p->yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
+				p->yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
+				p->yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
 				return (0);
 			}
 			index2++;
@@ -204,7 +201,7 @@ int	fill_values(char **splitted, t_game *game)
 	game->map->tex.wall_color = 0xFF0000;
 	game->map->tex.void_color = 0x00FF00;
 	game->map->tex.p_color = 0x4749FF;
-	game->map->tex.size = 5;
+	game->map->tex.size = 10;
 	get_position(game->map->map, game->p);
 	return (1);
 }

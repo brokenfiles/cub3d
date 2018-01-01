@@ -19,7 +19,7 @@ t_color		c(int v)
 	c.value = v;
 	return (c);
 }
-
+//UTILITE ??? 
 int			ft_lerpi(int first, int second, double p)
 {
 	if (first == second)
@@ -33,10 +33,8 @@ t_color		clerp(t_color c1, t_color c2, double p)
 
 	if (c1.value == c2.value)
 		return (c1);
-	if (p < 0.0f)
-		p = 0.0f;
-	if (p > 1.0f)
-		p = 1.0f;
+	p = (p < 0.0f ? 0.0f : p); 
+	p = (p > 1.0f ? 1.0f : p);
 	c.rgba.r = (char)ft_lerpi((int)c1.rgba.r, (int)c2.rgba.r, p);
 	c.rgba.g = (char)ft_lerpi((int)c1.rgba.g, (int)c2.rgba.g, p);
 	c.rgba.b = (char)ft_lerpi((int)c1.rgba.b, (int)c2.rgba.b, p);
