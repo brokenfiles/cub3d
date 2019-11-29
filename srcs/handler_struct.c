@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/11/28 12:41:35 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/11/28 19:10:38 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	init_player(t_player *player)
 {
-	if (!(player = malloc(sizeof(t_player))))
-		return (0);
+	player->rotation_speed = 1;
+	player->speed = 0.25;
+	player->health = 100;
+	player->size = 1;
 	return (1);
 }
 
@@ -75,4 +77,17 @@ t_triangle	*init_triangle(t_vector *vector1, t_vector *vector2, int color)
 	triangle->vector2 = vector2;
 	triangle->color = color;
 	return (triangle);
+}
+
+
+t_tri    *init_tri(t_vector *vector, int height, int color)
+{
+    t_tri    *triangle;
+    
+    if (!(triangle = malloc(sizeof(t_tri))))
+        return (NULL);
+    triangle->vector = vector;
+    triangle->height = height;
+    triangle->color = color;
+    return (triangle);
 }

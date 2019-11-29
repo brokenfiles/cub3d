@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2019/11/28 18:00:46 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/11/28 18:50:29 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int	main(int ac, char **av)
 		return (quit(EXIT_FAILURE, "Cannot init MLX."));
 	if (!(game->data->mlx_win = mlx_new_window(game->data->mlx_ptr, game->data->width, game->data->height, "Cub3d")))
 		return (quit(EXIT_FAILURE, "Cannot init MLX window."));
-	//display_map(game->data, game->map, game->player);
+	init_player(game->player);
+	display_map(game->data, game->map, game->player);
 	//display_rectangle(data, init_rectangle(init_dimension(100, 100), init_vector(100, 100), 0xFF60C5));
-	display_triangle(game->data, init_triangle(init_vector(100, 500), init_vector(700, 5), 0x7EFF3B));
+	//display_triangle(game->data, init_triangle(init_vector(100, 500), init_vector(700, 5), 0x7EFF3B));
 	mlx_hook(game->data->mlx_win, 2, 1L << 0, handle_key, (void *)game);
 	mlx_loop(game->data->mlx_ptr);
 	free(game->data);

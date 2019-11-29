@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2019/11/28 14:29:23 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/11/28 19:00:40 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct		s_location
 {
 	float	x;
 	float	y;
-	float	yaw;
+	int		yaw;
 }					t_location;
 typedef struct		s_vector
 {
@@ -48,6 +48,15 @@ typedef struct		s_triangle
 	t_vector	*vector2;
 	int			color;
 }					t_triangle;
+typedef struct      s_tri
+{
+    
+    t_vector *vector;
+    int height;
+    int color;
+}                   t_tri;
+
+
 typedef struct		s_texture
 {
 	char		*no_texture;
@@ -70,6 +79,8 @@ typedef struct		s_player
 	float		health;
 	t_location	location;
 	float		size;
+	float		speed;
+	int			rotation_speed;
 }					t_player;
 typedef struct		s_game
 {

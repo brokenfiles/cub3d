@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2019/11/28 14:33:30 by llaurent         ###   ########.fr        #
+#    Updated: 2019/11/28 18:59:21 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_strchr.c\
 				libs/libft/ft_stronly.c\
 				srcs/events.c\
+				srcs/direction.c\
 				srcs/display.c\
 				srcs/errors.c\
 				srcs/cub3d.c
