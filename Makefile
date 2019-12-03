@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2019/11/28 18:59:21 by llaurent         ###   ########.fr        #
+#    Updated: 2019/12/03 13:29:01 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ SRCSC		=	srcs/parse_map.c\
 				srcs/direction.c\
 				srcs/display.c\
 				srcs/errors.c\
+				srcs/texture.c\
+				srcs/images.c\
 				srcs/cub3d.c
 SRCSH		= includes/cub3d.h
 OBJS		= $(SRCSC:%.c=%.o)

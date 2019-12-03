@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2019/11/28 19:00:40 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/03 10:57:35 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ typedef struct		s_location
 	float	y;
 	int		yaw;
 }					t_location;
+typedef struct		s_image
+{
+	void		*image;
+	char		*ptr;
+	int			bpp;
+	int			stride;
+	int			endian;
+	int			width;
+	int			height;
+}					t_image;
 typedef struct		s_vector
 {
 	int	x;
@@ -48,22 +58,31 @@ typedef struct		s_triangle
 	t_vector	*vector2;
 	int			color;
 }					t_triangle;
-typedef struct      s_tri
+typedef struct		s_rgba
 {
-    
-    t_vector *vector;
-    int height;
-    int color;
-}                   t_tri;
-
-
+	uint8_t		b;
+	uint8_t		g;
+	uint8_t		r;
+	uint8_t		a;
+}					t_rgba;
+typedef union		u_color
+{
+	int			value;
+	t_rgba		rgba;
+}					t_color;
+typedef struct		s_tri
+{
+	t_vector *vector;
+	int height;
+	int color;
+}					t_tri;
 typedef struct		s_texture
 {
-	char		*no_texture;
-	char		*so_texture;
-	char		*we_texture;
-	char		*ea_texture;
-	char		*sp_texture;
+	t_image		*no_texture;
+	t_image		*so_texture;
+	t_image		*we_texture;
+	t_image		*ea_texture;
+	t_image		*sp_texture;
 	char		*sky_color;
 	char		*floor_color;
 }					t_texture;
@@ -87,5 +106,6 @@ typedef struct		s_game
 	t_data		*data;
 	t_map		*map;
 	t_player	*player;
+	t_image		*image;
 }					t_game;
 #endif

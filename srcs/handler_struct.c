@@ -14,8 +14,8 @@
 
 int	init_player(t_player *player)
 {
-	player->rotation_speed = 1;
-	player->speed = 0.25;
+	player->rotation_speed = 7;
+	player->speed = 0.5;
 	player->health = 100;
 	player->size = 1;
 	return (1);

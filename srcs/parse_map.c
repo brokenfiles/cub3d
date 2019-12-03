@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/11/28 18:07:09 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:06:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ int	get_position(char **map, t_location *location)
 				location->y = index;
 				location->x = index2;
 				location->yaw = 90.0;
+				if (map[index][index2] == 'S')
+					location->yaw = 270.0;
+				else if (map[index][index2] == 'E')
+					location->yaw = 360.0;
+				else if (map[index][index2] == 'W')
+					location->yaw = 180.0;
 				return (0);
 			}
 			index2++;
@@ -172,34 +178,34 @@ int	checks(char **splitted)
 	return (1);
 }
 
-int	fill_values(char **splitted, t_map *map, t_data *data, t_player *player)
+int	fill_values(char **splitted, t_game *game)
 {
-	char	*res;
+	char *res;
 
 	if (!(res = get_value(splitted, "R ")))
 		return (0);
-	if (!(data->width = ft_atoi(res)))
+	if (!(game->data->width = ft_atoi(res)))
 		return (0);
-	if (!res[get_nbr_length(data->width)])
+	if (!res[get_nbr_length(game->data->width)])
 		return (0);
-	res += get_nbr_length(data->width);
-	if (!(data->height = ft_atoi(res)))
+	res += get_nbr_length(game->data->width);
+	if (!(game->data->height = ft_atoi(res)))
 		return (0);
-	if (data->width < MIN_WIDTH || data->height < MIN_HEIGHT)
+	if (game->data->width < MIN_WIDTH || game->data->height < MIN_HEIGHT)
 		return (0);
-	if (!(map->textures.no_texture = get_value(splitted, "NO ")) || !(map->textures.so_texture =
-			get_value(splitted, "SO ")) ||
-		!(map->textures.we_texture = get_value(splitted, "WE ")) || !(map->textures.ea_texture =
-				get_value(splitted, "EA ")) ||
-		!(map->textures.sp_texture = get_value(splitted, "S ")) || !(map->textures.sp_texture =
-				get_value(splitted, "F ")) ||
-		!(map->textures.sp_texture = get_value(splitted, "C ")))
+	if (!(load_textures(game, &game->map->textures.no_texture, get_value(splitted, "NO "))) ||
+		!(load_textures(game, &game->map->textures.so_texture, get_value(splitted, "SO "))) ||
+		!(load_textures(game, &game->map->textures.we_texture, get_value(splitted, "WE "))) ||
+		!(load_textures(game, &game->map->textures.ea_texture, get_value(splitted, "EA "))) ||
+		!(load_textures(game, &game->map->textures.sp_texture, get_value(splitted, "S "))) ||
+		!(game->map->textures.floor_color = get_value(splitted, "F ")) ||
+		!(game->map->textures.sky_color = get_value(splitted, "C ")))
 		return (0);
-	get_position(map->map, &player->location);
+	get_position(game->map->map, &game->player->location);
 	return (1);
 }
 
-int	fill_map(char *map_name, t_map *map, t_data *data, t_player *player)
+int	fill_map(char *map_name, t_game *game)
 {
 	char	**splitted;
 	char	*content;
@@ -212,17 +218,17 @@ int	fill_map(char *map_name, t_map *map, t_data *data, t_player *player)
 		return (0);
 	if (!checks(splitted))
 		return (0);
-	if (!get_only_map(splitted, map))
+	if (!get_only_map(splitted, game->map))
 		return (0);
-	if (!ft_stronly("1", map->map[0]) || !ft_stronly("1", map->map[map->lines - 1]))
+	if (!ft_stronly("1", game->map->map[0]) || !ft_stronly("1", game->map->map[game->map->lines - 1]))
 		return (0);
-	while (map->map[index])
+	while (game->map->map[index])
 	{
-		if (map->map[index][0] != '1' || map->map[index][ft_strlen(map->map[index]) - 1] != '1')
+		if (game->map->map[index][0] != '1' || game->map->map[index][ft_strlen(game->map->map[index]) - 1] != '1')
 			return (0);
 		index++;
 	}
-	if (!fill_values(splitted, map, data, player))
+	if (!fill_values(splitted, game))
 		return (0);
 	//printf("res : width %d height %d\n", data->width, data->height);
 	return (1);

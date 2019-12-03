@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-int	direction_change(t_player *player, float inc)
+int direction_change(t_player *player, float inc)
 {
 	player->location.yaw += inc;
 	if (player->location.yaw > 360 || player->location.yaw <= 0)
@@ -22,11 +22,15 @@ int	direction_change(t_player *player, float inc)
 
 t_vector *rotation_matrice(t_player *player, int x, int y)
 {
-    t_vector *vector;
-    
-    if (!(vector = malloc(sizeof(t_vector))))
-        return (NULL);
-    vector->x = (x - 20 * player->location.x) * cos((player->location.yaw / 360.0) * (float)(2 * M_PI)) + (y - 20 * player->location.y) * sin((player->location.yaw / 360.0) * (float)(2 * M_PI)) + 20 * player->location.x;
-    vector->y =  - (x - 20 * player->location.x) * sin((player->location.yaw / 360.0) * (float)(2 * M_PI)) + (y - 20 * player->location.y) * cos((player->location.yaw / 360.0) * (float)(2 * M_PI)) + 20 * player->location.y;
-    return (vector);
+	t_vector *vector;
+
+	if (!(vector = malloc(sizeof(t_vector))))
+		return (NULL);
+	vector->x = (x - 15 * player->location.x) * cos((player->location.yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - 15 * player->location.y) * sin((player->location.yaw / 360.0) * (float) (2 * M_PI)) +
+			15 * player->location.x;
+	vector->y = -(x - 15 * player->location.x) * sin((player->location.yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - 15 * player->location.y) * cos((player->location.yaw / 360.0) * (float) (2 * M_PI)) +
+			15 * player->location.y;
+	return (vector);
 }
