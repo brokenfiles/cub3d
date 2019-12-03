@@ -1,9 +1,9 @@
 R 1920 1080
-NO ./textures/no.bmp
-SO ./textures/so.bmp
-WE ./textures/we.bmp
-EA ./textures/ea.bmp
-S ./textures/player_sprite.bmp
+NO ./textures/no.xpm
+SO ./textures/so.xpm
+WE ./textures/we.xpm
+EA ./textures/ea.xpm
+S ./textures/we.xpm
 F 220,100,0
 C 225,30,0
 
