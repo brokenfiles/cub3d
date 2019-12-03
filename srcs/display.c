@@ -252,7 +252,7 @@ int display_line(t_game *game, int x, float teta)
 		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 20;
 	}
 	//printf("dist : %f\n", pow(len_x, 2) + pow(len_y, 2));
-	height = (float) game->data->height * (29 / (58 + (pow(len_x, 2) + pow(len_y, 2))));
+	height = (float) game->data->height / (pow(len_x, 2) + pow(len_y, 2));
 	//printf("height : %f\n", height);
 	//display_rectangle(game->data, init_rectangle(init_dimension(4, game->data->height / 4), init_vector(x, game->data->height / 4), 0x4EFFFF)); //ciel;
 	//display_rectangle(game->data, init_rectangle(init_dimension(4, game->data->height / 4), init_vector(x, game->data->height / 2), 0xB9BCC2)); //sol;
