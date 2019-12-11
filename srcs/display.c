@@ -152,7 +152,6 @@ int	display_map(t_game *game, t_image **image)
 		while (game->map->map[y][x])
 		{
 			display_rectangle_image(game, init_rectangle(init_dimension(15, 15), init_vector(15 * x, 15 * y), game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2), image);
-			//display_rectangle(game->data, init_rectangle(init_dimension(20, 20), init_vector(20 * x, 20 * y), game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2));
 			x++;
 		}
 		y++;
@@ -182,9 +181,7 @@ int centered_line(t_game *game, t_rectangle *rectangle)
 		y = rectangle->vector->y - (rectangle->dimension->height / 2);
 		while (rectangle->vector->y + (rectangle->dimension->height / 2) > y)
 		{
-			//image_set_pixel(game->image, x, y, clerp(c(0x0), get_pixel(game->map->textures.we_texture, x % 36, y % 36), 1.0f).value);
-			image_set_pixel(game->image, x, y, 0xF2F2F2);
-			//mlx_pixel_put(data->mlx_ptr, game->data->mlx_win, x, y, (rectangle->vector->y + (rectangle->dimension->height / 2) > y + 1) ? rectangle->color : 0x6FFF43);
+			image_set_pixel(game->image, x, y, rectangle->color);
 			y++;
 		}
 		x++;
@@ -209,25 +206,36 @@ int display_full_range(t_game *game)
 	int x;
 	float teta;
 
-	x = (game->data->width / 2) - 1200;
-	teta = game->player->location.yaw + 20;
+	x = 0;
+	teta = game->player->location.yaw + 20; //angle de vision
 	game->image = new_image(game, game->data->width, game->data->height);
-	display_rectangle_image(game, init_rectangle(init_dimension(1920, game->data->height / 2), init_vector(0, 0), 0xFAFAFA), &game->image);
-	display_rectangle_image(game, init_rectangle(init_dimension(1920, game->data->height / 2), init_vector(0, game->data->height / 2), 0xAFAFAF), &game->image);
-	while (x <= (game->data->width / 2) + 1200)
+	display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, 0), 0xFAFAFA), &game->image);
+	display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, game->data->height / 2), 0x000000), &game->image);
+	while (x <= 1920 && teta >= game->player->location.yaw - 20)
 	{
-		//printf("x : %d, teta : %d\n", x, (int)teta);
-		//image_set_pixel(game->image, 5, 5, 0xFFFFFF);
 		display_line(game, x, teta);
-		x += 4;
-		teta -= 0.1;
+		x += 1;
+		teta -= 40.0 / game->data->width; //angle de vision * 2
 	}
-	display_map(game, &game->image);
+	display_map(game, &game->image); //rajoute la map a l'image
 	mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->image->image, 0, 0);
-	//mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->map->textures.so_texture, 0, 0);
+	mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->map->textures.so_texture, 0, 0);
+
 	return (1);
 
 }
+
+int convertRGB(int R, int G, int B)
+{
+    R = (R > 255 ? 255 : R);
+    G = (G > 255 ? 255 : G);
+    B = (B > 255 ? 255 : B);
+    R = (R < 0 ? 0 : R);
+    G = (G < 0 ? 0 : G);
+    B = (B < 0 ? 0 : B);
+    return (65536 * R + 256 * G + B);
+}
+
 
 /**
  * used to display a line
@@ -240,25 +248,30 @@ int display_line(t_game *game, int x, float teta)
 {
 	float len_x;
 	float len_y;
-	float height;
-	//void	*image;
+	float dist;
 
-	len_x = 0;
-	len_y = 0;
+    len_x = 0;
+    len_y = 0;
+    
 	while (game->map->map[(int) (game->player->location.y + len_y)][(int) (game->player->location.x + len_x)] != '1')
 	{
-		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) /
-				 20; //en realité on prendra une variable teta passée en parametre pour l'angle
-		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 20;
+		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) / 200; //en realité on prendra une variable teta passée en parametre pour l'angle
+		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 200;
 	}
-	//printf("dist : %f\n", pow(len_x, 2) + pow(len_y, 2));
-	height = (float) game->data->height / (pow(len_x, 2) + pow(len_y, 2));
-	//printf("height : %f\n", height);
-	//display_rectangle(game->data, init_rectangle(init_dimension(4, game->data->height / 4), init_vector(x, game->data->height / 4), 0x4EFFFF)); //ciel;
-	//display_rectangle(game->data, init_rectangle(init_dimension(4, game->data->height / 4), init_vector(x, game->data->height / 2), 0xB9BCC2)); //sol;
-	centered_line(game, init_rectangle(init_dimension(4, 20 * sqrt(height)), init_vector(x, game->data->height / 2), 0xFF54D7)); //faire deux autres lignes de mêmes epaisseurs qui comletent celle-ci pour faire le ciel et le sol
+	dist = sqrt((pow(len_y, 2) + pow(len_x, 2)));
+	centered_line(game, init_rectangle(init_dimension(1, (float) game->data->height / dist), init_vector(x, game->data->height / 2), convertRGB(255,255,0)));
 	return (1);
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * used to update the map

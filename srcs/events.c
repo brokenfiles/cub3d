@@ -27,7 +27,7 @@ int handle_key(int key, void *param)
 				game->player->speed * cos((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
 		game->player->location.y -=
 				game->player->speed * sin((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
-		display_full_range(game);
+		display_full_range(game); //pq pas mettre ca a la fin de la fonction
 	}
 	else if (key == K_DOWN)
 	{
