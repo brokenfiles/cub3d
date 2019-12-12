@@ -24,7 +24,7 @@ int			ft_lerpi(int first, int second, double p)
 {
 	if (first == second)
 		return (first);
-	return ((int)((double)first + (second - first) * p));
+    return ((int)((double)first + (second - first) * p));
 }
 
 t_color		clerp(t_color c1, t_color c2, double p)

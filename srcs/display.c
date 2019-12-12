@@ -24,6 +24,49 @@ void display_pixel(t_data *data, t_vector *vector, int color)
 	mlx_pixel_put(data->mlx_ptr, data->mlx_win, vector->x, vector->y, color);
 }
 
+int convertRGB(int R, int G, int B)
+{
+    R = (R > 255 ? 255 : R);
+    G = (G > 255 ? 255 : G);
+    B = (B > 255 ? 255 : B);
+    R = (R < 0 ? 0 : R);
+    G = (G < 0 ? 0 : G);
+    B = (B < 0 ? 0 : B);
+    return (65536 * R + 256 * G + B);
+}
+
+/**
+ * used to display a triangle
+ * TODO: change pixelput to images
+ * @deprecated for now
+ * @param t_data data
+ * @param t_player player
+ * @param t_triangle triangle
+ * @return int (1 = success, 0 = fail)
+ */
+int display_tri(t_data *data, t_player *player, t_tri *triangle)
+{
+    int y;
+    int x;
+    
+    x = triangle->vector->x;
+    y = triangle->vector->y;
+    while (x >= triangle->vector->x - triangle->height)
+    {
+        y = triangle->vector->y - (triangle->vector->x - x) / 3;
+        while (y <= triangle->vector->y + (triangle->vector->x - x) / 3)
+        {
+            display_pixel(data, rotation_matrice(player, x, y), triangle->color);
+            y++;
+        }
+        x--;
+    }
+    free(triangle->vector);
+    free(triangle);
+    return (1);
+}
+
+
 /**
  * used to display a rectangle but with images
  * //TODO: define pixel color using the textures
@@ -65,100 +108,21 @@ int display_rectangle_image(t_game *game, t_rectangle *rectangle, t_image **imag
 	return (1);
 }
 
-/**
- * put a rectangle in pixel (does not using images)
- * @deprecated because of pixel put
- * @param t_data data
- * @param t_rectangle rectangle
- * @return int (1 = success, 0 = fail)
- */
-int display_rectangle(t_data *data, t_rectangle *rectangle)
-{
-	int y;
-	int x;
 
-	x = rectangle->vector->x;
-	while (rectangle->vector->x + rectangle->dimension->width - x > 0)
-	{
-		y = rectangle->vector->y;
-		while (rectangle->vector->y + rectangle->dimension->height - y > 0)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->mlx_win, x, y, rectangle->color);
-			y++;
-		}
-		x++;
-	}
-	free(rectangle->dimension);
-	free(rectangle->vector);
-	free(rectangle);
-	return (1);
+int ft_scale(int ymin, int ymax, int nmin, int nmax, int y)
+{
+    float k;
+    float c;
+    
+    k = (float)(nmax - nmin) / (ymax - ymin);
+    c = (float) nmin - (float)k * ymin;
+    return ((int) (k * y + c));
 }
 
-/**
- * used to display a triangle
- * TODO: change pixelput to images
- * @deprecated for now
- * @param t_data data
- * @param t_player player
- * @param t_triangle triangle
- * @return int (1 = success, 0 = fail)
- */
-int display_tri(t_data *data, t_player *player, t_tri *triangle)
-{
-	int y;
-	int x;
 
-	x = triangle->vector->x;
-	y = triangle->vector->y;
-	while (x >= triangle->vector->x - triangle->height)
-	{
-		y = triangle->vector->y - (triangle->vector->x - x) / 3;
-		while (y <= triangle->vector->y + (triangle->vector->x - x) / 3)
-		{
-			display_pixel(data, rotation_matrice(player, x, y), triangle->color);
-			y++;
-		}
-		x--;
-	}
-	free(triangle->vector);
-	free(triangle);
-	return (1);
-}
 
-/**
- * used to display the map
- * @param t_data data
- * @param t_map map
- * @param t_player player
- * @return int (1 = success, 0 = fail)
- */
-int	display_map(t_game *game, t_image **image)
-{
-	int		len_x;
-	int		len_y;
-	int		x;
-	int		y;
 
-	y = 0;
-	len_x = 0;
-	len_y = 0;
-	while (game->map->map[len_y])
-		len_y++;
-	while (game->map->map[0][len_x])
-		len_x++;
-	while (game->map->map[y])
-	{
-		x = 0;
-		while (game->map->map[y][x])
-		{
-			display_rectangle_image(game, init_rectangle(init_dimension(15, 15), init_vector(15 * x, 15 * y), game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2), image);
-			x++;
-		}
-		y++;
-	}
-	return (1);
-}
-
+//FAIRE UNE FONCTION PROPORTIONALITE
 /**
  * display a centered line
  * //TODO: define pixel color using the textures
@@ -170,20 +134,25 @@ int centered_line(t_game *game, t_rectangle *rectangle)
 {
 	int y;
 	int x;
+    t_texture tex;
+    float x_im;
+    float y_im;
+    float c;
+    float k;
 
 	x = rectangle->vector->x;
-	//printf("0x%d, r: %d, g: %d, b:%d\n", get_pixel(game->map->textures.we_texture, x % 36, y % 36).value,
-	//		get_pixel(game->map->textures.we_texture, x % 36, y % 36).rgba.r,
-	//		get_pixel(game->map->textures.we_texture, x % 36, y % 36).rgba.g,
-	//		get_pixel(game->map->textures.we_texture, x % 36, y % 36).rgba.b);
-	while (rectangle->vector->x + rectangle->dimension->width - x > 0)
+    tex = game->map->textures;
+    x_im = 0;
+	while (rectangle->vector->x + rectangle->dimension->width > x)
 	{
 		y = rectangle->vector->y - (rectangle->dimension->height / 2);
 		while (rectangle->vector->y + (rectangle->dimension->height / 2) > y)
 		{
-			image_set_pixel(game->image, x, y, rectangle->color);
-			y++;
-		}
+            y_im = ft_scale(rectangle->vector->y - (rectangle->dimension->height / 2), rectangle->vector->y + (rectangle->dimension->height / 2), 0, tex.we_texture->height, y);
+            image_set_pixel(game->image, x, y, convertRGB(get_pixel(tex.we_texture, x_im, y_im).rgba.r, get_pixel(tex.we_texture, x_im, y_im).rgba.g, get_pixel(tex.we_texture, x_im, y_im).rgba.b));
+            //image_set_pixel(game->image, x, y, rectangle->color);
+            y++;
+        }
 		x++;
 	}
 	free(rectangle->dimension);
@@ -192,49 +161,8 @@ int centered_line(t_game *game, t_rectangle *rectangle)
 	return (1);
 }
 
-//game->image = new_image(game, 100, 100);
-//image_set_pixel(game->image, 5, 5, 0xFFFFFF);
-//mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->image->image, 100, 100);
 
-/**
- * display the render
- * @param t_game game
- * @return int (1 = success, 0 = fail)
- */
-int display_full_range(t_game *game)
-{
-	int x;
-	float teta;
 
-	x = 0;
-	teta = game->player->location.yaw + 20; //angle de vision
-	game->image = new_image(game, game->data->width, game->data->height);
-	display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, 0), 0xFAFAFA), &game->image);
-	display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, game->data->height / 2), 0x000000), &game->image);
-	while (x <= 1920 && teta >= game->player->location.yaw - 20)
-	{
-		display_line(game, x, teta);
-		x += 1;
-		teta -= 40.0 / game->data->width; //angle de vision * 2
-	}
-	display_map(game, &game->image); //rajoute la map a l'image
-	mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->image->image, 0, 0);
-	mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->map->textures.so_texture, 0, 0);
-
-	return (1);
-
-}
-
-int convertRGB(int R, int G, int B)
-{
-    R = (R > 255 ? 255 : R);
-    G = (G > 255 ? 255 : G);
-    B = (B > 255 ? 255 : B);
-    R = (R < 0 ? 0 : R);
-    G = (G < 0 ? 0 : G);
-    B = (B < 0 ? 0 : B);
-    return (65536 * R + 256 * G + B);
-}
 
 
 /**
@@ -249,9 +177,18 @@ int display_line(t_game *game, int x, float teta)
 	float len_x;
 	float len_y;
 	float dist;
+    long int color;
+    long int color1 = 0x00FF00;
+    long int color2 = 0xFF0000;
+    long int color3 = 0x0000FF;
+    long int color4 = 0xFF00FF;
 
+    //len_x = cos((teta / 360.0) * (float) (2 * M_PI)) * hypot();
+    //len_y = -sin((teta / 360.0) * (float) (2 * M_PI)) * hypot();
+    
     len_x = 0;
     len_y = 0;
+
     
 	while (game->map->map[(int) (game->player->location.y + len_y)][(int) (game->player->location.x + len_x)] != '1')
 	{
@@ -259,12 +196,105 @@ int display_line(t_game *game, int x, float teta)
 		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 200;
 	}
 	dist = sqrt((pow(len_y, 2) + pow(len_x, 2)));
-	centered_line(game, init_rectangle(init_dimension(1, (float) game->data->height / dist), init_vector(x, game->data->height / 2), convertRGB(255,255,0)));
+    color = ((game->player->location.y + len_y) - (int) (game->player->location.y + len_y) < (game->player->location.x + len_x) - (int)(game->player->location.x + len_x) ? color3 : color4);
+    //color = (long int)game->map->textures.so_texture->image[0];
+	centered_line(game, init_rectangle(init_dimension(1, (float) game->data->height / dist), init_vector(x, game->data->height / 2), color));
+    //printf ("height = %f    yaw = %d   len_x = %f   len_y = %f\n", (game->data->height / dist), game->player->location.yaw, len_x, len_y);
 	return (1);
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+/**
+ * used to display the map
+ * @param t_data data
+ * @param t_map map
+ * @param t_player player
+ * @return int (1 = success, 0 = fail)
+ */
+int    display_map(t_game *game, t_image **image)
+{
+    int        len_x;
+    int        len_y;
+    int        x;
+    int        y;
+    
+    y = 0;
+    len_x = 0;
+    len_y = 0;
+    while (game->map->map[len_y])
+        len_y++;
+    while (game->map->map[0][len_x])
+        len_x++;
+    while (game->map->map[y])
+    {
+        x = 0;
+        while (game->map->map[y][x])
+        {
+            display_rectangle_image(game, init_rectangle(init_dimension(15, 15), init_vector(15 * x, 15 * y), game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2), image);
+            x++;
+        }
+        y++;
+    }
+    return (1);
+}
+
+
+
+
+/**
+ * display the render
+ * @param t_game game
+ * @return int (1 = success, 0 = fail)
+ */
+int display_full_range(t_game *game)
+{
+    int x;
+    float teta;
+    
+    x = 0;
+    teta = game->player->location.yaw + 20; //angle de vision
+    game->image = new_image(game, game->data->width, game->data->height);
+    display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, 0), 0xF1F1F1), &game->image);
+    display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, game->data->height / 2), 0x000000), &game->image);
+    while (x <= 1920 && teta >= game->player->location.yaw - 20)
+    {
+        display_line(game, x, teta);
+        x += 1;
+        teta -= 40.0 / game->data->width; //angle de vision * 2
+    }
+    display_map(game, &game->image); //rajoute la map a l'image
+    mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->image->image, 0, 0);
+    mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->map->textures.so_texture->image, 0, 0);
+    
+    return (1);
+    
+}
+
+
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
 
 
 
@@ -280,6 +310,7 @@ int display_line(t_game *game, int x, float teta)
  * @param t_player player
  * @return int (1 = success, 0 = fail)
  */
+/*
 int update_map(t_data *data, t_map *map, t_player *player)
 {//passer un pointeur de fonction en arg (soit un direction_change soit une/deux nouvelles pour key_up et down)
 	//on pourra donc effacer le curseur, faire les modifications sur sa structure puis afficher le cursuer dans chaque cas de handle_key
@@ -291,3 +322,4 @@ int update_map(t_data *data, t_map *map, t_player *player)
 										   init_vector(20 * player->location.x, 20 * player->location.y), 0xFF54D7));
 	return (1);
 }
+*/
