@@ -38,7 +38,7 @@ int			main(int argc, char **argv)
 		return (die("error: not enough arguments\nusage: ./wolf3d [mapfile]"));
 	if ((mlx = init()) == NULL)
 		return (die("error: mlx couldn't initialize properly"));
-	if (load_tex(mlx))
+	if (load_textures(mlx))
 		return (die("error: couldn't load textures"));
 	if ((map = read_map(argv[1], mlx->max_tex)) == NULL)
 		return (die("error: invalid map file"));

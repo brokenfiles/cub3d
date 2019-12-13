@@ -15,7 +15,7 @@
 #include "libft.h"
 #include <stddef.h>
 
-static void	free_tex(t_mlx *mlx)
+static void	free_textures(t_mlx *mlx)
 {
 	int i;
 
@@ -24,7 +24,7 @@ static void	free_tex(t_mlx *mlx)
 		del_image(mlx, mlx->tex[i++]);
 }
 
-int			load_tex(t_mlx *mlx)
+int			load_textures(t_mlx *mlx)
 {
 	static char	*map[TEX_MAP_SIZE] = { "brick.xpm", "sky.xpm", "metal.xpm",
 		"stone.xpm", "grass.xpm", NULL };
@@ -39,7 +39,7 @@ int			load_tex(t_mlx *mlx)
 		if ((img = xpm_image(t, mlx)) == NULL)
 		{
 			ft_strdel(&t);
-			free_tex(mlx);
+			free_textures(mlx);
 			return (1);
 		}
 		ft_strdel(&t);

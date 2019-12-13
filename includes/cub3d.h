@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 00:46:07 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 04:50:24 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int			display_full_range(t_game *game);
 t_form		*init_form(t_vector *vector, t_vector *dim, int color);
 t_vector	*init_vector(float x, float y);
 int			init_player(t_player *player);
-t_vector	*rotation_matrice(t_player *player, int x, int y);
+t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
 
 #endif

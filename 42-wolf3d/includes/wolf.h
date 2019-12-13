@@ -135,6 +135,6 @@ int					is_enclosed_map(t_map *m);
 void				cast(t_ray *r, t_map *m, t_player *p, t_image *tex[]);
 void				rotate_player(t_player *p, float angle);
 void				move_player(t_player *p, t_map *m, float distance);
-int					load_tex(t_mlx *mlx);
+int					load_textures(t_mlx *mlx);
 void				draw_minimap(t_mlx *mlx);
 #endif

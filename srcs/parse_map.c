@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 01:48:03 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 04:38:06 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,10 @@ int	fill_values(char **splitted, t_game *game)
 		!(game->map->tex.floor_color = get_value(splitted, "F ")) ||
 		!(game->map->tex.sky_color = get_value(splitted, "C ")))
 		return (0);
+	game->map->tex.wall_color = 0xFF0000;
+	game->map->tex.void_color = 0x00FF00;
+	game->map->tex.p_color = 0x4749FF;
+	game->map->tex.size = 5;
 	get_position(game->map->map, game->p);
 	return (1);
 }

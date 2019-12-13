@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 01:56:07 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 04:52:17 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ int			direction_change(t_player *player, float inc)
 	return (1);
 }
 
-t_vector	*rotation_matrice(t_player *player, int x, int y)
+t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y)
 {
 	t_vector *vector;
 
 	if (!(vector = malloc(sizeof(t_vector))))
 		return (NULL);
-	vector->x = (x - 15 * player->pos->x) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
-				(y - 15 * player->pos->y) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
-				15 * player->pos->x;
-	vector->y = -(x - 15 * player->pos->x) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
-				(y - 15 * player->pos->y) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
-				15 * player->pos->y;
+	vector->x = (x - tex.size * player->pos->x) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - tex.size * player->pos->y) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				tex.size * player->pos->x;
+	vector->y = -(x - tex.size * player->pos->x) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - tex.size * player->pos->y) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				tex.size * player->pos->y;
 	return (vector);
 }
 
@@ -48,7 +48,7 @@ int			handle_key(int key, void *param)
 	game = (t_game *) param;
 	if (key == K_ESC)
 		exit(EXIT_SUCCESS);
-	else if (key == K_UP || key == 37) //avancer
+	else if (key == K_UP || key == 37)
 		move_player(game->p, 1);
 	else if (key == K_DOWN || key == 35)
 		move_player(game->p, -1);
@@ -58,11 +58,12 @@ int			handle_key(int key, void *param)
 		direction_change(game->p, -game->p->rot_speed);
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 43 || key == 36 || key == 35 || key == 37)
 	{
-		display_full_range(game);
-		display_tri(game,
-					init_form(init_vector(15 * game->p->pos->x, 15 * game->p->pos->y), init_vector(15, 15), 0xB9BCC2));
-		display_tri(game,
-					init_form(init_vector(15 * game->p->pos->x, 15 * game->p->pos->y), init_vector(15, 15), 0x4749FF));
+		//display_full_range(game);
+		display_map(game, &game->image);
+		mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+
+		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), 0x0));
+		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 	}
 	return (1);
 }
