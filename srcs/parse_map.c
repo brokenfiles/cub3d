@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/03 16:34:35 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 01:48:03 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_value(char **splitted, char *key)
 	return (NULL);
 }
 
-int	get_position(char **map, t_location *location)
+int	get_position(char **map, t_player *p)
 {
 	int	index;
 	int	index2;
@@ -55,15 +55,15 @@ int	get_position(char **map, t_location *location)
 		{
 			if (ft_strchr("WENS", map[index][index2]))
 			{
-				location->y = index;
-				location->x = index2;
-				location->yaw = 90.0;
+				p->pos->y = index;
+				p->pos->x = index2;
+				p->yaw = 90.0;
 				if (map[index][index2] == 'S')
-					location->yaw = 270.0;
+					p->yaw = 270.0;
 				else if (map[index][index2] == 'E')
-					location->yaw = 360.0;
+					p->yaw = 360.0;
 				else if (map[index][index2] == 'W')
-					location->yaw = 180.0;
+					p->yaw = 180.0;
 				return (0);
 			}
 			index2++;
@@ -180,28 +180,28 @@ int	checks(char **splitted)
 
 int	fill_values(char **splitted, t_game *game)
 {
-	char *res;
+	char	*res;
 
 	if (!(res = get_value(splitted, "R ")))
 		return (0);
-	if (!(game->data->width = ft_atoi(res)))
+	if (!(game->image->width = ft_atoi(res)))
 		return (0);
-	if (!res[get_nbr_length(game->data->width)])
+	if (!res[get_nbr_length(game->image->width)])
 		return (0);
-	res += get_nbr_length(game->data->width);
-	if (!(game->data->height = ft_atoi(res)))
+	res += get_nbr_length(game->image->width);
+	if (!(game->image->height = ft_atoi(res)))
 		return (0);
-	if (game->data->width < MIN_WIDTH || game->data->height < MIN_HEIGHT)
+	if (game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT)
 		return (0);
-	if (!(load_textures(game, &game->map->textures.no_texture, get_value(splitted, "NO "))) ||
-		!(load_textures(game, &game->map->textures.so_texture, get_value(splitted, "SO "))) ||
-		!(load_textures(game, &game->map->textures.we_texture, get_value(splitted, "WE "))) ||
-		!(load_textures(game, &game->map->textures.ea_texture, get_value(splitted, "EA "))) ||
-		!(load_textures(game, &game->map->textures.sp_texture, get_value(splitted, "S "))) ||
-		!(game->map->textures.floor_color = get_value(splitted, "F ")) ||
-		!(game->map->textures.sky_color = get_value(splitted, "C ")))
+	if (!(load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "))) ||
+		!(load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "))) ||
+		!(load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "))) ||
+		!(load_tex(game, &game->map->tex.ea_tex, get_value(splitted, "EA "))) ||
+		!(load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "S "))) ||
+		!(game->map->tex.floor_color = get_value(splitted, "F ")) ||
+		!(game->map->tex.sky_color = get_value(splitted, "C ")))
 		return (0);
-	get_position(game->map->map, &game->player->location);
+	get_position(game->map->map, game->p);
 	return (1);
 }
 

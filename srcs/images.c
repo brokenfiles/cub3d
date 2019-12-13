@@ -23,7 +23,7 @@ t_image	*del_image(t_game *game, t_image *img)
 	if (img != NULL)
 	{
 		if (img->image != NULL)
-			mlx_destroy_image(game->data->mlx_ptr, img->image);
+			mlx_destroy_image(game->ptr, img->image);
 		free(img);
 		img = NULL;
 	}
@@ -36,7 +36,7 @@ t_image	*new_image(t_game *game, int w, int h)
 
 	if ((img = malloc(sizeof(t_image))) == NULL)
 		return (NULL);
-	if ((img->image = mlx_new_image(game->data->mlx_ptr, w, h)) == NULL)
+	if ((img->image = mlx_new_image(game->ptr, w, h)) == NULL)
 		return (del_image(game, img));
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
 								 &img->endian);

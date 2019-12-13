@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2019/12/03 16:34:35 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/12 23:57:11 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 	if ((img = malloc(sizeof(t_image))) == NULL)
 		return (NULL);
-	if ((img->image = mlx_xpm_file_to_image(game->data->mlx_ptr, xpm, &img->width, &img->height)) == NULL)
+	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->width, &img->height)) == NULL)
 		return (0);
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
 	img->bpp /= 8;
@@ -75,21 +75,33 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 /**
  * used to load a texture.
- * @example load_texture(game, &game->map->textures->so_texture, "textures/brick.xmp")
+ * @example load_texture(game, &game->map->tex->so_texture, "tex/brick.xmp")
  * @param t_game game
  * @param &t_image image
- * @param char *texture
+ * @param char *tex
  * @return t_image *
  */
-t_image	*load_textures(t_game *game, t_image **image, char *texture)
+t_image	*load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;
 
-	if ((img = xpm_image(texture, game)) == NULL)
+	if ((img = xpm_image(tex, game)) == NULL)
 	{
-		//free_textures(mlx);
+		//free_tex(mlx);
 		return (0);
 	}
 	*image = img;
 	return (img);
+}
+
+
+int convertRGB(int R, int G, int B)
+{
+	R = (R > 255 ? 255 : R);
+	G = (G > 255 ? 255 : G);
+	B = (B > 255 ? 255 : B);
+	R = (R < 0 ? 0 : R);
+	G = (G < 0 ? 0 : G);
+	B = (B < 0 ? 0 : B);
+	return (65536 * R + 256 * G + B);
 }

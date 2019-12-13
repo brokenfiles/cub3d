@@ -6,57 +6,63 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/03 15:41:11 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 01:56:07 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int handle_key(int key, void *param)
+void		move_player(t_player *p, int sign)
+{
+	p->pos->x += sign * p->speed * cos((p->yaw / 360.0) * (float) (2 * M_PI));
+	p->pos->y += -sign * p->speed * sin((p->yaw / 360.0) * (float) (2 * M_PI));
+}
+
+int			direction_change(t_player *player, float inc)
+{
+	player->yaw += inc;
+	if (player->yaw > 360 || player->yaw <= 0)
+		player->yaw = player->yaw > 0 ? player->yaw % 360 : 360;
+	return (1);
+}
+
+t_vector	*rotation_matrice(t_player *player, int x, int y)
+{
+	t_vector *vector;
+
+	if (!(vector = malloc(sizeof(t_vector))))
+		return (NULL);
+	vector->x = (x - 15 * player->pos->x) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - 15 * player->pos->y) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				15 * player->pos->x;
+	vector->y = -(x - 15 * player->pos->x) * sin((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				(y - 15 * player->pos->y) * cos((player->yaw / 360.0) * (float) (2 * M_PI)) +
+				15 * player->pos->y;
+	return (vector);
+}
+
+int			handle_key(int key, void *param)
 {
 	t_game *game;
 
 	game = (t_game *) param;
-	//mlx_clear_window(data->mlx_ptr, data->mlx_win);
-	//printf("dist : %f\n", sqrt(pow((game->player->location.x - 1), 2) + pow((game->player->location.y - 0), 2)));
 	if (key == K_ESC)
 		exit(EXIT_SUCCESS);
-	else if (key == K_UP) //avancer
+	else if (key == K_UP || key == 37) //avancer
+		move_player(game->p, 1);
+	else if (key == K_DOWN || key == 35)
+		move_player(game->p, -1);
+	else if (key == K_LEFT || key == 36)
+		direction_change(game->p, game->p->rot_speed);
+	else if (key == K_RIGHT || key == 43)
+		direction_change(game->p, -game->p->rot_speed);
+	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 43 || key == 36 || key == 35 || key == 37)
 	{
-		game->player->location.x +=
-				game->player->speed * cos((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
-		game->player->location.y -=
-				game->player->speed * sin((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
-		display_full_range(game); //pq pas mettre ca a la fin de la fonction
-	}
-	else if (key == K_DOWN)
-	{
-		game->player->location.x -=
-				game->player->speed * cos((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
-		game->player->location.y +=
-				game->player->speed * sin((game->player->location.yaw / 360.0) * (float) (2 * M_PI));
 		display_full_range(game);
+		display_tri(game,
+					init_form(init_vector(15 * game->p->pos->x, 15 * game->p->pos->y), init_vector(15, 15), 0xB9BCC2));
+		display_tri(game,
+					init_form(init_vector(15 * game->p->pos->x, 15 * game->p->pos->y), init_vector(15, 15), 0x4749FF));
 	}
-	else if (key == K_LEFT)
-	{
-		direction_change(game->player, game->player->rotation_speed);
-		display_full_range(game);
-	}
-	else if (key == K_RIGHT)
-	{
-		direction_change(game->player, -game->player->rotation_speed);
-		display_full_range(game);
-	}
-
-	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP)
-	{
-		display_tri(game->data, game->player,
-					init_tri(init_vector(15 * game->player->location.x, 15 * game->player->location.y), 15, 0xB9BCC2));
-		display_tri(game->data, game->player,
-					init_tri(init_vector(15 * game->player->location.x, 15 * game->player->location.y), 15, 0x4749FF));
-	}
-	//printf("direction : %d\n", game->player->location.yaw);
-	//printf("cos : %f\n", cos((game->player->location.yaw / 360.0) * (float)(2 * M_PI)));
-	//printf("sin : %f\n\n", sin((game->player->location.yaw / 360.0) * (float)(2 * M_PI)));
 	return (1);
 }

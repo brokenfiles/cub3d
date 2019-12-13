@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/03 16:37:38 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/13 00:59:38 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,9 @@
  * @param t_vector vector
  * @param int color
  */
-void display_pixel(t_data *data, t_vector *vector, int color)
+void display_pixel(t_game *game, t_vector *vector, int color)
 {
-	mlx_pixel_put(data->mlx_ptr, data->mlx_win, vector->x, vector->y, color);
-}
-
-int convertRGB(int R, int G, int B)
-{
-    R = (R > 255 ? 255 : R);
-    G = (G > 255 ? 255 : G);
-    B = (B > 255 ? 255 : B);
-    R = (R < 0 ? 0 : R);
-    G = (G < 0 ? 0 : G);
-    B = (B < 0 ? 0 : B);
-    return (65536 * R + 256 * G + B);
+	mlx_pixel_put(game->ptr, game->win, vector->x, vector->y, color);
 }
 
 /**
@@ -44,125 +33,117 @@ int convertRGB(int R, int G, int B)
  * @param t_triangle triangle
  * @return int (1 = success, 0 = fail)
  */
-int display_tri(t_data *data, t_player *player, t_tri *triangle)
+int display_tri(t_game *game, t_form *form)
 {
-    int y;
-    int x;
-    
-    x = triangle->vector->x;
-    y = triangle->vector->y;
-    while (x >= triangle->vector->x - triangle->height)
-    {
-        y = triangle->vector->y - (triangle->vector->x - x) / 3;
-        while (y <= triangle->vector->y + (triangle->vector->x - x) / 3)
-        {
-            display_pixel(data, rotation_matrice(player, x, y), triangle->color);
-            y++;
-        }
-        x--;
-    }
-    free(triangle->vector);
-    free(triangle);
-    return (1);
+	int y;
+	int x;
+	x = form->vector->x;
+	y = form->vector->y;
+	while (x >= form->vector->x - form->dim->x)
+	{
+		y = form->vector->y - (form->vector->x - x) / 3;
+		while (y <= form->vector->y + (form->vector->x - x) / 3)
+		{
+			display_pixel(game, rotation_matrice(game->p, x, y), form->color);
+			y++;
+		}
+		x--;
+	}
+	free(form->vector);
+	free(form->dim);
+	free(form);
+	return (1);
 }
 
 
 /**
  * used to display a rectangle but with images
- * //TODO: define pixel color using the textures
+ * //TODO: define pixel color using the tex
  * @apprecieted
  * @param t_game game
  * @param t_rectangle rectangle
  * @return int (1 = success, 0 = fail)
  */
-int display_rectangle_image(t_game *game, t_rectangle *rectangle, t_image **image)
+int display_rec(t_game *game, t_form *form, t_image **image)
 {
 	int y;
 	int x;
 
-	x = rectangle->vector->x;
-	while (rectangle->vector->x + rectangle->dimension->width - x > 0)
+	x = form->vector->x;
+	while (form->vector->x + form->dim->x - x > 0)
 	{
-		y = rectangle->vector->y;
-		while (rectangle->vector->y + rectangle->dimension->height - y > 0)
+		y = form->vector->y;
+		while (form->vector->y + form->dim->y - y > 0)
 		{
-			if (rectangle->color == -1)
+			if (form->color == -1)
 			{
-				image_set_pixel(*image, x, y, clerp(c(0x0), get_pixel(game->map->textures.no_texture, x % 30, y % 30), x).value);
+				image_set_pixel(*image, x, y,
+								clerp(c(0x0), get_pixel(game->map->tex.no_tex, x % 30, y % 30), x).value);
 			}
-			else if (rectangle->color == -2)
+			else if (form->color == -2)
 			{
-				image_set_pixel(*image, x, y, clerp(c(0x0), get_pixel(game->map->textures.so_texture, x % 30, y % 30), 1.0f).value);
+				image_set_pixel(*image, x, y,
+								clerp(c(0x0), get_pixel(game->map->tex.so_tex, x % 30, y % 30), 1.0f).value);
 			}
 			else
 			{
-				image_set_pixel(*image, x, y, rectangle->color);
+				image_set_pixel(*image, x, y, form->color);
 			}
 			y++;
 		}
 		x++;
 	}
-	free(rectangle->dimension);
-	free(rectangle->vector);
-	free(rectangle);
+	free(form->dim);
+	free(form->vector);
+	free(form);
 	return (1);
 }
 
-
 int ft_scale(int ymin, int ymax, int nmin, int nmax, int y)
 {
-    float k;
-    float c;
-    
-    k = (float)(nmax - nmin) / (ymax - ymin);
-    c = (float) nmin - (float)k * ymin;
-    return ((int) (k * y + c));
+	float k;
+	float c;
+
+	k = (float) (nmax - nmin) / (ymax - ymin);
+	c = (float) nmin - (float) k * ymin;
+	return ((int) (k * y + c));
 }
 
-
-
-
-//FAIRE UNE FONCTION PROPORTIONALITE
 /**
  * display a centered line
- * //TODO: define pixel color using the textures
+ * //TODO: define pixel color using the tex
  * @param t_game game
  * @param t_rectangle rectangle
  * @return int (1 = success, 0 = fail)
  */
-int centered_line(t_game *game, t_rectangle *rectangle)
+int centered_line(t_game *game, t_form *form)
 {
-	int y;
-	int x;
-    t_texture tex;
-    float x_im;
-    float y_im;
-    float c;
-    float k;
+	int		y;
+	int		x;
+	float	x_im;
+	float	y_im;
 
-	x = rectangle->vector->x;
-    tex = game->map->textures;
-    x_im = 0;
-	while (rectangle->vector->x + rectangle->dimension->width > x)
+	x = form->vector->x;
+	x_im = 0;
+	while (form->vector->x + form->dim->x > x)
 	{
-		y = rectangle->vector->y - (rectangle->dimension->height / 2);
-		while (rectangle->vector->y + (rectangle->dimension->height / 2) > y)
+		y = form->vector->y - (form->dim->y / 2);
+		while (form->vector->y + (form->dim->y / 2) > y)
 		{
-            y_im = ft_scale(rectangle->vector->y - (rectangle->dimension->height / 2), rectangle->vector->y + (rectangle->dimension->height / 2), 0, tex.we_texture->height, y);
-            image_set_pixel(game->image, x, y, convertRGB(get_pixel(tex.we_texture, x_im, y_im).rgba.r, get_pixel(tex.we_texture, x_im, y_im).rgba.g, get_pixel(tex.we_texture, x_im, y_im).rgba.b));
-            //image_set_pixel(game->image, x, y, rectangle->color);
-            y++;
-        }
+			y_im = ft_scale(form->vector->y - (form->dim->y / 2),
+							form->vector->y + (form->dim->y / 2), 0, game->map->tex.we_tex->height, y);
+			image_set_pixel(game->image, x, y, convertRGB(get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.r,
+														  get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.g,
+														  get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.b));
+			y++;
+		}
 		x++;
 	}
-	free(rectangle->dimension);
-	free(rectangle->vector);
-	free(rectangle);
+	free(form->dim);
+	free(form->vector);
+	free(form);
 	return (1);
 }
-
-
-
 
 
 /**
@@ -177,42 +158,21 @@ int display_line(t_game *game, int x, float teta)
 	float len_x;
 	float len_y;
 	float dist;
-    long int color;
-    long int color1 = 0x00FF00;
-    long int color2 = 0xFF0000;
-    long int color3 = 0x0000FF;
-    long int color4 = 0xFF00FF;
+	long int color = 0xF6F4F6;
 
-    //len_x = cos((teta / 360.0) * (float) (2 * M_PI)) * hypot();
-    //len_y = -sin((teta / 360.0) * (float) (2 * M_PI)) * hypot();
-    
-    len_x = 0;
-    len_y = 0;
-
-    
-	while (game->map->map[(int) (game->player->location.y + len_y)][(int) (game->player->location.x + len_x)] != '1')
+	len_x = 0;
+	len_y = 0;
+	while (game->map->map[(int) (game->p->pos->y + len_y)][(int) (game->p->pos->x + len_x)] != '1')
 	{
-		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) / 200; //en realité on prendra une variable teta passée en parametre pour l'angle
+		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) /
+				 200; //en realité on prendra une variable teta passée en parametre pour l'angle
 		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 200;
 	}
 	dist = sqrt((pow(len_y, 2) + pow(len_x, 2)));
-    color = ((game->player->location.y + len_y) - (int) (game->player->location.y + len_y) < (game->player->location.x + len_x) - (int)(game->player->location.x + len_x) ? color3 : color4);
-    //color = (long int)game->map->textures.so_texture->image[0];
-	centered_line(game, init_rectangle(init_dimension(1, (float) game->data->height / dist), init_vector(x, game->data->height / 2), color));
-    //printf ("height = %f    yaw = %d   len_x = %f   len_y = %f\n", (game->data->height / dist), game->player->location.yaw, len_x, len_y);
+	centered_line(game, init_form(init_vector(1, (float) game->image->height / dist),
+									   init_vector(x, game->image->height / 2), color));
 	return (1);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 /**
@@ -222,34 +182,33 @@ int display_line(t_game *game, int x, float teta)
  * @param t_player player
  * @return int (1 = success, 0 = fail)
  */
-int    display_map(t_game *game, t_image **image)
+int display_map(t_game *game, t_image **image)
 {
-    int        len_x;
-    int        len_y;
-    int        x;
-    int        y;
-    
-    y = 0;
-    len_x = 0;
-    len_y = 0;
-    while (game->map->map[len_y])
-        len_y++;
-    while (game->map->map[0][len_x])
-        len_x++;
-    while (game->map->map[y])
-    {
-        x = 0;
-        while (game->map->map[y][x])
-        {
-            display_rectangle_image(game, init_rectangle(init_dimension(15, 15), init_vector(15 * x, 15 * y), game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2), image);
-            x++;
-        }
-        y++;
-    }
-    return (1);
+	int len_x;
+	int len_y;
+	int x;
+	int y;
+
+	y = 0;
+	len_x = 0;
+	len_y = 0;
+	while (game->map->map[len_y])
+		len_y++;
+	while (game->map->map[0][len_x])
+		len_x++;
+	while (game->map->map[y])
+	{
+		x = 0;
+		while (game->map->map[y][x])
+		{
+			display_rec(game, init_form(init_vector(15, 15), init_vector(15 * x, 15 * y),
+														 game->map->map[y][x] == '1' ? 0xFF54D7 : 0xB9BCC2), image);
+			x++;
+		}
+		y++;
+	}
+	return (1);
 }
-
-
 
 
 /**
@@ -259,67 +218,28 @@ int    display_map(t_game *game, t_image **image)
  */
 int display_full_range(t_game *game)
 {
-    int x;
-    float teta;
-    
-    x = 0;
-    teta = game->player->location.yaw + 20; //angle de vision
-    game->image = new_image(game, game->data->width, game->data->height);
-    display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, 0), 0xF1F1F1), &game->image);
-    display_rectangle_image(game, init_rectangle(init_dimension(game->data->width, game->data->height / 2), init_vector(0, game->data->height / 2), 0x000000), &game->image);
-    while (x <= 1920 && teta >= game->player->location.yaw - 20)
-    {
-        display_line(game, x, teta);
-        x += 1;
-        teta -= 40.0 / game->data->width; //angle de vision * 2
-    }
-    display_map(game, &game->image); //rajoute la map a l'image
-    mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->image->image, 0, 0);
-    mlx_put_image_to_window(game->data->mlx_ptr, game->data->mlx_win, game->map->textures.so_texture->image, 0, 0);
-    
-    return (1);
-    
-}
+	int x;
+	float teta;
 
+	x = 0;
+	teta = game->p->yaw + 30;
+	display_rec(game,
+			init_form(init_vector(game->image->width, game->image->height / 2), init_vector(0, 0),0xF1F1F1), &game->image);
+	display_rec(game, init_form(init_vector(game->image->width, game->image->height / 2),
+			init_vector(0, game->image->height / 2), 0x000000), &game->image);
+	while (x <= game->image->width && teta >= game->p->yaw - 30)
+	{
+		display_line(game, x, teta);
+		x += 1;
+		teta -= 60.0 / game->image->width; //angle de vision * 2
+	}
+	display_map(game, &game->image); //rajoute la map a l'image
+	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+	mlx_put_image_to_window(game->ptr, game->win, game->map->tex.so_tex->image, 0, 0);
 
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-
-
-
-
-
-
-
-
-/**
- * used to update the map
- * @param t_data data
- * @param t_map map
- * @param t_player player
- * @return int (1 = success, 0 = fail)
- */
-/*
-int update_map(t_data *data, t_map *map, t_player *player)
-{//passer un pointeur de fonction en arg (soit un direction_change soit une/deux nouvelles pour key_up et down)
-	//on pourra donc effacer le curseur, faire les modifications sur sa structure puis afficher le cursuer dans chaque cas de handle_key
-	int index;
-	int index2;
-
-	index = 0;
-	display_rectangle(data, init_rectangle(init_dimension(20, 20),
-										   init_vector(20 * player->location.x, 20 * player->location.y), 0xFF54D7));
 	return (1);
+
 }
-*/
+
+
+
