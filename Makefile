@@ -43,7 +43,7 @@ CFLAGS		= -Wall -Wextra -Werror
 	@${CC} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS} ${SRCSH}
-			@${CC} ${OBJS} -l mlx -framework AppKit -framework OpenGL -o ${NAME}
+			@${CC} ${OBJS} -L ./ -lmlx -framework AppKit -framework OpenGL -o ${NAME}
 			@echo "\033[1;32m"
 			@echo "┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
 			@echo "└─┐│ ││  │  ├┤ └─┐└─┐"
