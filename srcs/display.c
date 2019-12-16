@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 13:12:03 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:54:20 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int display_cir(t_game *game, t_form *form)
 	free(form->dim);
 	free(form);
 }
-int display_view(t_game *game, t_form *form)
-{}
 
 /**
  * used to display a triangle
@@ -164,38 +162,43 @@ float sq_dist(t_vector *origin, t_vector *point)
 	return (pow(point->x - origin->x, 2) + pow(point->y - origin->y, 2));
 }
 
-t_vector next_inter(t_vector *p, t_vector *vec, float teta, int *wall)
+t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *game)
 {
 	float c;
 	float alpha;
 	t_vector x;
 	t_vector y;
-	t_vector res; //variable supprimable
+	t_vector res; //variable to delete
 
 	alpha = (teta / 360) * (float)(2 * M_PI);
-	c = vec->y + tan(alpha) * vec->x;
-	x.x = (int) vec->x + (cos(alpha) > 0 ? 1 : 0);
+	c = vec.y + tan(alpha) * vec.x;
+	x.x = (int) vec.x + (vec.x = (int) vec.x && cos(alpha) > 0 ? 0 : -1) + (cos(alpha) > 0 ? 1 : 0);
 	x.y = -tan(alpha) * (float) x.x + c;
-	y.y = (int) vec->y + (sin(alpha) > 0 ? 0 : 1);
+	y.y = (int) vec.y + (vec.y = (int) vec.y && sin(alpha) > 0 ? -1 : 0) + (sin(alpha) > 0 ? 0 : 1);
 	y.x = (y.y - c) / -tan(alpha);
 	res = (sq_dist(p, &y) > sq_dist(p, &x) ? x : y); //ligne a mettre dans le return
-//	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
-//			wall = 1;
-//	else if (res.x == x.x && res.y == x.y)
-//			wall = 3;
-//	else if (sin(alpha) > 0)
-//			wall = 2;
-//	else
-//			wall = 4;
+	//printf("next x : %f  next y :  %f wall : %d\n",next.x, next.y, wall);
+	mlx_pixel_put(game->ptr, game->win, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xFFFFFF);
+	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
+			*wall = 1;
+	else if (res.x == x.x && res.y == x.y)
+			*wall = 3;
+	else if (sin(alpha) > 0)
+			*wall = 2;
+	else
+			*wall = 4;
 	return (res);
 }
 
-t_vector next_hit(t_vector *p, float teta, int *wall)
+t_vector next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game)
 {
 	t_vector res;
 	
-	res = *p;
-	//while ((res = next_inter(p, &res, teta, wall) != 1)){}
+	res = next_inter(p, *p, teta, wall, game);
+	while (map->map[(int)(res.y-0.0001)][(int)(res.x-0.0001)] != '1')
+	{
+		res = next_inter(p, res, teta, wall, game);
+	}
 	return (res);
 }
 

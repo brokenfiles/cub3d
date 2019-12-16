@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 13:09:42 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:38:34 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int			handle_key(int key, void *param)
 		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), 0x0));
 		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 
-		t_vector next = next_inter(game->p->pos, game->p->pos, game->p->yaw, &wall);
+		//t_vector next = next_inter(game->p->pos, *game->p->pos, game->p->yaw, &wall);
+		t_vector next = next_hit(game->map, game->p->pos, game->p->yaw, &wall, game);
 		printf("pos x : %f,  pos y : %f,  angle : %d  next x : %f  next y :  %f wall : %d\n", game->p->pos->x, game->p->pos->y, game->p->yaw, next.x, next.y, wall);
 		mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size, next.y*game->map->tex.size, 0xFFFFFF);
 	}

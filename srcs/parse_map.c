@@ -199,7 +199,7 @@ int	fill_values(char **splitted, t_game *game)
 		!(game->map->tex.sky_color = get_value(splitted, "C ")))
 		return (0);
 	game->map->tex.wall_color = 0xFF0000;
-	game->map->tex.void_color = 0x00FF00;
+	game->map->tex.void_color = 0x000000;
 	game->map->tex.p_color = 0x4749FF;
 	game->map->tex.size = 10;
 	get_position(game->map->map, game->p);
