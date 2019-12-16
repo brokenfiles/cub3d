@@ -6,11 +6,18 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 02:44:56 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:45 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int		close_red_button(t_game *game)
+{
+	(void)game;
+	quit(EXIT_SUCCESS, NULL);
+	return (0);
+}
 
 int		main(int ac, char **av)
 {
@@ -20,6 +27,9 @@ int		main(int ac, char **av)
 		return (quit(EXIT_FAILURE, "Too few arguments.\nUsage: ./cub3d <valid map>"));
 	if (!(game = malloc(sizeof(struct s_game))))
 		return (quit(EXIT_FAILURE, "Cannot allocate global game."));
+	if (ac == 3)
+		if (ft_strcmp(av[2], "-save") == 0)
+			game->save_first_image = 1;
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (quit(EXIT_FAILURE, "Cannot allocate map."));
 	if (!(game->image = malloc(sizeof(struct s_image))))
@@ -37,6 +47,7 @@ int		main(int ac, char **av)
 	display_map(game, &game->image);
 	//display_full_range(game);
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
+	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
 	mlx_loop(game->ptr);
 	free(game->map);
 	free(game->p->pos);

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 04:24:36 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ typedef struct		s_game
 	t_map		*map;
 	t_player	*p;
 	t_image		*image;
+	int			save_first_image;
 }					t_game;
 #endif

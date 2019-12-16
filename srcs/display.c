@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 04:49:42 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:12:03 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ t_vector next_hit(t_vector *p, float teta, int *wall)
 	t_vector res;
 	
 	res = *p;
-	while ((res = next_inter(p, &res, teta, wall) != 1)){}
+	//while ((res = next_inter(p, &res, teta, wall) != 1)){}
 	return (res);
 }
 

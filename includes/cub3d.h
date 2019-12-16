@@ -6,14 +6,14 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/13 04:50:24 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../mlx.h"
+# include "mlx.h"
 # include "printf.h"
 # include "keys.h"
 # include "libft.h"
@@ -28,7 +28,7 @@
 # define NORTH 90
 # define EAST 0
 # define WEST 180
-# define SOUTH 270
+# define SOUTH -90
 
 void		ft_puterror(char *s);
 int			quit(int code, char *message);
@@ -45,16 +45,14 @@ t_image		*load_tex(t_game *game, t_image **image, char *tex);
 int 		convertRGB(int R, int G, int B);
 int			handle_key(int key, void *param);
 int			display_tri(t_game *game, t_form *form);
-int			display_cir(t_game *game, t_form *form);
-int			display_view(t_game *game, t_form *form);
 int 		display_rec(t_game *game, t_form *form, t_image **image);
 int			display_map(t_game *game, t_image **image);
 int			display_line(t_game *game, int x, float teta);
 int			update_map(t_game *game);
 int			display_full_range(t_game *game);
-t_vector	next_inter(t_vector *p, t_vector *vec, float teta, int *wall);
 t_form		*init_form(t_vector *vector, t_vector *dim, int color);
 t_vector	*init_vector(float x, float y);
+t_vector	next_inter(t_vector *p, t_vector *vec, float teta, int *wall);
 int			init_player(t_player *player);
 t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
 
