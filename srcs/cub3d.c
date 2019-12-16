@@ -12,6 +12,13 @@
 
 #include "../includes/cub3d.h"
 
+int		close_red_button(t_game *game)
+{
+	(void)game;
+	quit(EXIT_SUCCESS, NULL);
+	return (0);
+}
+
 int		main(int ac, char **av)
 {
 	t_game	*game;
@@ -37,6 +44,7 @@ int		main(int ac, char **av)
 	display_map(game, &game->image);
 	//display_full_range(game);
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
+	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
 	mlx_loop(game->ptr);
 	free(game->map);
 	free(game->p->pos);
