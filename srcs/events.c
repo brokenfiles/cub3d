@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 15:38:34 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/16 16:55:22 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y)
 
 int			handle_key(int key, void *param)
 {
-	t_game *game;
-	int wall;
-
+	static int	last_key_code;
+	t_game		*game;
+	int			wall;
 	game = (t_game *) param;
+	if (last_key_code == 259 && key == 12)
+		exit(EXIT_SUCCESS);
 	if (key == K_ESC)
 		exit(EXIT_SUCCESS);
 	else if (key == K_UP || key == 37)
@@ -61,7 +63,6 @@ int			handle_key(int key, void *param)
 		direction_change(game->p, -game->p->rot_speed);
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 43 || key == 36 || key == 35 || key == 37)
 	{
-		//display_full_range(game);
 		display_map(game, &game->image);
 		mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 
@@ -73,5 +74,6 @@ int			handle_key(int key, void *param)
 		printf("pos x : %f,  pos y : %f,  angle : %d  next x : %f  next y :  %f wall : %d\n", game->p->pos->x, game->p->pos->y, game->p->yaw, next.x, next.y, wall);
 		mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size, next.y*game->map->tex.size, 0xFFFFFF);
 	}
+	last_key_code = key;
 	return (1);
 }
