@@ -73,7 +73,7 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 /**
  * used to load a texture.
- * @example load_texture(game, &game->map->tex->so_texture, "tex/brick.xmp")
+ * @example load_texture(game, &game->map->tex->soture, "tex/brick.xmp")
  * @param t_game game
  * @param &t_image image
  * @param char *tex

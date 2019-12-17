@@ -56,7 +56,7 @@ static void	rotate(t_vector *v, float angle)
 
 	x = v->x;
 	c = cos(angle);
-	s = sin(angle);
+	s = sin(-angle);
 	v->x = v->x * c - v->y * s;
 	v->y = x * s + v->y * c;
 }

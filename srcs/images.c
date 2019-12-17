@@ -45,8 +45,3 @@ t_image	*new_image(t_game *game, int w, int h)
 	img->height = h;
 	return (img);
 }
-
-int		save_image(t_game *game)
-{
-	return (0);
-}

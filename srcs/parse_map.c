@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/17 11:16:38 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/17 16:56:10 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	get_position(char **map, t_player *p)
 			{
 				p->pos->y = index;
 				p->pos->x = index2;
-				p->yaw = 90.0;
-				p->yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
-				p->yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
-				p->yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
+				p->dir->x = (map[index][index2] == 'E' ? 1 : 0);
+				p->dir->x = (map[index][index2] == 'O' ? -1 : p->dir->x);
+				p->dir->y = (map[index][index2] == 'N' ? 1 : 0);
+				p->dir->y = (map[index][index2] == 'S' ? -1 : p->dir->y);
 				return (0);
 			}
 			index2++;
@@ -190,11 +190,11 @@ int	fill_values(char **splitted, t_game *game)
 		return (0);
 	if (game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT)
 		return (0);
-	if (!(load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "))) ||
-		!(load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "))) ||
-		!(load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "))) ||
-		!(load_tex(game, &game->map->tex.ea_tex, get_value(splitted, "EA "))) ||
-		!(load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "S "))) ||
+	if (!(load_tex(game, &game->map->tex.no, get_value(splitted, "NO "))) ||
+		!(load_tex(game, &game->map->tex.so, get_value(splitted, "SO "))) ||
+		!(load_tex(game, &game->map->tex.we, get_value(splitted, "WE "))) ||
+		!(load_tex(game, &game->map->tex.ea, get_value(splitted, "EA "))) ||
+		!(load_tex(game, &game->map->tex.sp, get_value(splitted, "S "))) ||
 		!(game->map->tex.floor_color = get_value(splitted, "F ")) ||
 		!(game->map->tex.sky_color = get_value(splitted, "C ")))
 		return (0);
