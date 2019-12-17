@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/17 00:31:51 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/17 11:26:56 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			handle_key(int key, void *param)
 	static int	last_key_code;
 	t_game		*game;
 	int			wall;
-	game = (t_game *) param;
+	game = (t_game *)param;
 	if (last_key_code == 259 && key == 12)
 		exit(EXIT_SUCCESS);
 	if (key == K_ESC)
@@ -70,18 +70,22 @@ int			handle_key(int key, void *param)
 		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 
 		//t_vector next = next_inter(game->p->pos, *game->p->pos, game->p->yaw, &wall);
-		t_vector next = next_hit(game->map, game->p->pos, game->p->yaw, &wall, game);
-		//t_vector next = test_hit2(game->p->pos, game->p->yaw, &wall, game);
-		printf("pos x : %f,  pos y : %f,  angle : %d  next x : %f  next y :  %f wall : %d\n", game->p->pos->x, game->p->pos->y, game->p->yaw, next.x, next.y, wall);
+
+		float index = game->p->yaw;
+		while (index < game->p->yaw + 30)
+		{
+			t_vector next = next_hit(game->map, game->p->pos, index, &wall, game);
 			mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size, next.y*game->map->tex.size, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size + 1, next.y*game->map->tex.size, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size , next.y*game->map->tex.size + 1, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size + 2, next.y*game->map->tex.size, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size , next.y*game->map->tex.size + 2, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size - 1, next.y*game->map->tex.size, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size , next.y*game->map->tex.size - 1, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size - 2, next.y*game->map->tex.size, 0xFFFFFF);
-	mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size , next.y*game->map->tex.size - 2, 0xFFFFFF);
+			index += 0.5;
+		}
+		index = game->p->yaw;
+		while (index > game->p->yaw - 30)
+		{
+			t_vector next = next_hit(game->map, game->p->pos, index, &wall, game);
+			mlx_pixel_put(game->ptr, game->win, next.x*game->map->tex.size, next.y*game->map->tex.size, 0xFFFFFF);
+			index -= 0.5;
+		}
+		//printf("pos x : %f,  pos y : %f,  angle : %d  next x : %f  next y :  %f wall : %d\n", game->p->pos->x, game->p->pos->y, game->p->yaw, next.x, next.y, wall);
 	}
 	last_key_code = key;
 	return (1);

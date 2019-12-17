@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 22:37:14 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/17 11:16:38 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,5 @@ t_vector	next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 t_vector	next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game);
 int			init_player(t_player *player);
 t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
-
-
-t_vector test_hit(t_vector *p, float teta, int *wall, t_game *game);
-t_vector test_hit2(t_vector *p, float teta, int *wall, t_game *game);
 
 #endif
