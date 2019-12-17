@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 15:54:20 by jchotel          ###   ########.fr       */
+/*   Updated: 2019/12/17 02:38:25 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,20 @@ t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 
 	alpha = (teta / 360) * (float)(2 * M_PI);
 	c = vec.y + tan(alpha) * vec.x;
-	x.x = (int) vec.x + (vec.x = (int) vec.x && cos(alpha) > 0 ? 0 : -1) + (cos(alpha) > 0 ? 1 : 0);
+	x.x = (int) vec.x + (cos(alpha) > 0 ? 1 : -1); //(vec.x = (int)vec.x && cos(alpha) > 0 ? 0 : -1) + (cos(alpha) > 0 ? 1 : -1);
 	x.y = -tan(alpha) * (float) x.x + c;
-	y.y = (int) vec.y + (vec.y = (int) vec.y && sin(alpha) > 0 ? -1 : 0) + (sin(alpha) > 0 ? 0 : 1);
+	mlx_pixel_put(game->ptr, game->win, x.x*game->map->tex.size, x.y*game->map->tex.size, 0x0000FF);
+	mlx_pixel_put(game->ptr, game->win, x.x*game->map->tex.size + 1, x.y*game->map->tex.size, 0x0000FF);
+	mlx_pixel_put(game->ptr, game->win, x.x*game->map->tex.size , x.y*game->map->tex.size + 1, 0x0000FF);
+	mlx_pixel_put(game->ptr, game->win, x.x*game->map->tex.size + 1, x.y*game->map->tex.size + 1, 0x0000FF);
+	y.y = (int) vec.y + (sin(alpha) > 0 ? -1 : 1);//(vec.y = (int)vec.y && sin(alpha) > 0 ? -1 : 0) + (sin(alpha) > 0 ? 0 : 1);
 	y.x = (y.y - c) / -tan(alpha);
+	mlx_pixel_put(game->ptr, game->win, y.x*game->map->tex.size, y.y*game->map->tex.size, 0x00FF00);
+	mlx_pixel_put(game->ptr, game->win, y.x*game->map->tex.size + 1, y.y*game->map->tex.size, 0x00FF00);
+	mlx_pixel_put(game->ptr, game->win, y.x*game->map->tex.size , y.y*game->map->tex.size + 1, 0x00FF00);
+	mlx_pixel_put(game->ptr, game->win, y.x*game->map->tex.size + 1, y.y*game->map->tex.size + 1, 0x00FF00);
 	res = (sq_dist(p, &y) > sq_dist(p, &x) ? x : y); //ligne a mettre dans le return
-	//printf("next x : %f  next y :  %f wall : %d\n",next.x, next.y, wall);
-	mlx_pixel_put(game->ptr, game->win, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xFFFFFF);
+	printf ("%s avec x.x=%f x.y=%f y.x=%f y.y=%f\n", sq_dist(p, &y) > sq_dist(p, &x) ? "bleu plus court" : "vert plus court", x.x, x.y, y.x, y.y);
 	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
 			*wall = 1;
 	else if (res.x == x.x && res.y == x.y)
@@ -193,18 +200,122 @@ t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 t_vector next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game)
 {
 	t_vector res;
-	
+	float alpha;
+
 	res = next_inter(p, *p, teta, wall, game);
-	while (map->map[(int)(res.y-0.0001)][(int)(res.x-0.0001)] != '1')
+	alpha = (teta / 360) * (float)(2 * M_PI);
+	while (map->map[(int)(res.y)][(int)(res.x+ ((cos(alpha) > 0 && *wall = 1)? 0 : -1))] != '1')
 	{
+		printf("%d\n", *wall);
 		res = next_inter(p, res, teta, wall, game);
 	}
 	return (res);
 }
 
+//t_vector test_hit2(t_vector *p, float teta, int *wall, t_game *game)
+//{
+//	float alpha;
+//	t_vector delta;
+//	t_vector move;
+//	t_vector hit;
+//
+//	alpha = (teta / 360) * (float)(2 * M_PI);
+//	if (cos(alpha) == 0 || sin(alpha) == 0)
+//	{
+//		printf("we are fucked\n");
+//		return (*init_vector(0, 0));
+//	}
+//	delta.x = cos(alpha);
+//	delta.y = -sin(alpha);
+//	move.x =  ((int)p->x - p->x) * delta.x;//(cos(alpha) > 0 ? 1 : 0)) * delta.x;
+//	move.y =  ((int)p->y - p->y + (-sin(alpha) > 0 ? 1 : 0)) * delta.y;
+//	while (game->map->map[(int)(p->y + move.y)][(int)(p->x + move.x)] == '0')
+//	{
+//		if (fabs(move.x) < fabs(move.y))
+//			move.x += delta.x;
+//		else
+//			move.y += delta.y;
+//	}
+//	hit.x = (int)(p->x + move.x);
+//	hit.y = (int)p->y; //(int)(p->y + move.y);
+//	return (hit);
+//}
 
 
-/**
+
+
+
+
+
+
+
+
+//t_vector test_hit(t_vector *p, float teta, int *wall, t_game *game)
+//{
+//	float alpha;
+//	float rayDirX;
+//	float rayDirY;
+//	int stepX;
+//	int stepY;
+//	float sideDistX;
+//	float sideDistY;
+//	float deltaDistX;
+//	float deltaDistY;
+//	int mapX;
+//	int mapY;
+//	int side;
+//	t_vector res;
+//
+//	alpha = (teta / 360) * (float)(2 * M_PI);
+//	rayDirX = cos(alpha);
+//	rayDirY = cos(alpha);
+//	deltaDistX = fabs(1 / rayDirX);
+//	deltaDistY = fabs(1 / rayDirY);
+//	mapX = (int)p->x;
+//	mapY = (int)p->y;
+//	if (rayDirX < 0)
+//	{
+//		stepX = -1;
+//		sideDistX = (p->x - mapX) * deltaDistX;
+//	}
+//	else
+//	{
+//		stepX = 1;
+//		sideDistX = (mapX + 1.0 - p->x) * deltaDistX;
+//	}
+//	if (rayDirY < 0)
+//	{
+//		stepY = -1;
+//		sideDistY = (p->y - mapY) * deltaDistY;
+//	}
+//	else
+//	{
+//		stepY = 1;
+//		sideDistY = (mapY + 1.0 - p->y) * deltaDistY;
+//	}
+//
+//	while (game->map->map[mapY][mapX] == '0')
+//	{
+//		//jump to next map square, OR in x-direction, OR in y-direction
+//		if (sideDistX < sideDistY)
+//		{
+//			sideDistX += deltaDistX;
+//			mapX += stepX;
+//			side = 0;
+//		}
+//		else
+//		{
+//			sideDistY += deltaDistY;
+//			mapY += stepY;
+//			side = 1;
+//		}
+//	}
+//}
+
+
+
+
+ /**
  * used to display a line
  * @param t_game game
  * @param x
