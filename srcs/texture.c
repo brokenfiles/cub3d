@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2019/12/17 11:16:38 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_color		c(int v)
 	c.value = v;
 	return (c);
 }
-//UTILITE ??? 
+//UTILITE ??? // wow calme je me sens agressé la
 int			ft_lerpi(int first, int second, double p)
 {
 	if (first == second)
@@ -73,7 +73,7 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 /**
  * used to load a texture.
- * @example load_texture(game, &game->map->tex->soture, "tex/brick.xmp")
+ * @example load_texture(game, &game->map->tex->so_texture, "tex/brick.xmp")
  * @param t_game game
  * @param &t_image image
  * @param char *tex

@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/16 01:08:58 by pbondoer          #+#    #+#             */
-/*   Updated: 2019/12/17 11:16:38 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	rotate(t_vector *v, float angle)
 
 	x = v->x;
 	c = cos(angle);
-	s = sin(-angle);
+	s = sin(angle);
 	v->x = v->x * c - v->y * s;
 	v->y = x * s + v->y * c;
 }

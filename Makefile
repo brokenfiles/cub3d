@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2019/12/17 11:16:38 by llaurent         ###   ########.fr        #
+#    Updated: 2019/12/16 14:08:30 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,10 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_strncmp.c\
 				libs/libft/ft_strnstr.c\
 				libs/libft/ft_strchr.c\
-				libs/libft/ft_bzero.c\
 				libs/libft/ft_stronly.c\
 				srcs/events.c\
+				srcs/display.c\
 				srcs/errors.c\
-				srcs/render.c\
 				srcs/texture.c\
 				srcs/images.c\
 				srcs/cub3d.c

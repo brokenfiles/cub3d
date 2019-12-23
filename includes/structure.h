@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/17 17:40:21 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 14:08:43 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,37 @@ typedef struct			s_rgba
 }						t_rgba;
 typedef union			u_color
 {
-	int		value;
-	t_rgba	rgba;
-}						t_color;
+    int            value;
+    t_rgba        rgba;
+}                    t_color;
 typedef struct			s_image
 {
-	void	*image;
-	char	*ptr;
-	int		bpp;
-	int		stride;
-	int		endian;
-	int		width;
-	int		height;
+    void	*image;
+    char	*ptr;
+    int		bpp;
+    int		stride;
+    int		endian;
+    int		width;
+    int		height;
 }						t_image;
 typedef struct		s_vector
 {
 	float	x;
 	float	y;
 }					t_vector;
+typedef struct		s_form
+{
+	t_vector	*dim;
+	t_vector	*vector;
+	int			color;
+}					t_form;
 typedef struct		s_tex
 {
-	t_image		*no;
-	t_image		*so;
-	t_image		*we;
-	t_image		*ea;
-	t_image		*sp;
+	t_image		*no_tex;
+	t_image		*so_tex;
+	t_image		*we_tex;
+	t_image		*ea_tex;
+	t_image		*sp_tex;
 	char		*sky_color;
 	char		*floor_color;
 	int			wall_color;
@@ -59,43 +65,24 @@ typedef struct		s_map
 	char		**map;
 	int			lines;
 	t_vector	spawn;
-	t_tex		tex;
+	t_tex	tex;
 }					t_map;
 typedef struct		s_player
 {
 	t_vector	*pos;
-	t_vector	*dir;
+	int			yaw;
 	float		speed;
 	int			rot_speed;
 	float		health;
 	float		size;
 }					t_player;
-typedef struct		s_ray
-{
-	float		x;
-	float		y;
-	float		mov_x;
-	float		mov_y;
-	float		dx;
-	float		dy;
-	int			map_x;
-	int			map_y;
-	int			height;
-	int			side;
-	float		dist;
-	float		light;
-//	t_image		*texture;
-//	int			tex_x;
-//	float		fx;
-//	float		fy;
-}					t_ray;
 typedef struct		s_game
 {
 	void		*ptr;
 	void		*win;
-	t_image		*image;
 	t_map		*map;
 	t_player	*p;
+	t_image		*image;
 	int			save_first_image;
 }					t_game;
 #endif

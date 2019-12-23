@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/17 17:55:24 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:05:45 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		main(int ac, char **av)
 		return (quit(EXIT_FAILURE, "Cannot allocate map."));
 	if (!(game->image = malloc(sizeof(struct s_image))))
 		return (quit(EXIT_FAILURE, "Cannot allocate image."));
-	if (!(game->p = malloc(sizeof(struct s_player))) || !(game->p->pos = malloc(sizeof(struct s_vector)))  || !(game->p->dir = malloc(sizeof(struct s_vector))))
+	if (!(game->p = malloc(sizeof(struct s_player))) || !(game->p->pos = malloc(sizeof(struct s_vector))))
 		return (quit(EXIT_FAILURE, "Cannot allocate player."));
 	if (!(game->ptr = mlx_init()))
 		return (quit(EXIT_FAILURE, "Cannot init MLX."));
@@ -46,6 +46,10 @@ int		main(int ac, char **av)
 	game->image = new_image(game, game->image->width, game->image->height);
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
 	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
+	render(game);
+	display_map(game, &game->image);
+	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+	display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 	mlx_loop(game->ptr);
 	free(game->map);
 	free(game->p->pos);

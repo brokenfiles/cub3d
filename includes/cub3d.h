@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/17 17:55:24 by llaurent         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:34:59 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define MIN_WIDTH 700
-# define MIN_HEIGHT 700
+# define MIN_WIDTH 500
+# define MIN_HEIGHT 500
 # define NORTH 90
 # define EAST 0
 # define WEST 180
@@ -44,9 +44,19 @@ t_image		*xpm_image(char *xpm, t_game *game);
 t_image		*load_tex(t_game *game, t_image **image, char *tex);
 int 		convertRGB(int R, int G, int B);
 int			handle_key(int key, void *param);
-int			init_player(t_player *player);
+int			display_tri(t_game *game, t_form *form);
+int 		display_rec(t_game *game, t_form *form, t_image **image);
+int			display_map(t_game *game, t_image **image);
+int			display_line(t_game *game, int x, float teta);
+int			update_map(t_game *game);
+int			display_full_range(t_game *game);
+t_form		*init_form(t_vector *vector, t_vector *dim, int color);
 t_vector	*init_vector(float x, float y);
-void		draw_minimap(t_game *game);
-int			render(t_game *game);
+t_vector	next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *game);
+t_vector	next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game);
+int			init_player(t_player *player);
+t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
+void		render(t_game *game);
+int			centered_line(t_game *game, t_form *form);
 
 #endif
