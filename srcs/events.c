@@ -14,14 +14,19 @@
 
 void		move_player(t_game *game, int sign)
 {
-	float	x;
-	float	y;
-
-	x = game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
-	y = game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
-	if (game->map->map[(int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI)))][(int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI)))] == '1')
+	if (game->map->map[(int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
+	* (float) (2 * M_PI)))][(int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0)
+	* (float) (2 * M_PI)))] == '1')
 	{
-		game->p->pos->x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		game->p->health -= 2;
+		if (game->p->health <= 0)
+		{
+			printf("Tu es mort.\n");
+			game->p->pos->x = game->map->spawn->y;
+			game->p->pos->y = game->map->spawn->x;
+			game->p->yaw = game->map->spawn_yaw;
+			game->p->health = 100;
+		}
 		return ;
 	}
 	game->p->pos->x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));

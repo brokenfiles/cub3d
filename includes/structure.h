@@ -64,8 +64,11 @@ typedef struct		s_map
 {
 	char		**map;
 	int			lines;
-	t_vector	spawn;
-	t_tex	tex;
+	float		spawn_yaw;
+	int			sky_color;
+	int			floor_color;
+	t_vector	*spawn;
+	t_tex		tex;
 }					t_map;
 typedef struct		s_player
 {

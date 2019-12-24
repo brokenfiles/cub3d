@@ -28,7 +28,7 @@ void display_cir(t_game *game, t_form *form)
 {
 	int r;
 	float teta;
-	
+
 	teta = 0;
 	while (teta <= (float) (2 * M_PI))
 	{
@@ -108,6 +108,28 @@ int display_rec(t_game *game, t_form *form, t_image **image)
 	return (1);
 }
 
+int display_rec_notfilled(t_game *game, t_form *form, t_image **image)
+{
+	int y;
+	int x;
+
+	x = form->vector->x;
+	while (form->vector->x + form->dim->x > x)
+	{
+		y = form->vector->y;
+		while (form->vector->y + form->dim->y > y && (x == 0 || x == form->dim->x) && (y == 0 || y == form->dim->y))
+		{
+			image_set_pixel(*image, x, y, form->color);
+			y++;
+		}
+		x++;
+	}
+	free(form->dim);
+	free(form->vector);
+	free(form);
+	return (1);
+}
+
 int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 {
 	float k;
@@ -118,7 +140,7 @@ int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 	return ((k * y + c));
 }
 
-int test_line(t_game *game, t_form *form, float x_inter, int wall)
+int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 {
 	int		y;
 	int		x;
@@ -146,9 +168,17 @@ int test_line(t_game *game, t_form *form, float x_inter, int wall)
 			y_im = ft_scale(form->vector->y - (form->dim->y / 2),
 							form->vector->y + (form->dim->y / 2), 0, game->map->tex.we_tex->height, y);
 			if (y >= form->vector->y - (form->dim->y / 2) && y <= form->vector->y + (form->dim->y / 2))
-				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r, get_pixel(tex, x_im, y_im).rgba.g, get_pixel(tex, x_im, y_im).rgba.b);
+			{
+				dist = 255 / (255 / dist);
+				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
+			}
 			else
-				color = 0x000000;
+			{
+				if (y > game->image->height / 2)
+					color = game->map->floor_color;
+				else
+					color = game->map->sky_color;
+			}
 			image_set_pixel(game->image, x, y, color);
 			y++;
 		}
@@ -196,12 +226,24 @@ t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 
 t_vector next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game)
 {
-	t_vector res;
+	t_vector	res;
 
 	res = next_inter(p, *p, teta, wall, game);
 	while (map->map[(int)(res.y - (p->y > res.y && res.y == (int)res.y ? 0.0001 : 0))][(int)(res.x - (p->x > res.x && res.x == (int)res.x ? 0.0001 : 0))] != '1')
 		res = next_inter(p, res, teta, wall, game);
 	return (res);
+}
+
+int		display_lifebar(t_game *game)
+{
+	int	percent;
+	int	color;
+
+	color = convertRGB(150, 255 / (100 / game->p->health), 55);
+	percent = ((game->image->width / 2 - 20) / (100 / game->p->health));
+	display_rec(game, init_form(init_vector((game->image->width / 2) - (game->image->width / 2 / 2), game->image->height - 60), init_vector(game->image->width / 2 , 50), 0xFFFBBC), &game->image);
+	display_rec(game, init_form(init_vector((game->image->width / 2) - (game->image->width / 2 / 2 - 10), game->image->height - 55), init_vector(percent, 40), color), &game->image);
+	return (1);
 }
 
 void				render(t_game *game)
@@ -216,7 +258,7 @@ void				render(t_game *game)
 	x = 0;
 	angle = 30;
 	while (angle > -30)
-	{ 
+	{
 		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);
 		if (wall == 1)
 			color = 0xFFFF00;
@@ -227,10 +269,11 @@ void				render(t_game *game)
 		else if (wall == 4)
 			color = 0x0FFF0F;
 		dist = (float)sqrt(sq_dist(game->p->pos, &hit));
-		test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float) game->image->height / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall);
+		test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float) game->image->height / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist);
 		angle -= 60.0 / game->image->width;
 		x++;
 	}
+	display_lifebar(game);
 }
 
 /**
@@ -290,8 +333,6 @@ int display_line(t_game *game, int x, float teta)
 	return (1);
 }
 
-
-
 /**
  * display the render
  * @param t_game game
@@ -313,12 +354,8 @@ int display_full_range(t_game *game)
 	display_map(game, &game->image); //rajoute la map a l'image
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 	//mlx_put_image_to_window(game->ptr, game->win, game->map->tex.so_tex->image, 0, 0);
-
 	return (1);
-
 }
-
-
 
 /**
  * display a centered line

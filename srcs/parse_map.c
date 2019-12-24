@@ -42,10 +42,10 @@ char	*get_value(char **splitted, char *key)
 	return (NULL);
 }
 
-int	get_position(char **map, t_player *p)
+int	get_position(char **map, t_player *p, t_game *game)
 {
-	int	index;
-	int	index2;
+	int		index;
+	int		index2;
 
 	index = 0;
 	while (map[index])
@@ -55,12 +55,16 @@ int	get_position(char **map, t_player *p)
 		{
 			if (ft_strchr("WENS", map[index][index2]))
 			{
+				game->map->spawn = init_vector(index, index2);
 				p->pos->y = index;
 				p->pos->x = index2;
 				p->yaw = 90.0;
 				p->yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
 				p->yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
 				p->yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
 				return (0);
 			}
 			index2++;
@@ -178,6 +182,8 @@ int	checks(char **splitted)
 int	fill_values(char **splitted, t_game *game)
 {
 	char	*res;
+	char	**floor_split;
+	char	**sky_split;
 
 	if (!(res = get_value(splitted, "R ")))
 		return (0);
@@ -198,11 +204,18 @@ int	fill_values(char **splitted, t_game *game)
 		!(game->map->tex.floor_color = get_value(splitted, "F ")) ||
 		!(game->map->tex.sky_color = get_value(splitted, "C ")))
 		return (0);
+	floor_split = ft_split(game->map->tex.floor_color, ",");
+	sky_split = ft_split(game->map->tex.sky_color, ",");
+	//TODO: check split
+	game->map->floor_color = convertRGB(ft_atoi(floor_split[0]), ft_atoi(floor_split[1]), ft_atoi(floor_split[2]));
+	game->map->sky_color = convertRGB(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
+	free(floor_split);
+	free(sky_split);
 	game->map->tex.wall_color = 0xFF0000;
 	game->map->tex.void_color = 0x000000;
 	game->map->tex.p_color = 0x4749FF;
 	game->map->tex.size = 10;
-	get_position(game->map->map, game->p);
+	get_position(game->map->map, game->p, game);
 	return (1);
 }
 
