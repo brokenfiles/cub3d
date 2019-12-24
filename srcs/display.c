@@ -250,14 +250,16 @@ void				render(t_game *game)
 {
 	t_vector hit;
 	float angle;
+	float angle_copy;
 	int x;
 	int wall;
 	float dist;
 	int color;
 
 	x = 0;
-	angle = 30;
-	while (angle > -30)
+	angle = game->image->width * 0.020833333;
+	angle_copy = angle;
+	while (angle > -angle_copy)
 	{
 		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);
 		if (wall == 1)
@@ -269,8 +271,8 @@ void				render(t_game *game)
 		else if (wall == 4)
 			color = 0x0FFF0F;
 		dist = (float)sqrt(sq_dist(game->p->pos, &hit));
-		test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float) game->image->height / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist);
-		angle -= 60.0 / game->image->width;
+		test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist);
+		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
 	display_lifebar(game);

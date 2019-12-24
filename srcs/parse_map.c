@@ -211,8 +211,8 @@ int	fill_values(char **splitted, t_game *game)
 	game->map->sky_color = convertRGB(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
 	free(floor_split);
 	free(sky_split);
-	game->map->tex.wall_color = 0xFF0000;
-	game->map->tex.void_color = 0x000000;
+	game->map->tex.wall_color = 0x474347;
+	game->map->tex.void_color = 0xFFFFFF;
 	game->map->tex.p_color = 0x4749FF;
 	game->map->tex.size = 10;
 	get_position(game->map->map, game->p, game);
