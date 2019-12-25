@@ -28,6 +28,7 @@ int		main(int ac, char **av)
 	if (!(game = malloc(sizeof(struct s_game))))
 		return (quit(EXIT_FAILURE, "Cannot allocate global game."));
 	game->disable_map = 0;
+	game->save_first_image = 0;
 	if (ac == 3)
 	{
 		if (ft_strcmp(av[2], "-save") == 0)
