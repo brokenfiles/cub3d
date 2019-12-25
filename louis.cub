@@ -1,11 +1,11 @@
 R 1440 750
-NO textures/grass.xpm
-SO textures/brick.xpm
-WE textures/stone.xpm
-EA textures/metal.xpm
-S textures/ea.xpm
-F 220,100,0
-C 225,30,0
+NO textures/sonic.xpm
+SO textures/autorouteduBH.xpm
+WE textures/jordz.xpm
+EA textures/BH.xpm
+S textures/sky_text.xpm
+F 103,61,34
+C 30,112,195
 
 11111111111111111111111111111
 10000000000000000000000000001

@@ -175,9 +175,14 @@ int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 			else
 			{
 				if (y > game->image->height / 2)
+				{
 					color = game->map->floor_color;
+				}
 				else
+				{
+//					color = convertRGB(get_pixel(game->map->tex.sp_tex, x, y).rgba.r - dist, get_pixel(game->map->tex.sp_tex, x, y).rgba.g - dist, get_pixel(game->map->tex.sp_tex, x, y).rgba.b - dist);
 					color = game->map->sky_color;
+				}
 			}
 			image_set_pixel(game->image, x, y, color);
 			y++;

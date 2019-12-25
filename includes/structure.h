@@ -53,6 +53,8 @@ typedef struct		s_tex
 	t_image		*we_tex;
 	t_image		*ea_tex;
 	t_image		*sp_tex;
+	t_image		*sky_tex;
+	t_image		*floor_tex;
 	char		*sky_color;
 	char		*floor_color;
 	int			wall_color;
