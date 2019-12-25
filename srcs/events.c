@@ -14,9 +14,16 @@
 
 void		move_player(t_game *game, int sign)
 {
-	if (game->map->map[(int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
-	* (float) (2 * M_PI)))][(int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0)
-	* (float) (2 * M_PI)))] == '1')
+	int	x;
+	int	y;
+
+	y = (int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
+															 * (float) (2 * M_PI)));
+	x = (int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0)
+															* (float) (2 * M_PI)));
+	if (!game->map->map[y][x])
+		return ;
+	if (game->map->map[y][x] && game->map->map[y][x] == '1')
 	{
 		game->p->health -= 2;
 		if (game->p->health <= 0)
@@ -69,12 +76,6 @@ int			handle_key(int key, void *param)
 	int			wall;
 	game = (t_game *)param;
 
-	/*
-	 * a : 0
-	 * d : 2
-	 * w : 13
-	 * s : 1
-	 */
 	if (last_key_code == 259 && key == 12)
 		exit(EXIT_SUCCESS);
 	if (key == K_ESC)
@@ -101,7 +102,8 @@ int			handle_key(int key, void *param)
 		direction_change(game->p, -game->p->rot_speed);
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0)
 	{
-		render(game);
+		if (!render(game))
+			return (quit(EXIT_FAILURE, "Rendering error."));
 	}
 	last_key_code = key;
 	return (1);

@@ -55,7 +55,7 @@ t_vector	next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 t_vector	next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game);
 int			init_player(t_player *player);
 t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
-void		render(t_game *game);
+int		render(t_game *game);
 int			centered_line(t_game *game, t_form *form);
 int			display_lifebar(t_game *game);
 int			save_bitmap(t_game *game, char *name);

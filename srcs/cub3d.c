@@ -52,10 +52,12 @@ int		main(int ac, char **av)
 	if (!(game->win = mlx_new_window(game->ptr, game->image->width, game->image->height, "Cub3d")))
 		return (quit(EXIT_FAILURE, "Cannot init MLX window."));
 	init_player(game->p);
-	game->image = new_image(game, game->image->width, game->image->height);
+	if (!(game->image = new_image(game, game->image->width, game->image->height)))
+		return (quit(EXIT_FAILURE, "Rendering error."));
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
 	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
-	render(game);
+	if (!render(game))
+		return (quit(EXIT_FAILURE, "Rendering error."));
 	mlx_loop(game->ptr);
 	free(game->map);
 	free(game->p->pos);

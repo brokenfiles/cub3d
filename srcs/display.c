@@ -235,10 +235,28 @@ t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 t_vector next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game)
 {
 	t_vector	res;
+	int			number;
+	int			hit_x;
+	int			hit_y;
 
+	number = 0;
+	if (!map->map[(int)p->y][(int)p->x])
+		return (res);
 	res = next_inter(p, *p, teta, wall, game);
-	while (map->map[(int)(res.y - (p->y > res.y && res.y == (int)res.y ? 0.0001 : 0))][(int)(res.x - (p->x > res.x && res.x == (int)res.x ? 0.0001 : 0))] != '1')
+	hit_y = (int)(res.y - (p->y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+	hit_x = (int)(res.x - (p->x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+	while (map->map[hit_y][hit_x] && map->map[hit_y][hit_x] != '1')
+	{
 		res = next_inter(p, res, teta, wall, game);
+		number++;
+		if (number > 1000)
+		{
+			quit(EXIT_FAILURE, "Rendering error. (429)");
+			return (res);
+		}
+		hit_y = (int)(res.y - (p->y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+		hit_x = (int)(res.x - (p->x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+	}
 	return (res);
 }
 
@@ -254,7 +272,7 @@ int		display_lifebar(t_game *game)
 	return (1);
 }
 
-void				render(t_game *game)
+int				render(t_game *game)
 {
 	t_vector hit;
 	float angle;
@@ -270,6 +288,8 @@ void				render(t_game *game)
 	while (angle > -angle_copy)
 	{
 		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);
+		if (hit.x == 0 && hit.y == 0)
+			return (quit(EXIT_FAILURE, "Rendering error."));
 		if (wall == 1)
 			color = 0xFFFF00;
 		else if (wall == 2)
@@ -279,7 +299,8 @@ void				render(t_game *game)
 		else if (wall == 4)
 			color = 0x0FFF0F;
 		dist = (float)sqrt(sq_dist(game->p->pos, &hit));
-		test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist);
+		if (!test_line(game, init_form(init_vector(x, game->image->height / 2), init_vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
+			return (quit(EXIT_FAILURE, "Rendering error."));
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
@@ -292,8 +313,10 @@ void				render(t_game *game)
 	if (game->save_first_image)
 	{
 		game->save_first_image = 0;
-		save_bitmap(game, "screenshot.bmp");
+		if (!save_bitmap(game, "screenshot.bmp"))
+			return (0);
 	}
+	return (1);
 }
 
 /**
