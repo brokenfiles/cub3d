@@ -89,5 +89,6 @@ typedef struct		s_game
 	t_player	*p;
 	t_image		*image;
 	int			save_first_image;
+	int			disable_map;
 }					t_game;
 #endif

@@ -1,11 +1,11 @@
 R 1440 750
-NO textures/grass.xpm
-SO textures/brick.xpm
-WE textures/stone.xpm
-EA textures/metal.xpm
+NO textures/log_spruce.xpm
+SO textures/log_jungle.xpm
+WE textures/planks_jungle.xpm
+EA textures/planks_spruce.xpm
 S textures/ea.xpm
-F 133,67,27
-C 84,255,248
+F 103,61,34
+C 30,112,195
 
 111111111111111111111111111111111111111111111111111111111
 100000000000000000000000000000000000000000000000000000001

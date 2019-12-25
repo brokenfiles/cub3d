@@ -62,6 +62,9 @@ fclean:		clean
 
 re:			fclean all
 
+rc:			re
+			@make clean
+
 %:
 	@:
 

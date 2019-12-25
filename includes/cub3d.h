@@ -47,7 +47,6 @@ int			handle_key(int key, void *param);
 int			display_tri(t_game *game, t_form *form);
 int 		display_rec(t_game *game, t_form *form, t_image **image);
 int			display_map(t_game *game, t_image **image);
-int			display_line(t_game *game, int x, float teta);
 int			update_map(t_game *game);
 int			display_full_range(t_game *game);
 t_form		*init_form(t_vector *vector, t_vector *dim, int color);
@@ -59,5 +58,6 @@ t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y);
 void		render(t_game *game);
 int			centered_line(t_game *game, t_form *form);
 int			display_lifebar(t_game *game);
+int			save_bitmap(t_game *game, char *name);
 
 #endif

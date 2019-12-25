@@ -69,25 +69,39 @@ int			handle_key(int key, void *param)
 	int			wall;
 	game = (t_game *)param;
 
+	/*
+	 * a : 0
+	 * d : 2
+	 * w : 13
+	 * s : 1
+	 */
 	if (last_key_code == 259 && key == 12)
 		exit(EXIT_SUCCESS);
 	if (key == K_ESC)
 		exit(EXIT_SUCCESS);
-	else if (key == K_UP || key == 37)
+	else if (key == K_UP || key == 13)
 		move_player(game, 1);
-	else if (key == K_DOWN || key == 35)
+	else if (key == K_DOWN || key == 1)
 		move_player(game, -1);
-	else if (key == K_LEFT || key == 36)
+	else if (key == K_LEFT)
 		direction_change(game->p, game->p->rot_speed);
+	else if (key == 0)
+	{
+		game->p->yaw += 90;
+		move_player(game, 1);
+		game->p->yaw -= 90;
+	}
+	else if (key == 2)
+	{
+		game->p->yaw -= 90;
+		move_player(game, 1);
+		game->p->yaw += 90;
+	}
 	else if (key == K_RIGHT || key == 43)
 		direction_change(game->p, -game->p->rot_speed);
-	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 43 || key == 36 || key == 35 || key == 37)
+	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0)
 	{
 		render(game);
-		display_map(game, &game->image);
-		mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
-		//display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), 0x0));
-		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 	}
 	last_key_code = key;
 	return (1);

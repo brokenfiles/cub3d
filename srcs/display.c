@@ -140,7 +140,7 @@ int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 	return ((k * y + c));
 }
 
-int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
+int		test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 {
 	int		y;
 	int		x;
@@ -158,7 +158,7 @@ int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 	if (wall == 4)
 		tex = game->map->tex.so_tex;
 	x = form->vector->x;
-	x_im = ft_scale(0.0, 1.0, 0.0, game->map->tex.we_tex->width, x_inter);
+	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
 	//printf("x_inter : %f, x_im : %f\n",x_inter, x_im);
 	while (form->vector->x + form->dim->x > x)
 	{
@@ -166,7 +166,7 @@ int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 		while (game->image->height > y)
 		{
 			y_im = ft_scale(form->vector->y - (form->dim->y / 2),
-							form->vector->y + (form->dim->y / 2), 0, game->map->tex.we_tex->height, y);
+							form->vector->y + (form->dim->y / 2), 0, tex->height, y);
 			if (y >= form->vector->y - (form->dim->y / 2) && y <= form->vector->y + (form->dim->y / 2))
 			{
 				dist = 255 / (255 / dist);
@@ -176,6 +176,9 @@ int test_line(t_game *game, t_form *form, float x_inter, int wall, float dist)
 			{
 				if (y > game->image->height / 2)
 				{
+					//printf("%f\n", y_im);
+//					y_im = y_im / 32.0;
+//					color = convertRGB(get_pixel(game->map->tex.no_tex, x_im, y_im).rgba.r, get_pixel(game->map->tex.no_tex, x_im, y_im).rgba.g, get_pixel(game->map->tex.no_tex, x_im, y_im).rgba.b);
 					color = game->map->floor_color;
 				}
 				else
@@ -217,7 +220,7 @@ t_vector next_inter(t_vector *p, t_vector vec, float teta, int *wall, t_game *ga
 	y.x = (y.y - c) / -tan(alpha);
 	res = (sq_dist(p, &y) > sq_dist(p, &x) ? x : y); //ligne a mettre dans le return
 
-	//image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xFFFFFF);
+	//image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xACACAC);
 	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
 			*wall = 1;
 	else if (res.x == x.x && res.y == x.y)
@@ -281,6 +284,16 @@ void				render(t_game *game)
 		x++;
 	}
 	display_lifebar(game);
+	if (!game->disable_map)
+		display_map(game, &game->image);
+	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+	if (!game->disable_map)
+		display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
+	if (game->save_first_image)
+	{
+		game->save_first_image = 0;
+		save_bitmap(game, "screenshot.bmp");
+	}
 }
 
 /**
@@ -310,57 +323,6 @@ int display_map(t_game *game, t_image **image)
 		}
 		y++;
 	}
-	return (1);
-}
-
-/**
- * used to display a line
- * @param t_game game
- * @param x
- * @param teta (orientation of the player)
- * @return int (1 = success, 0 = fail)
- */
-int display_line(t_game *game, int x, float teta)
-{
-	float len_x;
-	float len_y;
-	float dist;
-	long int color = 0xF6F4F6;
-
-	len_x = 0;
-	len_y = 0;
-	while (game->map->map[(int) (game->p->pos->y + len_y)][(int) (game->p->pos->x + len_x)] != '1')
-	{
-		len_x += cos((teta / 360.0) * (float) (2 * M_PI)) / 200;
-		len_y -= sin((teta / 360.0) * (float) (2 * M_PI)) / 200;
-	}
-	dist = sqrt((pow(len_y, 2) + pow(len_x, 2)));
-	centered_line(game, init_form(init_vector(1, (float) game->image->height / dist),
-									   init_vector(x, game->image->height / 2), color));
-	return (1);
-}
-
-/**
- * display the render
- * @param t_game game
- * @return int (1 = success, 0 = fail)
- */
-int display_full_range(t_game *game)
-{
-	int x;
-	float teta;
-
-	x = 0;
-	teta = game->p->yaw + 30;
-	while (x <= game->image->width && teta >= game->p->yaw - 30)
-	{
-		display_line(game, x, teta);
-		x += 1;
-		teta -= 60.0 / game->image->width; //angle de vision * 2
-	}
-	display_map(game, &game->image); //rajoute la map a l'image
-	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
-	//mlx_put_image_to_window(game->ptr, game->win, game->map->tex.so_tex->image, 0, 0);
 	return (1);
 }
 

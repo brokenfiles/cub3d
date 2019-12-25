@@ -27,9 +27,17 @@ int		main(int ac, char **av)
 		return (quit(EXIT_FAILURE, "Too few arguments.\nUsage: ./cub3d <valid map>"));
 	if (!(game = malloc(sizeof(struct s_game))))
 		return (quit(EXIT_FAILURE, "Cannot allocate global game."));
+	game->disable_map = 0;
 	if (ac == 3)
+	{
 		if (ft_strcmp(av[2], "-save") == 0)
 			game->save_first_image = 1;
+		if (ft_strcmp(av[2], "--disable-map") == 0)
+			game->disable_map = 1;
+	}
+	if (ac == 4)
+		if (ft_strcmp(av[3], "--disable-map") == 0)
+			game->disable_map = 1;
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (quit(EXIT_FAILURE, "Cannot allocate map."));
 	if (!(game->image = malloc(sizeof(struct s_image))))
@@ -47,9 +55,6 @@ int		main(int ac, char **av)
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
 	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
 	render(game);
-	display_map(game, &game->image);
-	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
-	display_tri(game, init_form(init_vector(game->map->tex.size * game->p->pos->x, game->map->tex.size * game->p->pos->y), init_vector(game->map->tex.size, game->map->tex.size), game->map->tex.p_color));
 	mlx_loop(game->ptr);
 	free(game->map);
 	free(game->p->pos);
