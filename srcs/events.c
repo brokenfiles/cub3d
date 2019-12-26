@@ -53,10 +53,10 @@ int			direction_change(t_player *player, float inc)
 
 t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y)
 {
-	t_vector vector;
-	float alpha;
-	float c;
-	float s;
+	t_vector	vector;
+	float		alpha;
+	float		c;
+	float		s;
 
 	alpha = (game->p->yaw / 360.0) * (float) (2 * M_PI);
 	c = cos(alpha);
@@ -75,8 +75,8 @@ int			handle_key(int key, void *param)
 	static int	last_key_code;
 	t_game		*game;
 	int			wall;
-	game = (t_game *)param;
 
+	game = (t_game *)param;
 	if (last_key_code == 259 && key == 12)
 		quit(game, EXIT_SUCCESS, NULL);
 	if (key == K_ESC)

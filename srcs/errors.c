@@ -20,6 +20,8 @@ void ft_puterror(char *s)
 
 int free_map(char **map, int counter)
 {
+	if (!map || !*map)
+		return (0);
 	while (counter >= 0)
 	{
 		if (map[counter])
@@ -59,12 +61,10 @@ int quit(t_game *game, int code, char *message)
 //		free(game->map->tex.so_tex);
 //	if (game && game->map)
 //		free(game->map->tex.no_tex);
-//	if (game && game->map->map != NULL)
-//	{
-//		while (game->map->map[index])
-//			index++;
-//		free_map(game->map->map, index);
-//	}
+	while (game && game->map->map[index])
+		index++;
+	if (game)
+		free_map(game->map->map, index);
 	if (game)
 		free(game);
 //	system("leaks cub3d");

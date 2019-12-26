@@ -170,15 +170,25 @@ int	checks(char **splitted)
 	return (1);
 }
 
-int	free_splitted(char **splitted)
+int	count_splitted(char **splitted)
+{
+	int	count;
+
+	count = 0;
+	while (splitted[count])
+		count++;
+	return (count);
+}
+
+int	free_splitted(char **splitted, int code)
 {
 	int	counter;
 
-	counter = 0;
-	while (splitted[counter])
-		counter++;
+	counter = count_splitted(splitted);
+	if (!splitted || !*splitted)
+		return (code);
 	free_map(splitted, counter);
-	return (1);
+	return (code);
 }
 
 int	fill_values(char **splitted, t_game *game)
@@ -190,31 +200,16 @@ int	fill_values(char **splitted, t_game *game)
 
 	counter = 0;
 	if (!(res = get_value(splitted, "R ")))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
-	if (!(game->image->width = ft_atoi(res)) && free_splitted(splitted))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
+	if (!(game->image->width = ft_atoi(res)))
+		return (free_splitted(splitted, 0));
 	if (!ft_isdigit(res[get_nbr_length(game->image->width) + 2]))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
 	res += get_nbr_length(game->image->width);
 	if (!(game->image->height = ft_atoi(res)))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
 	if ((game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
 	if (!(load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "))) ||
 		!(load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "))) ||
 		!(load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "))) ||
@@ -222,36 +217,22 @@ int	fill_values(char **splitted, t_game *game)
 		!(load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "S "))) ||
 		(game->map->tex.floor_color = get_value(splitted, "F ")) == NULL ||
 		(game->map->tex.sky_color = get_value(splitted, "C ")) == NULL)
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
 	if (!(floor_split = ft_split(game->map->tex.floor_color, ",")))
-	{
-		free_splitted(splitted);
-		return (0);
-	}
+		return (free_splitted(splitted, 0));
 	if (!(sky_split = ft_split(game->map->tex.sky_color, ",")))
+		return (free_splitted(splitted, 0));
+	if ((count_splitted(floor_split) < 3) || (count_splitted(sky_split) < 3))
 	{
-		free_splitted(splitted);
-		return (0);
-	}
-	if ((!(floor_split[0] && floor_split[1] && floor_split[2]) || !(sky_split[0] && sky_split[1] && sky_split[2])))
-	{
-		free_splitted(splitted);
+		free_splitted(floor_split, 1);
+		free_splitted(sky_split, 1);
 		return (0);
 	}
 	game->map->floor_color = convertRGB(ft_atoi(floor_split[0]), ft_atoi(floor_split[1]), ft_atoi(floor_split[2]));
 	game->map->sky_color = convertRGB(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
-	while (counter < 3)
-	{
-		free(sky_split[counter]);
-		free(floor_split[counter]);
-		counter++;
-	}
-	free(sky_split);
-	free(floor_split);
-	free_splitted(splitted);
+	free_splitted(splitted, 1);
+	free_splitted(floor_split, 1);
+	free_splitted(sky_split, 1);
 	game->map->tex.wall_color = 0x474347;
 	game->map->tex.void_color = 0xFFFFFF;
 	game->map->tex.p_color = 0x4749FF;
@@ -272,12 +253,12 @@ int	fill_map(char *map_name, t_game *game)
 	if (!(splitted = ft_split(content, "\n")))
 		return (0);
 	free(content);
-	if (!checks(splitted))
-		return (0);
 	if (!get_only_map(splitted, game->map))
-		return (0);
+		return (free_splitted(splitted, 0));
+	if (!checks(splitted))
+		return (free_splitted(splitted, 0));
 	if (!ft_stronly("1", game->map->map[0]) || !ft_stronly("1", game->map->map[game->map->lines - 1]))
-		return (0);
+		return (free_splitted(splitted, 0));
 	while (game->map->map[index])
 	{
 		if (game->map->map[index][0] != '1' || game->map->map[index][ft_strlen(game->map->map[index]) - 1] != '1')
@@ -285,7 +266,7 @@ int	fill_map(char *map_name, t_game *game)
 		index++;
 	}
 	if (!fill_values(splitted, game))
-		return (0);
+		return (free_splitted(splitted, 0));
 	//printf("res : width %d height %d\n", data->width, data->height);
 	return (1);
 }
