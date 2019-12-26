@@ -13,40 +13,40 @@
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 
-typedef struct			s_rgba
+typedef struct	s_rgba
 {
-	uint8_t	b;
-	uint8_t	g;
-	uint8_t	r;
-	uint8_t	a;
-}						t_rgba;
-typedef union			u_color
+	uint8_t		b;
+	uint8_t		g;
+	uint8_t		r;
+	uint8_t		a;
+}				t_rgba;
+typedef union	u_color
 {
-    int            value;
-    t_rgba        rgba;
-}                    t_color;
-typedef struct			s_image
+	int			value;
+	t_rgba		rgba;
+}				t_color;
+typedef struct	s_image
 {
-    void	*image;
-    char	*ptr;
-    int		bpp;
-    int		stride;
-    int		endian;
-    int		width;
-    int		height;
-}						t_image;
-typedef struct		s_vector
+	void		*image;
+	char		*ptr;
+	int			bpp;
+	int			stride;
+	int			endian;
+	int			width;
+	int			height;
+}				t_image;
+typedef struct	s_vector
 {
-	float	x;
-	float	y;
-}					t_vector;
-typedef struct		s_form
+	float		x;
+	float		y;
+} 				t_vector;
+typedef struct	s_form
 {
-	t_vector	*dim;
-	t_vector	*vector;
+	t_vector	dim;
+	t_vector	vector;
 	int			color;
-}					t_form;
-typedef struct		s_tex
+}				t_form;
+typedef struct	s_tex
 {
 	t_image		*no_tex;
 	t_image		*so_tex;
@@ -61,27 +61,27 @@ typedef struct		s_tex
 	int			void_color;
 	int			p_color;
 	int			size;
-}					t_tex;
-typedef struct		s_map
+}				t_tex;
+typedef struct	s_map
 {
 	char		**map;
 	int			lines;
 	float		spawn_yaw;
 	int			sky_color;
 	int			floor_color;
-	t_vector	*spawn;
+	t_vector	spawn;
 	t_tex		tex;
-}					t_map;
-typedef struct		s_player
+}				t_map;
+typedef struct	s_player
 {
-	t_vector	*pos;
-	int			yaw;
-	float		speed;
-	int			rot_speed;
-	float		health;
-	float		size;
-}					t_player;
-typedef struct		s_game
+	t_vector pos;
+	int yaw;
+	float speed;
+	int rot_speed;
+	float health;
+	float size;
+}				t_player;
+typedef struct	s_game
 {
 	void		*ptr;
 	void		*win;
@@ -90,5 +90,5 @@ typedef struct		s_game
 	t_image		*image;
 	int			save_first_image;
 	int			disable_map;
-}					t_game;
+}				t_game;
 #endif

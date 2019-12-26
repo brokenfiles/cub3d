@@ -55,9 +55,9 @@ int	get_position(char **map, t_player *p, t_game *game)
 		{
 			if (ft_strchr("WENS", map[index][index2]))
 			{
-				game->map->spawn = init_vector(index, index2);
-				p->pos->y = index;
-				p->pos->x = index2;
+				game->map->spawn = vector(index, index2);
+				p->pos.y = index;
+				p->pos.x = index2;
 				p->yaw = 90.0;
 				p->yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
 				p->yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
@@ -97,6 +97,8 @@ int		get_map_line(char **splitted)
 
 	index = 0;
 	counter = 0;
+	if (!splitted)
+		return (-1);
 	while (splitted[index])
 	{
 		if (ft_stronly("120WENS", splitted[index]))
@@ -104,17 +106,6 @@ int		get_map_line(char **splitted)
 		index++;
 	}
 	return (counter);
-}
-
-int	free_map(char **map, int counter)
-{
-	while (counter > 0)
-	{
-		free(map[counter]);
-		counter--;
-	}
-	free(map);
-	return (0);
 }
 
 int	get_only_map(char **splitted, t_map *map)
@@ -179,38 +170,88 @@ int	checks(char **splitted)
 	return (1);
 }
 
+int	free_splitted(char **splitted)
+{
+	int	counter;
+
+	counter = 0;
+	while (splitted[counter])
+		counter++;
+	free_map(splitted, counter);
+	return (1);
+}
+
 int	fill_values(char **splitted, t_game *game)
 {
 	char	*res;
 	char	**floor_split;
 	char	**sky_split;
+	int		counter;
 
+	counter = 0;
 	if (!(res = get_value(splitted, "R ")))
+	{
+		free_splitted(splitted);
 		return (0);
-	if (!(game->image->width = ft_atoi(res)))
+	}
+	if (!(game->image->width = ft_atoi(res)) && free_splitted(splitted))
+	{
+		free_splitted(splitted);
 		return (0);
-	if (!res[get_nbr_length(game->image->width)])
+	}
+	if (!ft_isdigit(res[get_nbr_length(game->image->width) + 2]))
+	{
+		free_splitted(splitted);
 		return (0);
+	}
 	res += get_nbr_length(game->image->width);
 	if (!(game->image->height = ft_atoi(res)))
+	{
+		free_splitted(splitted);
 		return (0);
-	if (game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT)
+	}
+	if ((game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT))
+	{
+		free_splitted(splitted);
 		return (0);
+	}
 	if (!(load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "))) ||
 		!(load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "))) ||
 		!(load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "))) ||
 		!(load_tex(game, &game->map->tex.ea_tex, get_value(splitted, "EA "))) ||
 		!(load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "S "))) ||
-		!(game->map->tex.floor_color = get_value(splitted, "F ")) ||
-		!(game->map->tex.sky_color = get_value(splitted, "C ")))
+		(game->map->tex.floor_color = get_value(splitted, "F ")) == NULL ||
+		(game->map->tex.sky_color = get_value(splitted, "C ")) == NULL)
+	{
+		free_splitted(splitted);
 		return (0);
-	floor_split = ft_split(game->map->tex.floor_color, ",");
-	sky_split = ft_split(game->map->tex.sky_color, ",");
-	//TODO: check split
+	}
+	if (!(floor_split = ft_split(game->map->tex.floor_color, ",")))
+	{
+		free_splitted(splitted);
+		return (0);
+	}
+	if (!(sky_split = ft_split(game->map->tex.sky_color, ",")))
+	{
+		free_splitted(splitted);
+		return (0);
+	}
+	if ((!(floor_split[0] && floor_split[1] && floor_split[2]) || !(sky_split[0] && sky_split[1] && sky_split[2])))
+	{
+		free_splitted(splitted);
+		return (0);
+	}
 	game->map->floor_color = convertRGB(ft_atoi(floor_split[0]), ft_atoi(floor_split[1]), ft_atoi(floor_split[2]));
 	game->map->sky_color = convertRGB(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
-	free(floor_split);
+	while (counter < 3)
+	{
+		free(sky_split[counter]);
+		free(floor_split[counter]);
+		counter++;
+	}
 	free(sky_split);
+	free(floor_split);
+	free_splitted(splitted);
 	game->map->tex.wall_color = 0x474347;
 	game->map->tex.void_color = 0xFFFFFF;
 	game->map->tex.p_color = 0x4749FF;
@@ -230,6 +271,7 @@ int	fill_map(char *map_name, t_game *game)
 		return (0);
 	if (!(splitted = ft_split(content, "\n")))
 		return (0);
+	free(content);
 	if (!checks(splitted))
 		return (0);
 	if (!get_only_map(splitted, game->map))

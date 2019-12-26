@@ -12,20 +12,62 @@
 
 #include "../includes/cub3d.h"
 
-void	ft_puterror(char *s)
+void ft_puterror(char *s)
 {
 	while (*s)
 		write(2, &*(s++), 1);
 }
 
-int	quit(int code, char *message)
+int free_map(char **map, int counter)
 {
+	while (counter >= 0)
+	{
+		if (map[counter])
+			free(map[counter]);
+		counter--;
+	}
+	free(map);
+	return (0);
+}
+
+int quit(t_game *game, int code, char *message)
+{
+	int index;
+
+	index = 0;
 	if (code == EXIT_FAILURE)
 	{
 		ft_puterror("Error: ");
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
+	if (game && game->p)
+		free(game->p);
+	if (game && game->image)
+		free(game->image);
+	if (game && game->ptr)
+		free(game->ptr);
+	if (game && game->win)
+		free(game->win);
+//	if (game && game->map->tex.sp_tex)
+//		free(game->map->tex.sp_tex);
+//	if (game && game->map->tex.ea_tex)
+//		free(game->map->tex.ea_tex);
+//	if (game && game->map)
+//		free(game->map->tex.we_tex);
+//	if (game && game->map)
+//		free(game->map->tex.so_tex);
+//	if (game && game->map)
+//		free(game->map->tex.no_tex);
+//	if (game && game->map->map != NULL)
+//	{
+//		while (game->map->map[index])
+//			index++;
+//		free_map(game->map->map, index);
+//	}
+	if (game)
+		free(game);
+//	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

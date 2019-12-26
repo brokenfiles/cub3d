@@ -18,9 +18,9 @@ void		move_player(t_game *game, int sign)
 	int	y;
 	int	b;
 
-	y = (int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
+	y = (int)(game->p->pos.y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
 															 * (float) (2 * M_PI)));
-	x = (int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0)
+	x = (int)(game->p->pos.x + sign * game->p->speed * cos((game->p->yaw / 360.0)
 															* (float) (2 * M_PI)));
 	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S');
 	if (game->map->map[y][x] && !(b))
@@ -29,8 +29,8 @@ void		move_player(t_game *game, int sign)
 		if (game->p->health <= 0)
 		{
 			printf("Tu es mort.\n");
-			game->p->pos->x = game->map->spawn->y;
-			game->p->pos->y = game->map->spawn->x;
+			game->p->pos.x = game->map->spawn.y;
+			game->p->pos.y = game->map->spawn.x;
 			game->p->yaw = game->map->spawn_yaw;
 			game->p->health = 100;
 		}
@@ -38,8 +38,8 @@ void		move_player(t_game *game, int sign)
 	}
 	if (b)
 	{
-		game->p->pos->x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
-		game->p->pos->y += -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		game->p->pos.x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		game->p->pos.y += -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
 	}
 }
 
@@ -51,24 +51,22 @@ int			direction_change(t_player *player, float inc)
 	return (1);
 }
 
-t_vector	*rotation_matrice(t_tex tex, t_player *player, int x, int y)
+t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y)
 {
-	t_vector *vector;
+	t_vector vector;
 	float alpha;
 	float c;
 	float s;
 
-	alpha = (player->yaw / 360.0) * (float) (2 * M_PI);
+	alpha = (game->p->yaw / 360.0) * (float) (2 * M_PI);
 	c = cos(alpha);
 	s = sin(alpha);
-	if (!(vector = malloc(sizeof(t_vector))))
-		return (NULL);
-	vector->x = (x - tex.size * player->pos->x) * c +
-				(y - tex.size * player->pos->y) * s +
-				tex.size * player->pos->x;
-	vector->y = -(x - tex.size * player->pos->x) * s +
-				(y - tex.size * player->pos->y) * c +
-				tex.size * player->pos->y;
+	vector.x = (x - (game->image->width / 240) * game->p->pos.x) * c +
+				(y - (game->image->width / 240) * game->p->pos.y) * s +
+			game->image->width / 240 * game->p->pos.x;
+	vector.y = -(x - (game->image->width / 240) * game->p->pos.x) * s +
+				(y - (game->image->width / 240) * game->p->pos.y) * c +
+			(game->image->width / 240) * game->p->pos.y;
 	return (vector);
 }
 
@@ -80,9 +78,9 @@ int			handle_key(int key, void *param)
 	game = (t_game *)param;
 
 	if (last_key_code == 259 && key == 12)
-		exit(EXIT_SUCCESS);
+		quit(game, EXIT_SUCCESS, NULL);
 	if (key == K_ESC)
-		exit(EXIT_SUCCESS);
+		quit(game, EXIT_SUCCESS, NULL);
 	else if (key == K_UP || key == 13)
 		move_player(game, 1);
 	else if (key == K_DOWN || key == 1)
@@ -106,7 +104,7 @@ int			handle_key(int key, void *param)
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0)
 	{
 		if (!render(game))
-			return (quit(EXIT_FAILURE, "Rendering error."));
+			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 	}
 	last_key_code = key;
 	return (1);

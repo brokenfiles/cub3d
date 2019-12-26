@@ -14,32 +14,45 @@
 
 int	init_player(t_player *player)
 {
-	player->rot_speed = 7;
+	player->rot_speed = 5;
 	player->speed = 0.5;
 	player->health = 100;
 	player->size = 1;
 	return (1);
 }
 
-t_vector	*init_vector(float x, float y)
+t_game		*init_game()
 {
-	t_vector	*vector;
+	t_game	*game;
 
-	if (!(vector = malloc(sizeof(t_vector))))
+	if (!(game = malloc(sizeof(struct s_game))))
 		return (NULL);
-	vector->x = x;
-	vector->y = y;
+	if (!(game->image = malloc(sizeof(struct s_image))))
+		return (NULL);
+	game->ptr = NULL;
+	if (!(game->p = malloc(sizeof(struct s_player))))
+		return (NULL);
+	if (!(game->map = malloc(sizeof(struct s_map))))
+		return (NULL);
+	game->win = NULL;
+	return (game);
+}
+
+t_vector	vector(float x, float y)
+{
+	t_vector	vector;
+
+	vector.x = x;
+	vector.y = y;
 	return (vector);
 }
 
-t_form	*init_form(t_vector *vector, t_vector *dim, int color)
+t_form	form(t_vector vector, t_vector dim, int color)
 {
-	t_form	*form;
+	t_form	form;
 
-	if (!(form = malloc(sizeof(t_form))))
-		return (NULL);
-	form->dim = dim;
-	form->vector = vector;
-	form->color = color;
+	form.dim = dim;
+	form.vector = vector;
+	form.color = color;
 	return (form);
 }

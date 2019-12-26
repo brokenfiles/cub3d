@@ -45,8 +45,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 $(NAME):	${OBJS} ${SRCSH}
 			@${CC} ${OBJS} -L ./ -lmlx -framework AppKit -framework OpenGL -o ${NAME}
-			@echo "\033[1;32m"
-			@echo "┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
+			@echo "\033[1;32m┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
 			@echo "└─┐│ ││  │  ├┤ └─┐└─┐"
 			@echo "└─┘└─┘└─┘└─┘└─┘└─┘└─┘"
 			@echo "${NAME} generated successfully.\033[0;0m"
