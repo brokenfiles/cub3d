@@ -18,6 +18,7 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_atoi.c\
 				libs/libft/ft_isdigit.c\
 				libs/libft/ft_strjoin.c\
+				libs/libft/ft_isascii.c\
 				libs/libft/ft_strlen.c\
 				libs/libft/ft_strcpy.c\
 				libs/libft/ft_strdup.c\

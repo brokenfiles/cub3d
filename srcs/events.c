@@ -16,14 +16,14 @@ void		move_player(t_game *game, int sign)
 {
 	int	x;
 	int	y;
+	int	b;
 
 	y = (int)(game->p->pos->y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
 															 * (float) (2 * M_PI)));
 	x = (int)(game->p->pos->x + sign * game->p->speed * cos((game->p->yaw / 360.0)
 															* (float) (2 * M_PI)));
-	if (!game->map->map[y][x])
-		return ;
-	if (game->map->map[y][x] && game->map->map[y][x] == '1')
+	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S');
+	if (game->map->map[y][x] && !(b))
 	{
 		game->p->health -= 2;
 		if (game->p->health <= 0)
@@ -36,8 +36,11 @@ void		move_player(t_game *game, int sign)
 		}
 		return ;
 	}
-	game->p->pos->x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
-	game->p->pos->y += -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
+	if (b)
+	{
+		game->p->pos->x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		game->p->pos->y += -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
+	}
 }
 
 int			direction_change(t_player *player, float inc)

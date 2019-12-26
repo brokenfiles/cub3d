@@ -243,10 +243,17 @@ t_vector next_hit(t_map *map, t_vector *p, float teta, int *wall, t_game *game)
 	if (!map->map[(int)p->y][(int)p->x])
 		return (res);
 	res = next_inter(p, *p, teta, wall, game);
+	if (res.x == 0 && res.y == 0)
+		return (res);
 	hit_y = (int)(res.y - (p->y > res.y && res.y == (int)res.y ? 0.0001 : 0));
 	hit_x = (int)(res.x - (p->x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 	while (map->map[hit_y][hit_x] && map->map[hit_y][hit_x] != '1')
 	{
+		if (!ft_strchr("WENS01", map->map[hit_y][hit_x]))
+		{
+			quit(EXIT_FAILURE, "Rendering error. (428)");
+			return (res);
+		}
 		res = next_inter(p, res, teta, wall, game);
 		number++;
 		if (number > 1000)
