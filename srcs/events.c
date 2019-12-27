@@ -59,14 +59,14 @@ t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y)
 	float		s;
 
 	alpha = (game->p->yaw / 360.0) * (float) (2 * M_PI);
-	c = cos(alpha);
-	s = sin(alpha);
-	vector.x = (x - (game->image->width / 240) * game->p->pos.x) * c +
-				(y - (game->image->width / 240) * game->p->pos.y) * s +
-			game->image->width / 240 * game->p->pos.x;
-	vector.y = -(x - (game->image->width / 240) * game->p->pos.x) * s +
-				(y - (game->image->width / 240) * game->p->pos.y) * c +
-			(game->image->width / 240) * game->p->pos.y;
+	c = -cos(alpha);
+	s = -sin(alpha);
+	vector.x = (x - (game->image->width / MAP_SIZE) * game->p->pos.x) * c +
+				(y - (game->image->width / MAP_SIZE) * game->p->pos.y) * s +
+			game->image->width / MAP_SIZE * game->p->pos.x;
+	vector.y = -(x - (game->image->width / MAP_SIZE) * game->p->pos.x) * s +
+				(y - (game->image->width / MAP_SIZE) * game->p->pos.y) * c +
+			(game->image->width / MAP_SIZE) * game->p->pos.y;
 	return (vector);
 }
 

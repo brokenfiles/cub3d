@@ -28,6 +28,7 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_stronly.c\
 				srcs/events.c\
 				srcs/display.c\
+				srcs/display_2.c\
 				srcs/errors.c\
 				srcs/texture.c\
 				srcs/images.c\

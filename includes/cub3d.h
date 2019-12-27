@@ -29,6 +29,8 @@
 # define EAST 0
 # define WEST 180
 # define SOUTH -90
+# define MAP_SIZE 190
+# define MINIMAP_PLAYER_COLOR 0xA896FF
 # define AIM_HEIGHT 25
 # define AIM_WIDTH 2
 # define AIM_COLOR 0xFFFFFF
@@ -54,6 +56,9 @@ void		image_set_pixel(t_image *image, int x, int y, int color);
 t_image		*del_image(t_game *game, t_image *img);
 t_image		*new_image(t_game *game, int w, int h);
 t_color		c(int v);
+int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
+int			test_line(t_game *game, t_form form, float x_inter, int wall, float dist);
+int			display_aim(t_game *game);
 int			ft_lerpi(int first, int second, double p);
 t_color		clerp(t_color c1, t_color c2, double p);
 t_color		get_pixel(t_image *image, int x, int y);
@@ -62,6 +67,7 @@ t_image		*load_tex(t_game *game, t_image **image, char *tex);
 int 		convertRGB(int R, int G, int B);
 int			handle_key(int key, void *param);
 int			display_tri(t_game *game, t_form form);
+int			display_circle(t_game *game, t_form circle, float thick);
 int 		display_rec(t_game *game, t_form form, t_image **image);
 int			display_map(t_game *game, t_image **image);
 int			update_map(t_game *game);

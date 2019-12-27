@@ -12,136 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-/**
- * display pixel but DEPRECIATED!
- * @deprecated
- * @param t_data data
- * @param t_vector vector
- * @param int color
- */
-void display_pixel(t_game *game, t_vector vector, int color)
-{
-	mlx_pixel_put(game->ptr, game->win, vector.x, vector.y, color);
-}
-
-/**
- * used to display a triangle
- * TODO: change pixelput to images
- * @deprecated for now
- * @param t_data data
- * @param t_player player
- * @param t_triangle triangle
- * @return int (1 = success, 0 = fail)
- */
-int display_tri(t_game *game, t_form form)
-{
-	int y;
-	int x;
-	x = form.vector.x;
-	y = form.vector.y;
-	while (x >= form.vector.x - form.dim.x)
-	{
-		y = form.vector.y - (form.vector.x - x) / 3;
-		while (y <= form.vector.y + (form.vector.x - x) / 3)
-		{
-			display_pixel(game, rotation_matrice(game->map->tex, game, x, y), form.color);
-			y++;
-		}
-		x--;
-	}
-	return (1);
-}
-
-/**
- * used to display a rectangle but with images
- * //TODO: define pixel color using the tex
- * @apprecieted
- * @param t_game game
- * @param t_rectangle rectangle
- * @return int (1 = success, 0 = fail)
- */
-int display_rec(t_game *game, t_form form, t_image **image)
-{
-	int y;
-	int x;
-
-	x = form.vector.x;
-	while (form.vector.x + form.dim.x > x)
-	{
-		y = form.vector.y;
-		while (form.vector.y + form.dim.y > y)
-		{
-			image_set_pixel(*image, x, y, form.color);
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
-int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
-{
-	float k;
-	float c;
-
-	k = (float) (nmax - nmin) / (ymax - ymin);
-	c = (float) nmin - (float) k * ymin;
-	return ((k * y + c));
-}
-
-int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
-{
-	int		y;
-	int		x;
-	float	x_im;
-	float	y_im;
-	int color;
-	t_image *tex;
-
-	if (wall == 1)
-		tex = game->map->tex.we_tex;
-	if (wall == 2)
-		tex = game->map->tex.no_tex;
-	if (wall == 3)
-		tex = game->map->tex.ea_tex;
-	if (wall == 4)
-		tex = game->map->tex.so_tex;
-	x = form.vector.x;
-	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
-	while (form.vector.x + form.dim.x > x)
-	{
-		y = 0;
-		while (game->image->height > y)
-		{
-			y_im = ft_scale(form.vector.y - (form.dim.y / 2),
-							form.vector.y + (form.dim.y / 2), 0, tex->height, y);
-			if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
-			{
-				dist = 255 / (255 / dist);
-				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
-			}
-			else
-			{
-				if (y > game->image->height / 2)
-					color = game->map->floor_color;
-				else
-					color = game->map->sky_color;
-			}
-			image_set_pixel(game->image, x, y, color);
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
-int		display_aim(t_game *game)
-{
-	display_rec(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT + AIM_WIDTH / 2), vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
-	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2, game->image->height / 2 - AIM_HEIGHT / 2), vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
-	return (1);
-}
-
 float sq_dist(t_vector origin, t_vector point)
 {
 	return (pow(point.x - origin.x, 2) + pow(point.y - origin.y, 2));
@@ -258,14 +128,18 @@ int				render(t_game *game)
 	if (!game->disable_map)
 		display_map(game, &game->image);
 	display_aim(game);
-	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 	if (!game->disable_map)
-		display_tri(game, form(vector((game->image->width / 240) * game->p->pos.x, (game->image->width / 240) * game->p->pos.y), vector(game->image->width / 240, game->image->width / 240), game->map->tex.p_color));
+	{
+		display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3), MINIMAP_PLAYER_COLOR));
+		display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2), MINIMAP_PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
+		image_set_pixel(game->image, (game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y, 0xFF4A25);
+	}
+	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 	if (game->save_first_image)
 	{
 		game->save_first_image = 0;
 		if (!save_bitmap(game, "screenshot.bmp"))
-			return (0);
+			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 	}
 	return (1);
 }
@@ -289,9 +163,13 @@ int display_map(t_game *game, t_image **image)
 		while (game->map->map[y][x])
 		{
 			display_rec(game, form(
-					vector(game->image->width / 240 * x, game->image->width / 240 * y),
-					vector(game->image->width / 240, game->image->width / 240),
+					vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
+					vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE),
 					game->map->map[y][x] == '1' ? game->map->tex.wall_color : game->map->tex.void_color), image);
+			if (!ft_strchr("WENS01", game->map->map[y][x]))
+				display_circle(game, form(vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
+						vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE), 0xFF2B12),
+								game->image->width / MAP_SIZE);
 			x++;
 		}
 		y++;
