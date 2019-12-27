@@ -69,7 +69,7 @@ rc:			re
 %:
 	@:
 
-args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
+args = `arg="maps/$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 
 run: ${NAME}
 	@make clean

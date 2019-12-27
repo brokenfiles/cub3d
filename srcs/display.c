@@ -110,14 +110,6 @@ int				render(t_game *game)
 		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		if (wall == 1)
-			color = 0xFFFF00;
-		else if (wall == 2)
-			color = 0x00FFFF;
-		else if (wall == 3)
-			color = 0xFF00FF;
-		else if (wall == 4)
-			color = 0x0FFF0F;
 		dist = (float)sqrt(sq_dist(game->p->pos, hit));
 		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
@@ -176,40 +168,5 @@ int display_map(t_game *game, t_image **image)
 	}
 	return (1);
 }
-
-/**
- * display a centered line
- * //TODO: define pixel color using the tex
- * @param t_game game
- * @param t_rectangle rectangle
- * @return int (1 = success, 0 = fail)
- */
-int centered_line(t_game *game, t_form form)
-{
-	int		y;
-	int		x;
-	float	x_im;
-	float	y_im;
-
-	x = form.vector.x;
-
-	x_im = 0;
-	while (form.vector.x + form.dim.x > x)
-	{
-		y = form.vector.y - (form.dim.y / 2);
-		while (form.vector.y + (form.dim.y / 2) > y)
-		{
-			y_im = ft_scale(form.vector.y - (form.dim.y / 2),
-							form.vector.y + (form.dim.y / 2), 0, game->map->tex.we_tex->height, y);
-			image_set_pixel(game->image, x, y, form.color);//convertRGB(get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.r,
-												//		  get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.g,
-												//		  get_pixel(game->map->tex.we_tex, x_im, y_im).rgba.b));
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
 
 
