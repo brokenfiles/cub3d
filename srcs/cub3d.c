@@ -37,7 +37,11 @@ int		main(int ac, char **av, char **env)
 	}
 	if (ac == 4)
 		if (ft_strcmp(av[3], ARGUMENT_DISABLE_MAP) == 0)
+		{
+			if (ft_strcmp(av[2], ARGUMENT_SAVE) == 0)
+				game->save_first_image = 1;
 			game->disable_map = 1;
+		}
 	if (!(game->p = malloc(sizeof(struct s_player))))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_ALLOCATE_PLAYER_ERROR));
 	if (!(game->ptr = mlx_init()))

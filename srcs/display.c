@@ -86,7 +86,7 @@ int		display_lifebar(t_game *game)
 	int	color;
 
 	color = convertRGB(150, 255 / (100 / game->p->health), 55);
-	percent = ((game->image->width / 2 - 20) / (100 / game->p->health));
+	percent = ((game->image->width / 2 - 20) / (100 / game->p->health)); // je calcule un pourcentage responsive
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4), game->image->height - 60), vector(game->image->width / 2 , 50), 0xFFFBBC), &game->image);
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 55), vector(percent, 40), color), &game->image);
 	return (1);
@@ -103,7 +103,7 @@ int				render(t_game *game)
 	int color;
 
 	x = 0;
-	angle = game->image->width * 0.020833333;
+	angle = game->image->width * 0.020833333; //0.020833333 responsive, c'est la division qui permet d'avoir un angle toujours à peu près bon pour que le rendu soit carré
 	angle_copy = angle;
 	while (angle > -angle_copy)
 	{

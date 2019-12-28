@@ -61,12 +61,15 @@ int quit(t_game *game, int code, char *message)
 //		free(game->map->tex.so_tex);
 //	if (game && game->map)
 //		free(game->map->tex.no_tex);
-	while (game && game->map->map[index])
-		index++;
-	if (game)
-		free_map(game->map->map, index);
-	if (game)
-		free(game);
+
+
+//TODO: unmute that shit
+//	while (game && game->map->map[index])
+//		index++;
+//	if (game)
+//		free_map(game->map->map, index);
+//	if (game)
+//		free(game);
 //	system("leaks cub3d");
 	exit(code);
 	return (code);
