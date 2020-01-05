@@ -22,7 +22,9 @@ void		move_player(t_game *game, int sign)
 															 * (float) (2 * M_PI)));
 	x = (int)(game->p->pos.x + sign * game->p->speed * cos((game->p->yaw / 360.0)
 															* (float) (2 * M_PI)));
-	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S');
+	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S' || game->map->map[y][x] == '3');
+	if (game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] == '3' && game->map->map[y][x] != '3')
+		game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] = '2';
 	if (game->map->map[y][x] && !(b))
 	{
 		game->p->health -= 2;
@@ -95,7 +97,7 @@ int			handle_key(int key, void *param)
 																* (float) (2 * M_PI)));
 			if (game->map->map[y][x] == '2')
 			{
-				game->map->map[y][x] = '0';
+				game->map->map[y][x] = '3';
 				render(game);
 			}
 			index--;

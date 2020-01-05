@@ -60,9 +60,9 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game)
 		return (res);
 	hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
 	hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
-	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] == '0' || game->map->map[hit_y][hit_x] == 'W' || game->map->map[hit_y][hit_x] == 'E' || game->map->map[hit_y][hit_x] == 'N' || game->map->map[hit_y][hit_x] == 'S'))
+	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] == '0' || game->map->map[hit_y][hit_x] == 'W' || game->map->map[hit_y][hit_x] == 'E' || game->map->map[hit_y][hit_x] == 'N' || game->map->map[hit_y][hit_x] == 'S' || game->map->map[hit_y][hit_x] == '3'))
 	{
-		if (!ft_strchr("WENS01", map->map[hit_y][hit_x]))
+		if (!ft_strchr("WENS013", map->map[hit_y][hit_x]))
 		{
 			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_428);
 			return (res);
