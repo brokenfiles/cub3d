@@ -110,6 +110,60 @@ int		display_lifebar(t_game *game)
 	return (1);
 }
 
+// TRY CAST_FLOOR BUGGED
+/*int     cast_floor(t_game *game)
+{
+	float rayDirX0;
+	float rayDirY0;
+	float rayDirX1;
+	float rayDirY1;
+	int p;
+	float posZ;
+	float rowDistance;
+	float floorStepX;
+	float floorStepY;
+	float floorX;
+	float floorY;
+	int cellX;
+	int cellY;
+	int tx;
+	int ty;
+	int color;
+	int y;
+	int x;
+	x = 0;
+	y = 0;
+	while (y < game->image->height)
+	{
+		rayDirX0 = 1 * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		rayDirY0 = -1 * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		rayDirX1 = -1 * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		rayDirY1 = 1 * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
+		p = y - game->image->height / 2;
+		posZ = 0.5f * game->image->height;
+		rowDistance = posZ / p;
+		floorStepX = rowDistance * (rayDirX1 - rayDirX0) / game->image->width;
+		floorStepY = rowDistance * (rayDirY1 - rayDirY0) / game->image->width;
+		floorX = game->p->pos.x + rowDistance * rayDirX0;
+		floorY = game->p->pos.y + rowDistance * rayDirY0;
+		x = 0;
+		while (++x < game->image->width)
+		{
+			cellX = (int)(floorX);
+			cellY = (int)(floorY);
+			tx = (int)(game->map->tex.sp_tex->width * (floorX - cellX)) & (game->map->tex.sp_tex->width - 1);
+			ty = (int)(game->map->tex.sp_tex->height * (floorY - cellY)) & (game->map->tex.sp_tex->height - 1);
+			floorX += floorStepX;
+			floorY += floorStepY;
+			color = get_pixel(game->map->tex.sp_tex, tx, ty).value;
+			image_set_pixel(game->image, x, y, color);
+//			color = data->tex->add_tex_tf[data->tex->img_width_tf * ty + tx];
+//			data->image->img_data[y * data->info->width + x] = color;
+		}
+		y++;
+	}
+}*/
+
 int				render(t_game *game)
 {
 	t_vector hit;
@@ -123,6 +177,7 @@ int				render(t_game *game)
 	x = 0;
 	angle = game->image->width * 0.020833333; //0.020833333 responsive, c'est la division qui permet d'avoir un angle toujours à peu près bon pour que le rendu soit carré
 	angle_copy = angle;
+//	cast_floor(game);
 	while (angle > -angle_copy)
 	{
 		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);

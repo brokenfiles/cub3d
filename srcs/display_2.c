@@ -152,6 +152,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 			{
 				dist = 255 / (255 / dist);
 				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
+//				image_set_pixel(game->image, x, y, color);
 			}
 			else
 			{
