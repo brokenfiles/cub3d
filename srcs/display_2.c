@@ -68,6 +68,25 @@ int display_rec(t_game *game, t_form form, t_image **image)
 	return (1);
 }
 
+int display_rec_trans(t_game *game, t_form form, t_image **image)
+{
+	int y;
+	int x;
+
+	x = form.vector.x;
+	while (form.vector.x + form.dim.x > x)
+	{
+		y = form.vector.y;
+		while (form.vector.y + form.dim.y > y)
+		{
+			set_pixel_transparent(game, vector(x, y), c(form.color), 100);
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
+
 int		display_circle(t_game *game, t_form circle, float thick)
 {
 	float	dist;
@@ -118,6 +137,8 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		tex = game->map->tex.ea_tex;
 	if (wall == 4)
 		tex = game->map->tex.so_tex;
+	if (wall == 6)
+		tex = game->map->tex.sp_tex;
 	x = form.vector.x;
 	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
 	while (form.vector.x + form.dim.x > x)

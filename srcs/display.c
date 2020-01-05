@@ -76,8 +76,24 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game)
 		}
 		hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
 		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+		if (map->map[hit_y][hit_x] == '2')
+		{
+			*wall = 6;
+		}
 	}
 	return (res);
+}
+
+int		set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alpha)
+{
+	t_color	last_pixel;
+
+	last_pixel = get_pixel(game->image, pos.x, pos.y);
+	last_pixel.rgba.r = ((alpha * last_pixel.rgba.r) / 255) + (((255 - alpha) * color.rgba.r) / 255);
+	last_pixel.rgba.g = ((alpha * last_pixel.rgba.g) / 255) + (((255 - alpha) * color.rgba.g) / 255);
+	last_pixel.rgba.b = ((alpha * last_pixel.rgba.b) / 255) + (((255 - alpha) * color.rgba.b) / 255);
+	image_set_pixel(game->image, pos.x, pos.y, last_pixel.value);
+	return (1);
 }
 
 int		display_lifebar(t_game *game)
@@ -89,6 +105,8 @@ int		display_lifebar(t_game *game)
 	percent = ((game->image->width / 2 - 20) / (100 / game->p->health)); // je calcule un pourcentage responsive
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4), game->image->height - 60), vector(game->image->width / 2 , 50), 0xFFFBBC), &game->image);
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 55), vector(percent, 40), color), &game->image);
+	percent = ((game->image->width / 2 - 20) / (float)((float)MAX_ROT_SPEED / (float)game->p->rot_speed));
+	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 20), vector(percent, 5), 0xD56DFF), &game->image);
 	return (1);
 }
 
@@ -154,7 +172,7 @@ int display_map(t_game *game, t_image **image)
 		x = 0;
 		while (game->map->map[y][x])
 		{
-			display_rec(game, form(
+			display_rec_trans(game, form(
 					vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
 					vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE),
 					game->map->map[y][x] == '1' ? game->map->tex.wall_color : game->map->tex.void_color), image);

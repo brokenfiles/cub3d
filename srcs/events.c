@@ -75,12 +75,32 @@ int			handle_key(int key, void *param)
 	static int	last_key_code;
 	t_game		*game;
 	int			wall;
+	int 		x;
+	int 		y;
+	int 		index;
 
+	index = 3;
 	game = (t_game *)param;
 	if (last_key_code == 259 && key == 12)
 		quit(game, EXIT_SUCCESS, NULL);
 	if (key == K_ESC)
 		quit(game, EXIT_SUCCESS, NULL);
+	if (key == 14)
+	{
+		while (index > 0)
+		{
+			y = (int)(game->p->pos.y + -1 * index * sin((game->p->yaw / 360.0)
+																 * (float) (2 * M_PI)));
+			x = (int)(game->p->pos.x + 1 * index * cos((game->p->yaw / 360.0)
+																* (float) (2 * M_PI)));
+			if (game->map->map[y][x] == '2')
+			{
+				game->map->map[y][x] = '0';
+				render(game);
+			}
+			index--;
+		}
+	}
 	else if (key == K_UP || key == 13)
 		move_player(game, 1);
 	else if (key == K_DOWN || key == 1)
@@ -101,7 +121,20 @@ int			handle_key(int key, void *param)
 	}
 	else if (key == K_RIGHT || key == 43)
 		direction_change(game->p, -game->p->rot_speed);
-	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0)
+	else if (key == 24)
+	{
+		if (game->p->rot_speed < MAX_ROT_SPEED)
+			game->p->rot_speed++;
+	}
+	else if (key == 27)
+	{
+		if (game->p->rot_speed > 1)
+			game->p->rot_speed--;
+	}
+	else if (key == 29)
+		game->p->rot_speed = 7;
+	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0 ||
+			key == 27 || key == 24 || key == 29)
 	{
 		if (!render(game))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));

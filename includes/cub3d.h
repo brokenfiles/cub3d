@@ -56,6 +56,8 @@ t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y);
 t_game		*init_game();
 int			render(t_game *game);
 int			centered_line(t_game *game, t_form form);
+int			display_rec_trans(t_game *game, t_form form, t_image **image);
+int			set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alpha);
 int			display_lifebar(t_game *game);
 int			save_bitmap(t_game *game, char *name);
 int			free_map(char **map, int counter);
