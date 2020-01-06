@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/06 15:55:24 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,8 @@ int	fill_values(char **splitted, t_game *game)
 		return (free_splitted(splitted, 0));
 	if ((game->image->width < MIN_WIDTH || game->image->height < MIN_HEIGHT))
 		return (free_splitted(splitted, 0));
+	game->image->width = game->image->width > MAX_WIDTH ? MAX_WIDTH : game->image->width;
+	game->image->height = game->image->height > MAX_HEIGHT ? MAX_HEIGHT : game->image->height;
 	if (!(load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "))) ||
 		!(load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "))) ||
 		!(load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "))) ||
@@ -217,7 +219,10 @@ int	fill_values(char **splitted, t_game *game)
 		!(load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "S "))) ||
 		(game->map->tex.floor_color = get_value(splitted, "F ")) == NULL ||
 		(game->map->tex.sky_color = get_value(splitted, "C ")) == NULL)
-		return (free_splitted(splitted, 0));
+	{
+		free_splitted(splitted, 0);
+		return (0);
+	}
 	if (!(floor_split = ft_split(game->map->tex.floor_color, ",")))
 		return (free_splitted(splitted, 0));
 	if (!(sky_split = ft_split(game->map->tex.sky_color, ",")))

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 11:12:38 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 13:15:16 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/06 09:52:50 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	write_data(int file, t_game *game, int step)
 		x = 0;
 		while (x < game->image->width)
 		{
-			color = convertRGB(get_pixel(game->image, x, y).rgba.r, get_pixel(game->image, x, y).rgba.g, get_pixel(game->image, x, y).rgba.b);
+			color = get_pixel(game->image, x, y).value;
 			if (write(file, &color, 3) < 0)
 				return (0);
 			if (step > 0 && write(file, &zero, step) < 0)

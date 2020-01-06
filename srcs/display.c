@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 15:54:20 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/06 14:56:07 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int				render(t_game *game)
 	int color;
 
 	x = 0;
-	angle = game->image->width * 0.020833333; //0.020833333 responsive, c'est la division qui permet d'avoir un angle toujours à peu près bon pour que le rendu soit carré
+	angle = game->image->width * (float)(1.0f / (game->image->height / 17));
 	angle_copy = angle;
 //	cast_floor(game);
 	while (angle > -angle_copy)

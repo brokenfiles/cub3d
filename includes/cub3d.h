@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 15:34:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/06 16:58:36 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "printf.h"
 # include "keys.h"
 # include "libft.h"
+# include "get_next_line.h"
 # include "structure.h"
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -61,4 +62,5 @@ int			set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alp
 int			display_lifebar(t_game *game);
 int			save_bitmap(t_game *game, char *name);
 int			free_map(char **map, int counter);
+int			parse_map(t_game *game, char *map_name);
 #endif

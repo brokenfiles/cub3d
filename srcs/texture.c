@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2019/12/16 13:05:46 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/06 09:52:50 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ t_image	*load_tex(t_game *game, t_image **image, char *tex)
 	t_image		*img;
 
 	if ((img = xpm_image(tex, game)) == NULL)
-	{
-		//free_tex(mlx);
 		return (0);
-	}
 	*image = img;
 	return (img);
 }

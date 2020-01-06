@@ -127,6 +127,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 	float	x_im;
 	float	y_im;
 	int color;
+	int		tex_height, c_1, c_2;
 	t_image *tex;
 
 	if (wall == 1)
@@ -141,17 +142,20 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		tex = game->map->tex.sp_tex;
 	x = form.vector.x;
 	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
+	tex_height = tex->height;
+	c_1 = form.vector.y - (form.dim.y / 2);
+	c_2 = form.vector.y + (form.dim.y / 2);
 	while (form.vector.x + form.dim.x > x)
 	{
 		y = 0;
 		while (game->image->height > y)
 		{
-			y_im = ft_scale(form.vector.y - (form.dim.y / 2),
-							form.vector.y + (form.dim.y / 2), 0, tex->height, y);
+			y_im = ft_scale(c_1, c_2, 0, tex_height, y);
 			if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
 			{
-				dist = 255 / (255 / dist);
-				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
+//				dist = 255 / (255 / dist);
+				color = get_pixel(tex, x_im, y_im).value;
+//				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
 //				image_set_pixel(game->image, x, y, color);
 			}
 			else
@@ -161,7 +165,8 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 				else
 					color = game->map->sky_color;
 			}
-			image_set_pixel(game->image, x, y, color);
+//			if (get_pixel(game->image, x, y).value != color)
+				image_set_pixel(game->image, x, y, color);
 			y++;
 		}
 		x++;

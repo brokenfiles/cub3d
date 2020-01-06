@@ -1,0 +1,3 @@
+- Votre programme doit être capable d’afficher un objet (sprite) au lieu d’un mur.
+- Si la taille de fenêtre demandée dans la map est plus grande que celle de l’écran, la taille de fenêtre doit être celle de l’écran.
+- Refaire le parsing

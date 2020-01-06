@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 15:34:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/06 14:05:40 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define									CUB3D_DEFINES_H
 # define MIN_WIDTH							500
 # define MIN_HEIGHT							500
+# define MAX_WIDTH							2560
+# define MAX_HEIGHT							1400
 # define NORTH								90
 # define EAST								0
 # define WEST								180
 # define SOUTH								-90
 # define MAX_ROT_SPEED						90
-# define MAP_SIZE							190
+# define MAP_SIZE							200
 # define MINIMAP_PLAYER_COLOR				0xA896FF
 # define AIM_HEIGHT							25
 # define AIM_WIDTH							2

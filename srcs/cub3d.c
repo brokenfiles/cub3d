@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2019/12/16 13:05:45 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/06 13:15:34 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int		main(int ac, char **av, char **env)
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_ALLOCATE_PLAYER_ERROR));
 	if (!(game->ptr = mlx_init()))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
-	if (!fill_map(av[1], game))
+	if (!parse_map(game, av[1]))
 		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
+//	if (!fill_map(av[1], game))
+//		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
 	if (!(game->win = mlx_new_window(game->ptr, game->image->width, game->image->height, GAME_NAME)))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
 	init_player(game->p);

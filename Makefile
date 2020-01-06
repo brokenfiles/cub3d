@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2019/12/16 14:08:30 by jchotel          ###   ########.fr        #
+#    Updated: 2020/01/06 16:54:11 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,15 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_strnstr.c\
 				libs/libft/ft_strchr.c\
 				libs/libft/ft_stronly.c\
+				libs/get_next_line/get_next_line.c\
+				libs/get_next_line/get_next_line_utils.c\
 				srcs/events.c\
 				srcs/display.c\
 				srcs/display_2.c\
 				srcs/errors.c\
 				srcs/texture.c\
 				srcs/images.c\
+				srcs/new_parse_map.c\
 				srcs/cub3d.c
 SRCSH		= includes/cub3d.h
 OBJS		= $(SRCSC:%.c=%.o)
