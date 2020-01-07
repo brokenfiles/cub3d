@@ -150,11 +150,11 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		y = 0;
 		while (game->image->height > y)
 		{
-			y_im = ft_scale(c_1, c_2, 0, tex_height, y);
 			if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
 			{
+				y_im = ft_scale(c_1, c_2, 0, tex_height, y);
 //				dist = 255 / (255 / dist);
-				color = get_pixel(tex, x_im, y_im).value;
+				color = get_pixel(tex, x_im, y_im).value & 0xFFFFFF;
 //				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
 //				image_set_pixel(game->image, x, y, color);
 			}
@@ -165,11 +165,61 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 				else
 					color = game->map->sky_color;
 			}
-//			if (get_pixel(game->image, x, y).value != color)
+			if (color != 0x000000)
 				image_set_pixel(game->image, x, y, color);
+			else
+				set_pixel_transparent(game, vector(x, y), c(color), 255);
 			y++;
 		}
 		x++;
+	}
+	return (1);
+}
+
+int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
+{
+	int		y;
+	int		x;
+	float	x_im;
+	float	y_im;
+	int color;
+	int		tex_height, c_1, c_2;
+	t_image *tex;
+
+	tex = game->map->tex.sp_tex;
+	x = form.vector.x;
+	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
+	tex_height = tex->height;
+	c_1 = form.vector.y - (form.dim.x / 2);
+	c_2 = form.vector.y + (form.dim.x / 2);
+	y = 0;
+//	int i = 0;
+//	int j = 0;
+//	while (i < 32)
+//	{
+//		i++;
+//		while (j < 32)
+//		{
+//			color = get_pixel(tex, i, j).value & 0xFFFFFF;
+//			if (color != 0x000000)
+//				image_set_pixel(game->image, form.vector.x + i, form.vector.y + j, color);
+//			else
+//				set_pixel_transparent(game, vector(form.vector.x + i, form.vector.y + j), c(color), 255);
+//			j++;
+//		}
+//	}
+	while (y < game->image->height)
+	{
+		if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
+		{
+			y_im = ft_scale(c_1, c_2, 0, tex_height, y);
+			color = get_pixel(tex, x_im, y_im).value & 0xFFFFFF;
+			if (color != 0x000000)
+				image_set_pixel(game->image, x, y, color);
+			else
+				set_pixel_transparent(game, vector(x, y), c(color), 255);
+		}
+		y++;
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 16:58:36 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:14:25 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_image		*load_tex(t_game *game, t_image **image, char *tex);
 int 		convertRGB(int R, int G, int B);
 int			handle_key(int key, void *param);
 int			display_tri(t_game *game, t_form form);
+int			print_sprite(t_game *game, t_form form, float x_inter, float dist);
 int			display_circle(t_game *game, t_form circle, float thick);
 int 		display_rec(t_game *game, t_form form, t_image **image);
 int			display_map(t_game *game, t_image **image);
@@ -51,7 +52,7 @@ int			display_full_range(t_game *game);
 t_form		form(t_vector vector, t_vector dim, int color);
 t_vector	vector(float x, float y);
 t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *game);
-t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game);
+t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_vector *sprite);
 int			init_player(t_player *player);
 t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y);
 t_game		*init_game();

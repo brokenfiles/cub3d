@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 14:56:07 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:03:16 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_vector next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	return (res);
 }
 
-t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game)
+t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_vector *sprite)
 {
 	t_vector	res;
 	int			number;
@@ -60,9 +60,11 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game)
 		return (res);
 	hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
 	hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
-	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] == '0' || game->map->map[hit_y][hit_x] == 'W' || game->map->map[hit_y][hit_x] == 'E' || game->map->map[hit_y][hit_x] == 'N' || game->map->map[hit_y][hit_x] == 'S' || game->map->map[hit_y][hit_x] == '3'))
+	sprite->y = -1;
+	sprite->x = -1;
+	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] != '1'))
 	{
-		if (!ft_strchr("WENS013", map->map[hit_y][hit_x]))
+		if (!ft_strchr("WENS0132", map->map[hit_y][hit_x]))
 		{
 			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_428);
 			return (res);
@@ -78,7 +80,9 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game)
 		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 		if (map->map[hit_y][hit_x] == '2')
 		{
-			*wall = 6;
+			sprite->y = res.y;
+			sprite->x = res.x;
+			//printf("wall = 6\n");
 		}
 	}
 	return (res);
@@ -110,63 +114,10 @@ int		display_lifebar(t_game *game)
 	return (1);
 }
 
-// TRY CAST_FLOOR BUGGED
-/*int     cast_floor(t_game *game)
-{
-	float rayDirX0;
-	float rayDirY0;
-	float rayDirX1;
-	float rayDirY1;
-	int p;
-	float posZ;
-	float rowDistance;
-	float floorStepX;
-	float floorStepY;
-	float floorX;
-	float floorY;
-	int cellX;
-	int cellY;
-	int tx;
-	int ty;
-	int color;
-	int y;
-	int x;
-	x = 0;
-	y = 0;
-	while (y < game->image->height)
-	{
-		rayDirX0 = 1 * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
-		rayDirY0 = -1 * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
-		rayDirX1 = -1 * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
-		rayDirY1 = 1 * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
-		p = y - game->image->height / 2;
-		posZ = 0.5f * game->image->height;
-		rowDistance = posZ / p;
-		floorStepX = rowDistance * (rayDirX1 - rayDirX0) / game->image->width;
-		floorStepY = rowDistance * (rayDirY1 - rayDirY0) / game->image->width;
-		floorX = game->p->pos.x + rowDistance * rayDirX0;
-		floorY = game->p->pos.y + rowDistance * rayDirY0;
-		x = 0;
-		while (++x < game->image->width)
-		{
-			cellX = (int)(floorX);
-			cellY = (int)(floorY);
-			tx = (int)(game->map->tex.sp_tex->width * (floorX - cellX)) & (game->map->tex.sp_tex->width - 1);
-			ty = (int)(game->map->tex.sp_tex->height * (floorY - cellY)) & (game->map->tex.sp_tex->height - 1);
-			floorX += floorStepX;
-			floorY += floorStepY;
-			color = get_pixel(game->map->tex.sp_tex, tx, ty).value;
-			image_set_pixel(game->image, x, y, color);
-//			color = data->tex->add_tex_tf[data->tex->img_width_tf * ty + tx];
-//			data->image->img_data[y * data->info->width + x] = color;
-		}
-		y++;
-	}
-}*/
-
 int				render(t_game *game)
 {
 	t_vector hit;
+	t_vector sprite;
 	float angle;
 	float angle_copy;
 	int x;
@@ -177,15 +128,20 @@ int				render(t_game *game)
 	x = 0;
 	angle = game->image->width * (float)(1.0f / (game->image->height / 17));
 	angle_copy = angle;
-//	cast_floor(game);
 	while (angle > -angle_copy)
 	{
-		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game);
+		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game, &sprite);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		dist = (float)sqrt(sq_dist(game->p->pos, hit));
 		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		if (sprite.x != -1 && sprite.y != -1)
+		{
+			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.x, (int)sprite.y)));
+			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), sprite.x - (int)sprite.x, dist))
+				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		}
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
