@@ -12,6 +12,7 @@
 
 #ifndef										CUB3D_DEFINES_H
 # define									CUB3D_DEFINES_H
+# define MAP_VALUES							"R ,NO ,SO ,WE ,EA ,S ,C ,F "
 # define MIN_WIDTH							500
 # define MIN_HEIGHT							500
 # define MAX_WIDTH							2560
