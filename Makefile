@@ -6,12 +6,21 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/06 16:54:11 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/07 15:18:57 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCSC		=	srcs/parse_map.c\
-				srcs/handler_struct.c\
+SRCSC		=	srcs/parsing/parse_map_last.c\
+				srcs/parsing/parse_map.c\
+				srcs/parsing/parse_map_utils.c\
+				srcs/raytracing/display.c\
+				srcs/raytracing/display_2.c\
+				srcs/textures/texture.c\
+				srcs/textures/images.c\
+				srcs/events/events.c\
+				srcs/utils/errors.c\
+				srcs/utils/handler_struct.c\
+				srcs/cub3d.c\
 				libs/libft/ft_putstr.c\
 				libs/libft/ft_split.c\
 				libs/libft/ft_strcmp.c\
@@ -27,15 +36,7 @@ SRCSC		=	srcs/parse_map.c\
 				libs/libft/ft_strchr.c\
 				libs/libft/ft_stronly.c\
 				libs/get_next_line/get_next_line.c\
-				libs/get_next_line/get_next_line_utils.c\
-				srcs/events.c\
-				srcs/display.c\
-				srcs/display_2.c\
-				srcs/errors.c\
-				srcs/texture.c\
-				srcs/images.c\
-				srcs/new_parse_map.c\
-				srcs/cub3d.c
+				libs/get_next_line/get_next_line_utils.c
 SRCSH		= includes/cub3d.h
 OBJS		= $(SRCSC:%.c=%.o)
 NAME		= cub3d

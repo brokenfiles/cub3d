@@ -6,63 +6,11 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 17:18:26 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:50:07 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-
-int		get_int_len(unsigned int nb)
-{
-	unsigned int	index;
-
-	index = 0;
-	while (nb >= 10)
-	{
-		nb /= 10;
-		index++;
-	}
-	return (index + 1);
-}
-
-char	get_key(char *str)
-{
-	while (*(str - 1))
-		str--;
-	return (*(str + 1));
-}
-
-int	is_structure_full(t_game *game)
-{
-	if (!game->image->width || !game->map->tex.sky_color ||
-	!game->map->tex.floor_color || !game->map->tex.ea_tex ||
-	!game->map->tex.no_tex || !game->map->tex.so_tex ||
-	!game->map->tex.we_tex || !game->image->height)
-		return (0);
-	return (1);
-}
-
-char	*to_next_char(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == c && *(str + 1))
-			return (str + 1);
-		str++;
-	}
-	return (NULL);
-}
-
-char	*get_val(char *line, char *key)
-{
-	char	*tmp;
-
-	if (!key || !line)
-		return (0);
-	if ((tmp = ft_strnstr(line, key, ft_strlen(key))))
-		return (line + ft_strlen(key));
-	return (NULL);
-}
+#include "../../includes/cub3d.h"
 
 int	fill_data(t_game *game, char *line)
 {
@@ -95,7 +43,11 @@ int	fill_data(t_game *game, char *line)
 		else
 			game->map->sky_color = convertRGB(colors[0], colors[1], colors[2]);
 	}
-
+	load_tex(game, &game->map->tex.no_tex, get_val(line, "NO "));
+	load_tex(game, &game->map->tex.so_tex, get_val(line, "SO "));
+	load_tex(game, &game->map->tex.we_tex, get_val(line, "WE "));
+	load_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "));
+	load_tex(game, &game->map->tex.sp_tex, get_val(line, "S "));
 	return (1);
 }
 
@@ -103,7 +55,10 @@ int	parse_map(t_game *game, char *map_name)
 {
 	int		fd;
 	char	*line;
+	char	*temp[1028];
+	int		current_line;
 
+	current_line = 0;
 	if ((fd = open(map_name, O_RDONLY)) == -1)
 		return (0);
 	while (get_next_line(fd, &line))
@@ -112,15 +67,32 @@ int	parse_map(t_game *game, char *map_name)
 		{
 			if (!fill_data(game, line))
 				return (0);
+			free(line);
 		}
 		else
-			printf("la map\n");
-//		free(*line);
+		{
+			if (current_line >= 1027)
+				return (0);
+			if (ft_strlen(line) > 3)
+				temp[current_line++] = line;
+			else
+				free(line);
+		}
+		temp[current_line] = 0;
 	}
-	printf("w: %d, h: %d\n", game->image->width, game->image->height);
-	printf("floor: %d\n", game->map->floor_color);
-	printf("sky: %d\n", game->map->sky_color);
 	if (!is_structure_full(game))
 		return (0);
+	else
+	{
+		printf("w: %d, h: %d\n", game->image->width, game->image->height);
+		printf("floor: %d\n", game->map->floor_color);
+		printf("sky: %d\n", game->map->sky_color);
+		printf("w no: %d\n", game->map->tex.no_tex->width);
+		printf("w so: %d\n", game->map->tex.so_tex->width);
+		printf("w we: %d\n", game->map->tex.we_tex->width);
+		printf("w ea: %d\n", game->map->tex.ea_tex->width);
+		printf("w sp: %d\n", game->map->tex.sp_tex->width);
+	}
+	return (0);
 	return (1);
 }

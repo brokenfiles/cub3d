@@ -6,11 +6,11 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/06 09:52:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:12:54 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 t_color		c(int v)
 {
@@ -83,6 +83,8 @@ t_image	*load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;
 
+	if (!tex)
+		return (0);
 	if ((img = xpm_image(tex, game)) == NULL)
 		return (0);
 	*image = img;

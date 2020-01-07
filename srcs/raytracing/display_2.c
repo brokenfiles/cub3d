@@ -11,7 +11,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 /**
  * used to display a triangle
@@ -193,21 +193,6 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 	c_1 = form.vector.y - (form.dim.x / 2);
 	c_2 = form.vector.y + (form.dim.x / 2);
 	y = 0;
-//	int i = 0;
-//	int j = 0;
-//	while (i < 32)
-//	{
-//		i++;
-//		while (j < 32)
-//		{
-//			color = get_pixel(tex, i, j).value & 0xFFFFFF;
-//			if (color != 0x000000)
-//				image_set_pixel(game->image, form.vector.x + i, form.vector.y + j, color);
-//			else
-//				set_pixel_transparent(game, vector(form.vector.x + i, form.vector.y + j), c(color), 255);
-//			j++;
-//		}
-//	}
 	while (y < game->image->height)
 	{
 		if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
@@ -226,7 +211,8 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 
 int		display_aim(t_game *game)
 {
-	display_rec(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT + AIM_WIDTH / 2), vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
-	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2, game->image->height / 2 - AIM_HEIGHT / 2), vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
+	display_rec(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT + AIM_WIDTH / 2 + 8), vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
+	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
+	display_circle(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_CIRCLE_SIZE, AIM_CIRCLE_SIZE), AIM_CIRCLE_COLOR), AIM_CIRCLE_THICK);
 	return (1);
 }

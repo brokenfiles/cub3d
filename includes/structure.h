@@ -81,6 +81,11 @@ typedef struct	s_player
 	float health;
 	float size;
 }				t_player;
+typedef struct	s_sprite
+{
+	t_vector pos;
+	int wall;
+}				t_sprite;
 typedef struct	s_game
 {
 	void		*ptr;

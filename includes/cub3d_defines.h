@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 14:05:40 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:02:42 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 # define MAP_SIZE							200
 # define MINIMAP_PLAYER_COLOR				0xA896FF
 # define AIM_HEIGHT							25
-# define AIM_WIDTH							2
+# define AIM_WIDTH							1
+# define AIM_CIRCLE_THICK					1
+# define AIM_CIRCLE_COLOR					0xDC4A44
+# define AIM_CIRCLE_SIZE					7
 # define AIM_COLOR							0xFFFFFF
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
