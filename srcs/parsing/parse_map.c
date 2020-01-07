@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/07 15:50:07 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:07:51 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	parse_map(t_game *game, char *map_name)
 {
 	int		fd;
 	char	*line;
-	char	*temp[1028];
 	int		current_line;
 
 	current_line = 0;
@@ -71,15 +70,18 @@ int	parse_map(t_game *game, char *map_name)
 		}
 		else
 		{
-			if (current_line >= 1027)
-				return (0);
+//			if (current_line >= 1027)
+//				return (0);
 			if (ft_strlen(line) > 3)
-				temp[current_line++] = line;
+			{
+				game->map->map = malloc(sizeof(char **) * (current_line + 1));
+				game->map->map[current_line++] = line;
+			}
 			else
 				free(line);
 		}
-		temp[current_line] = 0;
 	}
+	game->map->map[current_line] = 0;
 	if (!is_structure_full(game))
 		return (0);
 	else
