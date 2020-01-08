@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 10:23:39 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:36:51 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,36 +51,79 @@ int	fill_data(t_game *game, char *line)
 	return (1);
 }
 
+int	get_resolution(t_game *game, char *line)
+{
+	char	*tmp;
+
+	if (!(tmp = get_val(line, "R ")))
+		return (0);
+	if (!(game->image->width = ft_atoi(tmp)))
+		return (0);
+	tmp += get_int_len(game->image->width);
+	if (!(game->image->height = ft_atoi(tmp)))
+		return (0);
+	return (1);
+}
+
+int	get_texture(t_game *game, char *line, char *key)
+{
+	int	all_was_good;
+
+//	all_was_good = 1;
+//	if (ft_strncmp("", key))
+//		all_was_good = load_tex(game, &game->map->tex.no_tex, get_value(splitted, "NO "));
+//	else if (c == 'S')
+//		all_was_good = load_tex(game, &game->map->tex.so_tex, get_value(splitted, "SO "));
+//	else if (c == 'W')
+//		all_was_good = load_tex(game, &game->map->tex.we_tex, get_value(splitted, "WE "));
+//	else if (c == 'E')
+//		all_was_good = load_tex(game, &game->map->tex.ea_tex, get_value(splitted, "EA "));
+//	else if (c == 'S')
+//		all_was_good = load_tex(game, &game->map->tex.sp_tex, get_value(splitted, "SP "));
+	return (1);
+}
+
+int	get_color(t_game *game, char *line, char c)
+{
+
+	return (1);
+}
+
+int	get_map(t_game *game, char *line)
+{
+
+	return (1);
+}
+
 int	parse_map(t_game *game, char *map_name)
 {
 	int		fd;
 	char	*line;
-	int		current_line;
+	int		continue_read;
 
-	current_line = 0;
+	continue_read = 1;
 	if ((fd = open(map_name, O_RDONLY)) == -1)
 		return (0);
 	while (get_next_line(fd, &line))
 	{
-		if (!is_structure_full(game))
+		if (ft_strlen(line) < 3)
 		{
-			if (!fill_data(game, line))
-				return (0);
 			free(line);
+			continue;
 		}
+		if (line[0] == 'R')
+			continue_read = get_resolution(game, line);
+//		else if (line || (line[0] == 'S' && line[1] == 'O') || line[0] == 'W' || line[0] == 'E' || line[0] == 'S')
+//			continue_read = get_texture(game, line, line[0]);
+		else if (line[0] == 'C' || line[0] == 'F')
+			continue_read = get_color(game, line, line[0]);
+		else if (line[0] == '1')
+			continue_read = get_map(game, line);
 		else
-		{
-//			if (current_line >= 1027)
-//				return (0);
-			if (ft_strlen(line) > 3)
-			{
-
-			}
-			else
-				free(line);
-		}
+			free(line);
+		if (!continue_read)
+			return (0);
 	}
-	game->map->map[current_line] = 0;
 	if (!is_structure_full(game))
 		return (0);
 	else

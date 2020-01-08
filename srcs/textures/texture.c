@@ -79,7 +79,7 @@ t_image	*xpm_image(char *xpm, t_game *game)
  * @param char *tex
  * @return t_image *
  */
-t_image	*load_tex(t_game *game, t_image **image, char *tex)
+int	load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;
 
@@ -88,7 +88,7 @@ t_image	*load_tex(t_game *game, t_image **image, char *tex)
 	if ((img = xpm_image(tex, game)) == NULL)
 		return (0);
 	*image = img;
-	return (img);
+	return (1);
 }
 
 

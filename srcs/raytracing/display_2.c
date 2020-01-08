@@ -177,7 +177,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		y = 0;
 		while (game->image->height > y)
 		{
-			if (y >= form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
+			if (y > form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
 			{
 				y_im = ft_scale(c_1, c_2, 0, tex_height, y);
 //				dist = 255 / (255 / dist);
@@ -187,7 +187,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 			}
 			else
 			{
-				if (y > game->image->height / 2)
+				if (y >= game->image->height / 2)
 					color = game->map->floor_color;
 				else
 					color = game->map->sky_color;
@@ -215,7 +215,7 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 
 	tex = game->map->tex.sp_tex;
 	x = form.vector.x;
-	x_im = ft_scale(0.0, form.dim.y, 0.0, tex->width, x_inter);
+	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
 
 	tex_height = tex->height;
 	c_1 = form.vector.y - (form.dim.x / 2);

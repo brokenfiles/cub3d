@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 10:53:43 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 15:57:05 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int quit(t_game *game, int code, char *message)
 //	if (game && game->map)
 //		free(game->map->tex.no_tex);
 
-
 //TODO: unmute that shit
 //	while (game && game->map->map[index])
 //		index++;
@@ -70,7 +69,7 @@ int quit(t_game *game, int code, char *message)
 //		free_map(game->map->map, index);
 //	if (game)
 //		free(game);
-//	system("leaks cub3d");
+	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

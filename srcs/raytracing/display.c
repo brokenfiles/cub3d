@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 13:34:47 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:37:58 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_vector next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	return (res);
 }
 
-t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprite)
+t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprite, int x)
 {
 	t_vector	res;
 	int			number;
@@ -81,7 +81,10 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 			sprite->pos.y = res.y;
 			sprite->pos.x = res.x;
 			if (!sprite->first_x)
-				sprite->first_x = sprite->pos.x;
+			{
+				sprite->first_x = x;
+				display_rec(game, form(vector(sprite->first_x, 0), vector(3, game->image->height - 1), 0xFAFAFA), &game->image);
+			}
 			sprite->wall = *wall;
 		}
 	}
@@ -124,6 +127,8 @@ int				render(t_game *game)
 	int wall;
 	float dist;
 	int color;
+	float teta;
+	float x_inter;
 
 	x = 0;
 	angle = game->image->width * (float)(1.0f / (game->image->height / 17));
@@ -133,26 +138,35 @@ int				render(t_game *game)
 		sprite.pos.x = -1;
 		sprite.pos.y = -1;
 		sprite.first_x = 0;
-		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game, &sprite);
+		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game, &sprite, x);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		dist = (float)sqrt(sq_dist(game->p->pos, hit));
 		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-//		if (sprite.pos.x != -1 && sprite.pos.y != -1)
-//		{
-//			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.pos.x, (int)sprite.pos.y)));
-//			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), sprite.wall % 2 == 0 ? sprite.pos.x - (int)sprite.pos.x : sprite.pos.y - (int)sprite.pos.y), dist))
-//				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-//		}
 		if (sprite.pos.x != -1 && sprite.pos.y != -1)
 		{
 			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.pos.x, (int)sprite.pos.y)));
-//			printf("%d\n", sprite.first_x);
-			display_rec(game, form(vector(sprite.first_x, 0), vector(3, game->image->height - 1), 0xFAFAFA), &game->image);
-			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), x - sprite.first_x, dist))
+			teta = (((float)game->p->yaw + angle)/ 360.0) * (float)(2 * M_PI);
+			teta = teta < 0 ? 2 * M_PI + teta : teta;
+			//printf("%f\n", dist);
+			if (teta > 3 * M_PI/2 && teta <= 2 * M_PI)
+				x_inter = sprite.wall % 2 == 0 ? (1 - sprite.pos.x + (int)sprite.pos.x) * sin(teta) * sin(teta) : 1 - (1 - sprite.pos.y + (int)sprite.pos.y) * cos(teta) * cos(teta);
+			else if (teta > M_PI/2 && teta <= M_PI)
+				x_inter = sprite.wall % 2 == 0 ? (sprite.pos.x - (int)sprite.pos.x) * sin(teta) * sin(teta) : 1 - (sprite.pos.y - (int)sprite.pos.y) * cos(teta) * cos(teta);
+			else if (teta > M_PI && teta <= 3 * M_PI / 2)
+				x_inter = sprite.wall % 2 == 0 ? 1 - (sprite.pos.x - (int)sprite.pos.x) * sin(teta) * sin(teta) : (1 - sprite.pos.y + (int)sprite.pos.y) * cos(teta) * cos(teta);
+			else
+				x_inter = sprite.wall % 2 == 0 ? 1 - (1 - sprite.pos.x + (int)sprite.pos.x) * sin(teta) * sin(teta) : (sprite.pos.y - (int)sprite.pos.y) * cos(teta) * cos(teta);
+			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), x_inter, dist))
 				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		}
+//		if (sprite.pos.x != -1 && sprite.pos.y != -1)
+//		{
+//			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.pos.x, (int)sprite.pos.y)));
+//			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), x - sprite.first_x, dist))
+//				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+//		}
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
@@ -167,6 +181,7 @@ int				render(t_game *game)
 		image_set_pixel(game->image, (game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y, 0xFF4A25);
 	}
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+	mlx_put_image_to_window(game->ptr, game->win, game->map->tex.sp_tex->image, 0, 0);
 	if (game->save_first_image)
 	{
 		game->save_first_image = 0;
@@ -175,6 +190,7 @@ int				render(t_game *game)
 	}
 	return (1);
 }
+
 
 /**
  * used to display the map

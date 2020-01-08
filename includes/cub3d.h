@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 14:33:35 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:33:55 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 t_game		*init_game();
 t_form		form(t_vector vector, t_vector dim, int color);
 t_image		*xpm_image(char *xpm, t_game *game);
-t_image		*load_tex(t_game *game, t_image **image, char *tex);
 t_image		*del_image(t_game *game, t_image *img);
 t_image		*new_image(t_game *game, int w, int h);
 t_color		c(int v);
@@ -38,7 +37,7 @@ t_vector	vector(float x, float y);
 t_vector	next_inter(t_vector p, t_vector vec, float teta,
 		int *wall, t_game *game);
 t_vector	next_hit(t_map *map, t_vector p, float teta,
-		int *wall, t_game *game, t_sprite *sprite);
+		int *wall, t_game *game, t_sprite *sprite, int x);
 t_vector	rotation_matrice(t_game *game, int x, int y);
 t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta);
 char		*to_next_char(char *str, char c);
@@ -53,6 +52,7 @@ int			test_line(t_game *game, t_form form,
 		float x_inter, int wall, float dist);
 int			display_aim(t_game *game);
 int			ft_lerpi(int first, int second, double p);
+int			load_tex(t_game *game, t_image **image, char *tex);
 int			convert_rgb(int r, int g, int b);
 int			handle_key(int key, void *param);
 int			display_tri(t_game *game, t_form form);
