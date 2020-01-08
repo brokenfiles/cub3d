@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 14:37:58 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/08 18:05:15 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ t_vector next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 
 	//image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xACACAC);
 	if (res.x == x.x && res.y == x.y && cos(alpha) > 0)
-			*wall = 1;
+		*wall = 1;
 	else if (res.x == x.x && res.y == x.y)
-			*wall = 3;
+		*wall = 3;
 	else if (sin(alpha) > 0)
-			*wall = 2;
+		*wall = 2;
 	else
-			*wall = 4;
+		*wall = 4;
 	return (res);
 }
 
@@ -62,7 +62,7 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 	hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] != '1'))
 	{
-		if (!ft_strchr("WENS0132", map->map[hit_y][hit_x]))
+		if (!ft_strchr("WENSABCD0132", map->map[hit_y][hit_x]))
 		{
 			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_428);
 			return (res);
@@ -78,13 +78,8 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 		if (map->map[hit_y][hit_x] == '2')
 		{
-			sprite->pos.y = res.y;
-			sprite->pos.x = res.x;
-			if (!sprite->first_x)
-			{
-				sprite->first_x = x;
-				display_rec(game, form(vector(sprite->first_x, 0), vector(3, game->image->height - 1), 0xFAFAFA), &game->image);
-			}
+			sprite->pos.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+			sprite->pos.x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 			sprite->wall = *wall;
 		}
 	}
@@ -191,7 +186,6 @@ int				render(t_game *game)
 	return (1);
 }
 
-
 /**
  * used to display the map
  * @param t_data data
@@ -214,7 +208,7 @@ int display_map(t_game *game, t_image **image)
 					vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
 					vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE),
 					game->map->map[y][x] == '1' ? game->map->tex.wall_color : game->map->tex.void_color), image);
-			if (!ft_strchr("WENS01", game->map->map[y][x]))
+			if (!ft_strchr("WENSABCD01", game->map->map[y][x]))
 				display_cir2(game, form(vector(game->image->width / MAP_SIZE * (x + 0.5f), game->image->width / MAP_SIZE * (y+0.5f)), vector (0,5), 0xFF2B12));
 			x++;
 		}

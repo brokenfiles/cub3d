@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 13:31:20 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:04:13 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void		move_player(t_game *game, int sign)
 	int	x;
 	int	y;
 	int	b;
-
 	y = (int)(game->p->pos.y + -sign * game->p->speed * sin((game->p->yaw / 360.0)
-															 * (float) (2 * M_PI)));
-	x = (int)(game->p->pos.x + sign * game->p->speed * cos((game->p->yaw / 360.0)
 															* (float) (2 * M_PI)));
-	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S' || game->map->map[y][x] == '3');
-	if (game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] == '3' && game->map->map[y][x] != '3')
-		game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] = '2';
+	x = (int)(game->p->pos.x + sign * game->p->speed * cos((game->p->yaw / 360.0)
+														   * (float) (2 * M_PI)));
+	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S' || game->map->map[y][x] == '2');
+//	if (game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] == '3' && game->map->map[y][x] != '3')
+//		game->map->map[(int)game->p->pos.y][(int)game->p->pos.x] = '2';
 	if (game->map->map[y][x] && !(b))
 	{
 		game->p->health -= 2;
@@ -40,6 +39,12 @@ void		move_player(t_game *game, int sign)
 	}
 	if (b)
 	{
+		if (game->map->map[y][x] == '2')
+		{
+			if (game->p->health < 100)
+				game->p->health = (game->p->health < 100 - 20) ? game->p->health + 20 : 100;
+			game->map->map[y][x] = '0';
+		}
 		game->p->pos.x += sign * game->p->speed * cos((game->p->yaw / 360.0) * (float) (2 * M_PI));
 		game->p->pos.y += -sign * game->p->speed * sin((game->p->yaw / 360.0) * (float) (2 * M_PI));
 	}
