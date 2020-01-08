@@ -39,9 +39,9 @@ int	fill_data(t_game *game, char *line)
 		if (index < 3)
 			return (0);
 		if (colors[3] == 1)
-			game->map->floor_color = convertRGB(colors[0], colors[1], colors[2]);
+			game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2]);
 		else
-			game->map->sky_color = convertRGB(colors[0], colors[1], colors[2]);
+			game->map->sky_color = convert_rgb(colors[0], colors[1], colors[2]);
 	}
 	load_tex(game, &game->map->tex.no_tex, get_val(line, "NO "));
 	load_tex(game, &game->map->tex.so_tex, get_val(line, "SO "));

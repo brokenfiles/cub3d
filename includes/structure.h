@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 09:52:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:34:32 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct	s_vector
 {
 	float		x;
 	float		y;
-} 				t_vector;
+}				t_vector;
 typedef struct	s_form
 {
 	t_vector	dim;
@@ -74,12 +74,12 @@ typedef struct	s_map
 }				t_map;
 typedef struct	s_player
 {
-	t_vector pos;
-	int yaw;
-	float speed;
-	int rot_speed;
-	float health;
-	float size;
+	t_vector	pos;
+	int			yaw;
+	float		speed;
+	int			rot_speed;
+	float		health;
+	float		size;
 }				t_player;
 typedef struct	s_sprite
 {

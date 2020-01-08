@@ -182,7 +182,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 				y_im = ft_scale(c_1, c_2, 0, tex_height, y);
 //				dist = 255 / (255 / dist);
 				color = get_pixel(tex, x_im, y_im).value & 0xFFFFFF;
-//				color = convertRGB(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
+//				color = convert_rgb(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
 //				image_set_pixel(game->image, x, y, color);
 			}
 			else

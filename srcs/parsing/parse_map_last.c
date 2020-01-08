@@ -233,8 +233,8 @@ int	fill_values(char **splitted, t_game *game)
 		free_splitted(sky_split, 1);
 		return (0);
 	}
-	game->map->floor_color = convertRGB(ft_atoi(floor_split[0]), ft_atoi(floor_split[1]), ft_atoi(floor_split[2]));
-	game->map->sky_color = convertRGB(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
+	game->map->floor_color = convert_rgb(ft_atoi(floor_split[0]), ft_atoi(floor_split[1]), ft_atoi(floor_split[2]));
+	game->map->sky_color = convert_rgb(ft_atoi(sky_split[0]), ft_atoi(sky_split[1]), ft_atoi(sky_split[2]));
 	free_splitted(splitted, 1);
 	free_splitted(floor_split, 1);
 	free_splitted(sky_split, 1);

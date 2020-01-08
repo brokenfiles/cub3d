@@ -92,7 +92,7 @@ t_image	*load_tex(t_game *game, t_image **image, char *tex)
 }
 
 
-int convertRGB(int R, int G, int B)
+int convert_rgb(int R, int G, int B)
 {
 	R = (R > 255 ? 255 : R);
 	G = (G > 255 ? 255 : G);

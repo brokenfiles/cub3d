@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 13:22:36 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 13:34:47 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		display_lifebar(t_game *game)
 	int	percent;
 	int	color;
 
-	color = convertRGB(150, 255 / (100 / game->p->health), 55);
+	color = convert_rgb(150, 255 / (100 / game->p->health), 55);
 	percent = ((game->image->width / 2 - 20) / (100 / game->p->health)); // je calcule un pourcentage responsive
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4), game->image->height - 60), vector(game->image->width / 2 , 50), 0xFFFBBC), &game->image);
 	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 55), vector(percent, 40), color), &game->image);
