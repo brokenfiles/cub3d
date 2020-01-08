@@ -72,6 +72,24 @@ t_vector	rotation_matrice(t_game *game, int x, int y)
 	return (vector);
 }
 
+t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta)
+{
+	t_vector	vector;
+	float		alpha;
+	float		c;
+	float		s;
+
+	alpha = (teta / 360.0) * (float) (2 * M_PI);
+	c = -cos(alpha);
+	s = -sin(alpha);
+	vector.x = (point.x - origin.x) * c +
+				(point.y - origin.y) * s + origin.x;
+	vector.y = -(point.x - origin.x) * s +
+			   (point.y - origin.y) * c +
+			   origin.y;
+	return (vector);
+}
+
 int			handle_key(int key, void *param)
 {
 	static int	last_key_code;

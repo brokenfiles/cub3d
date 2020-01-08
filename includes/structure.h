@@ -83,8 +83,9 @@ typedef struct	s_player
 }				t_player;
 typedef struct	s_sprite
 {
-	t_vector pos;
-	int wall;
+	t_vector	pos;
+	int			wall;
+	int			first_x;
 }				t_sprite;
 typedef struct	s_game
 {

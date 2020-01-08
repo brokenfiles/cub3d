@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/08 10:42:58 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/08 10:44:02 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				libs/libft/ft_lstmap.c\
 				libs/libft/ft_lstnew.c\
 				libs/libft/ft_bzero.c\
+				libs/libft/ft_lstrev.c\
 				libs/libft/ft_lstsize.c\
 				libs/get_next_line/get_next_line.c\
 				libs/get_next_line/get_next_line_utils.c

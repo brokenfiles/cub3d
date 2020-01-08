@@ -86,5 +86,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 		void (*del)(void *));
+void				ft_lstrev(t_list **alst);
 t_list				*ft_lstlast(t_list *lst);
 #endif

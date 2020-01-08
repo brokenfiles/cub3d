@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 11:14:29 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 13:22:36 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ t_vector next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	return (res);
 }
 
-t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_list **lst)
+t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprite)
 {
 	t_vector	res;
 	int			number;
 	int			hit_x;
 	int			hit_y;
-	t_sprite	sprite;
 
 	number = 0;
 	if (!map->map[(int)p.y][(int)p.x])
@@ -79,11 +78,11 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 		if (map->map[hit_y][hit_x] == '2')
 		{
-			sprite.pos.y = res.y;
-			sprite.pos.x = res.x;
-			sprite.wall = *wall;
-			ft_lstadd_back(lst, ft_lstnew(&sprite));
-			//printf("wall = 6\n");
+			sprite->pos.y = res.y;
+			sprite->pos.x = res.x;
+			if (!sprite->first_x)
+				sprite->first_x = sprite->pos.x;
+			sprite->wall = *wall;
 		}
 	}
 	return (res);
@@ -118,7 +117,7 @@ int		display_lifebar(t_game *game)
 int				render(t_game *game)
 {
 	t_vector hit;
-	t_list *lst;
+	t_sprite sprite;
 	float angle;
 	float angle_copy;
 	int x;
@@ -131,30 +130,29 @@ int				render(t_game *game)
 	angle_copy = angle;
 	while (angle > -angle_copy)
 	{
-		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game, &lst);
+		sprite.pos.x = -1;
+		sprite.pos.y = -1;
+		sprite.first_x = 0;
+		hit = next_hit(game->map, game->p->pos, (float)game->p->yaw + angle, &wall, game, &sprite);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		dist = (float)sqrt(sq_dist(game->p->pos, hit));
 		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), color), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		while (lst->next)
-		{
-			lst = lst->next;
-			if (lst->content)
-			{
-				dist = sqrt(sq_dist(game->p->pos, vector((int)((t_sprite *)(lst->content))->pos.x, (int)((t_sprite *)(lst->content))->pos.y)));
-				if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), (((t_sprite *)(lst->content))->wall % 2 == 0 ? ((t_sprite *)(lst->content))->pos.x - (int)((t_sprite *)(lst->content))->pos.x : ((t_sprite *)(lst->content))->pos.y - (int)((t_sprite *)(lst->content))->pos.y), dist))
-				{
-					return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-				}
-			}
-		}
 //		if (sprite.pos.x != -1 && sprite.pos.y != -1)
 //		{
 //			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.pos.x, (int)sprite.pos.y)));
-//			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), (sprite.wall % 2 == 0 ? sprite.pos.x - (int)sprite.pos.x : sprite.pos.y - (int)sprite.pos.y), dist))
+//			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), sprite.wall % 2 == 0 ? sprite.pos.x - (int)sprite.pos.x : sprite.pos.y - (int)sprite.pos.y), dist))
 //				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 //		}
+		if (sprite.pos.x != -1 && sprite.pos.y != -1)
+		{
+			dist = sqrt(sq_dist(game->p->pos, vector((int)sprite.pos.x, (int)sprite.pos.y)));
+//			printf("%d\n", sprite.first_x);
+			display_rec(game, form(vector(sprite.first_x, 0), vector(3, game->image->height - 1), 0xFAFAFA), &game->image);
+			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), color), x - sprite.first_x, dist))
+				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		}
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
@@ -201,9 +199,7 @@ int display_map(t_game *game, t_image **image)
 					vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE),
 					game->map->map[y][x] == '1' ? game->map->tex.wall_color : game->map->tex.void_color), image);
 			if (!ft_strchr("WENS01", game->map->map[y][x]))
-				display_circle(game, form(vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
-						vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE), 0xFF2B12),
-								game->image->width / MAP_SIZE);
+				display_cir2(game, form(vector(game->image->width / MAP_SIZE * (x + 0.5f), game->image->width / MAP_SIZE * (y+0.5f)), vector (0,5), 0xFF2B12));
 			x++;
 		}
 		y++;

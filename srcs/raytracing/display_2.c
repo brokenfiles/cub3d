@@ -33,7 +33,7 @@ int display_tri(t_game *game, t_form form)
 		y = form.vector.y - (form.vector.x - x) / 3;
 		while (y <= form.vector.y + (form.vector.x - x) / 3)
 		{
-			image_set_pixel(game->image, rotation_matrice(game, x, y).x, rotation_matrice(game, x, y).y, form.color);
+			image_set_pixel(game->image, rotation_matrice2(vector(x, y), vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), game->p->yaw).x, rotation_matrice2(vector(x, y), vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), game->p->yaw).y, form.color);
 			y++;
 		}
 		x--;
@@ -106,6 +106,33 @@ int		display_circle(t_game *game, t_form circle, float thick)
 			y++;
 		}
 		x++;
+	}
+	return (1);
+}
+
+int display_cir(t_game *game, t_form form)
+{
+	t_vector point;
+	float teta;
+	point.x = form.vector.x + form.dim.x;
+	point.y = form.vector.y;
+	teta = 0;
+	while (teta < 360.0)
+	{
+		image_set_pixel(game->image, rotation_matrice2(point, form.vector, teta).x, rotation_matrice2(point, form.vector, teta).y, form.color);
+		//teta += (float) 360.0 / (form.dim.x * 6);
+		teta++;
+	}
+	return (1);
+}
+int display_cir2(t_game *game, t_form forme)
+{
+	int i;
+	i = forme.dim.x;
+	while (i < forme.dim.y)
+	{
+		display_cir(game, form(forme.vector, vector(i, 0), forme.color));
+		i++;
 	}
 	return (1);
 }
@@ -188,10 +215,13 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 
 	tex = game->map->tex.sp_tex;
 	x = form.vector.x;
-	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
+	x_im = ft_scale(0.0, form.dim.y, 0.0, tex->width, x_inter);
+
 	tex_height = tex->height;
 	c_1 = form.vector.y - (form.dim.x / 2);
 	c_2 = form.vector.y + (form.dim.x / 2);
+
+
 	y = 0;
 	while (y < game->image->height)
 	{
