@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/07 15:26:22 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 11:12:42 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ t_color		clerp(t_color c1, t_color c2, double p);
 t_color		get_pixel(t_image *image, int x, int y);
 t_vector	vector(float x, float y);
 t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *game);
-t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprite);
-t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y);
+t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_list **lst);
+t_vector	rotation_matrice(t_game *game, int x, int y);
 char		*to_next_char(char *str, char c);
 char		*get_val(char *line, char *key);
 void		ft_puterror(char *s);

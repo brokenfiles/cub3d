@@ -53,7 +53,7 @@ int			direction_change(t_player *player, float inc)
 	return (1);
 }
 
-t_vector	rotation_matrice(t_tex tex, t_game *game, int x, int y)
+t_vector	rotation_matrice(t_game *game, int x, int y)
 {
 	t_vector	vector;
 	float		alpha;

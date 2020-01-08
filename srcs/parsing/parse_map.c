@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/07 18:07:51 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 10:23:39 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ int	parse_map(t_game *game, char *map_name)
 //				return (0);
 			if (ft_strlen(line) > 3)
 			{
-				game->map->map = malloc(sizeof(char **) * (current_line + 1));
-				game->map->map[current_line++] = line;
+
 			}
 			else
 				free(line);

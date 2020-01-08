@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 11:37:44 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 10:43:43 by llaurent         ###   ########.fr       */
+/*   Created: 2019/11/06 10:12:16 by llaurent          #+#    #+#             */
+/*   Updated: 2019/11/06 10:18:28 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_bzero(void *s, unsigned int n)
-{
-	unsigned char	*d;
-	unsigned int	index;
+#include "../../includes/libft.h"
 
-	index = 0;
-	d = (unsigned char *)s;
-	while (index < n)
-	{
-		d[index] = '\0';
-		index++;
-	}
+void	ft_lstadd_front(t_list **alst, t_list *new)
+{
+	if (alst)
+		new->next = *alst;
+	*alst = new;
 }

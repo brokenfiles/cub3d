@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/07 15:18:57 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/08 10:42:58 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,17 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				libs/libft/ft_strnstr.c\
 				libs/libft/ft_strchr.c\
 				libs/libft/ft_stronly.c\
+				libs/libft/ft_calloc.c\
+				libs/libft/ft_lstadd_front.c\
+				libs/libft/ft_lstadd_back.c\
+				libs/libft/ft_lstclear.c\
+				libs/libft/ft_lstdelone.c\
+				libs/libft/ft_lstiter.c\
+				libs/libft/ft_lstlast.c\
+				libs/libft/ft_lstmap.c\
+				libs/libft/ft_lstnew.c\
+				libs/libft/ft_bzero.c\
+				libs/libft/ft_lstsize.c\
 				libs/get_next_line/get_next_line.c\
 				libs/get_next_line/get_next_line_utils.c
 SRCSH		= includes/cub3d.h

@@ -33,7 +33,7 @@ int display_tri(t_game *game, t_form form)
 		y = form.vector.y - (form.vector.x - x) / 3;
 		while (y <= form.vector.y + (form.vector.x - x) / 3)
 		{
-			image_set_pixel(game->image, rotation_matrice(game->map->tex, game, x, y).x, rotation_matrice(game->map->tex, game, x, y).y, form.color);
+			image_set_pixel(game->image, rotation_matrice(game, x, y).x, rotation_matrice(game, x, y).y, form.color);
 			y++;
 		}
 		x--;

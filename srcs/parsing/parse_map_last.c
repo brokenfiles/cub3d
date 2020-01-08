@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 15:55:24 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/08 10:38:02 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,7 @@ int	fill_map(char *map_name, t_game *game)
 	char	**splitted;
 	char	*content;
 	int		index;
+	int		last_len;
 
 	index = 0;
 	if (!(content = get_content(map_name)))
@@ -264,10 +265,14 @@ int	fill_map(char *map_name, t_game *game)
 		return (free_splitted(splitted, 0));
 	if (!ft_stronly("1", game->map->map[0]) || !ft_stronly("1", game->map->map[game->map->lines - 1]))
 		return (free_splitted(splitted, 0));
+	last_len = -1;
 	while (game->map->map[index])
 	{
+		if (last_len != -1 && last_len != ft_strlen(game->map->map[index]))
+			return (0);
 		if (game->map->map[index][0] != '1' || game->map->map[index][ft_strlen(game->map->map[index]) - 1] != '1')
 			return (0);
+		last_len = ft_strlen(game->map->map[index]);
 		index++;
 	}
 	if (!fill_values(splitted, game))
