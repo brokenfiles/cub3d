@@ -14,8 +14,7 @@
 
 void		reinit_player(t_game *game)
 { //TODO : Remmettre les coeurs
-	game->p.pos.x = game->map->spawn.y;
-	game->p.pos.y = game->map->spawn.x;
+	game->p.pos = game->map->spawn;
 	game->p.yaw = game->map->spawn_yaw;
 	game->p.health = 100;
 }
