@@ -22,7 +22,7 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				srcs/events/events.c\
 				srcs/utils/errors.c\
 				srcs/utils/handler_struct.c\
-				srcs/utils/other.c\
+				srcs/utils/save_img.c\
 				srcs/cub3d.c\
 				libs/libft/ft_putstr.c\
 				libs/libft/ft_split.c\

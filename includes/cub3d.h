@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 16:27:50 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/09 16:45:27 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			valid_map(t_game *game);
 t_vector	next_inter(t_vector p, t_vector vec, float teta,
 					   int *wall, t_game *game);
 t_vector	next_hit(t_map *map, t_vector p, float teta,
-					 int *wall, t_game *game, t_sprite *sprite, int x);
+					 int *wall, t_game *game, t_sprite *sprites, int x);
 int			set_pixel_transparent(t_game *game,
 									 t_vector pos, t_color color, float alpha);
 int			render(t_game *game);

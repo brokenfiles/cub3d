@@ -82,6 +82,7 @@ typedef struct	s_sprite
 {
 	t_vector	pos;
 	int			wall;
+	int			defined;
 	int			first_x;
 }				t_sprite;
 typedef struct	s_game

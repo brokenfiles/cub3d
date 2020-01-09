@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 15:57:11 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:26:40 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,30 @@ t_vector next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	return (res);
 }
 
-t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprite, int x)
+t_sprite	init_sprite()
+{
+	t_sprite	sprite;
+
+	sprite.defined = 0;
+	sprite.pos.x = -1;
+	sprite.pos.y = -1;
+	sprite.wall = -1;
+	return (sprite);
+}
+
+void	clear_sprites(t_sprite *sprites, int n)
+{
+	while (n-- > 0)
+		sprites[n + 1] = init_sprite();
+}
+
+t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprites, int x)
 {
 	t_vector	res;
 	int			number;
 	int			hit_x; //mettre sous forme de vecteur
 	int			hit_y;
+	t_sprite	sprite;
 
 	number = 0;
 	if (!map->map[(int)p.y][(int)p.x])
@@ -60,6 +78,8 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		return (res);
 	hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
 	hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+	clear_sprites(sprites, 9);
+	int i = 0;
 	while (map->map[hit_y][hit_x] && (game->map->map[hit_y][hit_x] != '1')) //
 	{
 		if (!ft_strchr("WENSABCD0132", map->map[hit_y][hit_x]))
@@ -78,13 +98,19 @@ t_vector next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 		if (map->map[hit_y][hit_x] == '2')
 		{
-			sprite->pos.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-			sprite->pos.x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
-			sprite->wall = *wall;
+			sprite.pos.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+			sprite.pos.x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+			sprite.wall = *wall;
+			sprite.defined = 1;
+			i++;
+			sprites[i] = sprite;
+//			ft_lstadd_front(lst, ft_lstnew(&sprite));
 		}
 	}
 	return (res);
 }
+
+
 
 int		set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alpha)
 {
@@ -98,29 +124,35 @@ int		set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alph
 	return (1);
 }
 
-int display_sprite(t_game *game, t_list *lst_sprite, int x, float angle)
+int display_sprite(t_game *game, t_sprite *sprites, int x, float angle)
 {
 	float teta;
 	float dist;
 	float x_inter;
 	t_sprite *sprite;
+	int 	index;
 
-	sprite = lst_sprite->content;
-	if (sprite->pos.x != -1 && sprite->pos.y != -1)
+	index = 9;
+	while (index >= 0)
 	{
-		dist = sqrt(sq_dist(game->p.pos, vector((int)sprite->pos.x, (int)sprite->pos.y)));
-		teta = (((float)game->p.yaw + angle)/ 360.0) * (float)(2 * M_PI);
-		teta = teta < 0 ? 2 * M_PI + teta : teta;
-		if (teta > 3 * M_PI/2 && teta <= 2 * M_PI)
-			x_inter = sprite->wall % 2 == 0 ? (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
-		else if (teta > M_PI/2 && teta <= M_PI)
-			x_inter = sprite->wall % 2 == 0 ? (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
-		else if (teta > M_PI && teta <= 3 * M_PI / 2)
-			x_inter = sprite->wall % 2 == 0 ? 1 - (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
-		else
-			x_inter = sprite->wall % 2 == 0 ? 1 - (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
-		if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), 0x0), x_inter, dist))
-			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		sprite = &sprites[index];
+		if (sprite->defined == 1)
+		{
+			dist = sqrt(sq_dist(game->p.pos, vector((int)sprite->pos.x, (int)sprite->pos.y)));
+			teta = (((float)game->p.yaw + angle)/ 360.0) * (float)(2 * M_PI);
+			teta = teta < 0 ? 2 * M_PI + teta : teta;
+			if (teta > 3 * M_PI/2 && teta <= 2 * M_PI)
+				x_inter = sprite->wall % 2 == 0 ? (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
+			else if (teta > M_PI/2 && teta <= M_PI)
+				x_inter = sprite->wall % 2 == 0 ? (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
+			else if (teta > M_PI && teta <= 3 * M_PI / 2)
+				x_inter = sprite->wall % 2 == 0 ? 1 - (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
+			else
+				x_inter = sprite->wall % 2 == 0 ? 1 - (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
+			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), 0x0), x_inter, dist))
+				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		}
+		index--;
 	}
 	return (1);
 }
@@ -129,7 +161,7 @@ int				render(t_game *game)
 {
 	t_vector hit;
 	t_sprite sprite;
-	t_list *lst_sprite;
+	t_sprite *sprites;
 	float angle;
 	float angle_copy; //DEGAGE dans game
 	int x;
@@ -139,20 +171,22 @@ int				render(t_game *game)
 	x = 0;
 	angle = game->image->width * (float)(1.0f / (game->image->height / 17)); //pas besoin de le recalculer a chaque nouveau render TODO : mettre cette valeur dans une structure
 	angle_copy = angle;
-	lst_sprite = ft_lstnew(&sprite);
+	sprites = malloc(sizeof(struct s_sprite) * 10);
 	while (angle > -angle_copy)
 	{
+		clear_sprites(sprites, 9);
 		sprite.pos = vector(-1, -1);
-		hit = next_hit(game->map, game->p.pos, (float)game->p.yaw + angle, &wall, game, &sprite, x);
+		hit = next_hit(game->map, game->p.pos, (float)game->p.yaw + angle, &wall, game, sprites, x);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		dist = (float)sqrt(sq_dist(game->p.pos, hit));
 		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), 0x0), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		display_sprite(game, lst_sprite, x, angle);
+		display_sprite(game, sprites, x, angle);
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
+	free(sprites);
 	display_bonus(game);
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 //	mlx_put_image_to_window(game->ptr, game->win, game->map->tex.sp_tex->image, 0, 0); //PERMET D'AFFICHER UNE IMAGE
