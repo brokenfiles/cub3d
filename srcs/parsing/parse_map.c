@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 14:17:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:59:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_resolution(t_game *game, char *line)
 	return (1);
 }
 
-int	get_texture(t_game *game, char *line)
+int	get_texture(t_game *game, char *line, int *tex_counter)
 {
 	int	all_was_good;
 
@@ -41,6 +41,7 @@ int	get_texture(t_game *game, char *line)
 		all_was_good = load_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "));
 	else if (!ft_strncmp(line, "S ", 2))
 		all_was_good = load_tex(game, &game->map->tex.sp_tex, get_val(line, "S "));
+	all_was_good ? (*tex_counter)++ : all_was_good;
 	return (all_was_good);
 }
 
@@ -85,14 +86,15 @@ int		free_entire_map(char **str)
 
 int		fill_temp_map(t_game *game, char *line, char **temp)
 {
-	(*temp) = ft_strnew(ft_strlen(game->map->map[0]) + ft_strlen(line) + 1);
+	if (!((*temp) = ft_strnew(ft_strlen(game->map->map[0]) + ft_strlen(line) + 1)))
+		return (0);
 	(*temp) = ft_strncat((*temp), game->map->map[0], ft_strlen(game->map->map[0]));
 	(*temp) = ft_strncat((*temp), "\n", 1);
 	(*temp) = ft_strncat((*temp), line, ft_strlen(line));
 	free_entire_map(game->map->map);
-	if (!(game->map->map = (char **)malloc(sizeof(char *) * 2)))
+	if (!(game->map->map = malloc(sizeof(char *) * 2)))
 		return (0);
-	game->map->map[0] = ft_strdup((*temp));
+	game->map->map[0] = ft_strdup(*temp);
 	game->map->map[1] = NULL;
 	free((*temp));
 	return (1);
@@ -113,7 +115,8 @@ int	get_map(t_game *game, char *line)
 		game->map->map[1] = NULL;
 		return (1);
 	}
-	fill_temp_map(game, line, &temp);
+	if (!(fill_temp_map(game, line, &temp)))
+		return (0);
 	return (1);
 }
 
@@ -121,9 +124,11 @@ int	read_map(t_game *game, int fd)
 {
 	char	*line;
 	int		continue_read;
+	int		tex_counter;
 
 	continue_read = 1;
 	game->map->map = NULL;
+	tex_counter = 0;
 	while (get_next_line(fd, &line))
 	{
 		if (!ft_strncmp(line, "R ", 2))
@@ -131,7 +136,7 @@ int	read_map(t_game *game, int fd)
 		else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
 				 || !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
 				 || !ft_strncmp(line, "S ", 2))
-			continue_read = get_texture(game, line);
+			continue_read = get_texture(game, line, &tex_counter);
 		else if (!ft_strncmp(line, "C ", 2) || !ft_strncmp(line, "F ", 2))
 			continue_read = get_color(game, line, line[0]);
 		else if (ft_strlen(line) > 0 && line[0] == '1')
@@ -141,6 +146,8 @@ int	read_map(t_game *game, int fd)
 			return (0);
 	}
 	free(line);
+	if (tex_counter < 5)
+		return (0);
 	return (1);
 }
 

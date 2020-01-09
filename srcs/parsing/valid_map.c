@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:42:21 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 14:14:36 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:14:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	valid_map(t_game *game)
 		return (0);
 	if (!map->spawn_yaw && !game->p.yaw && !game->p.pos.x && !game->p.pos.y)
 		return (0);
-	printf("d\n");
 	map->lines = index;
 	if (!ft_stronly("1", map->map[index - 1]))
 		return (1);

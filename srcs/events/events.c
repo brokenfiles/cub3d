@@ -6,47 +6,48 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 12:25:33 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 15:03:03 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+void		reinit_player(t_game *game)
+{ //TODO : Remmettre les coeurs
+	game->p.pos.x = game->map->spawn.y;
+	game->p.pos.y = game->map->spawn.x;
+	game->p.yaw = game->map->spawn_yaw;
+	game->p.health = 100;
+}
+
+void		regain_life(t_game *game, int x, int y)
+{
+	if (game->p.health < 100)
+		game->p.health = (game->p.health < 100 - 20) ? game->p.health + 20 : 100; //Passer le 20 en #Define
+	game->map->map[y][x] = '0';
+}
+
+
 void		move_player(t_game *game, int sign)
 {
-	int	x;
-	int	y;
-	int	b;
-	y = (int)(game->p.pos.y + -sign * game->p.speed * sin((game->p.yaw / 360.0)
-															* (float) (2 * M_PI)));
-	x = (int)(game->p.pos.x + sign * game->p.speed * cos((game->p.yaw / 360.0)
-														   * (float) (2 * M_PI)));
-	b = (game->map->map[y][x] == '0' || game->map->map[y][x] == 'W' || game->map->map[y][x] == 'E' || game->map->map[y][x] == 'N' || game->map->map[y][x] == 'S' || game->map->map[y][x] == '2');
-//	if (game->map->map[(int)game->p.pos.y][(int)game->p.pos.x] == '3' && game->map->map[y][x] != '3')
-//		game->map->map[(int)game->p.pos.y][(int)game->p.pos.x] = '2';
-	if (game->map->map[y][x] && !(b))
+	t_vector new_pos;
+	char val;
+
+	new_pos.y = game->p.pos.y + -sign * game->p.speed * sin((game->p.yaw / 360.0) * (float) (2 * M_PI));
+	new_pos.x = game->p.pos.x + sign * game->p.speed * cos((game->p.yaw / 360.0) * (float) (2 * M_PI));
+	val = game->map->map[(int)new_pos.y][(int)new_pos.x];
+	if (val && !(val == '0' || val == 'W' || val == 'E' || val == 'N' || val == 'S' || val == '2')) //est-ce quon peut pas remplacer par ft_strchr() ?
 	{
 		game->p.health -= 2;
 		if (game->p.health <= 0)
-		{
-			printf("Tu es mort.\n");
-			game->p.pos.x = game->map->spawn.y;
-			game->p.pos.y = game->map->spawn.x;
-			game->p.yaw = game->map->spawn_yaw;
-			game->p.health = 100;
-		}
-		return ;
+			reinit_player(game);
 	}
-	if (b)
+	if (val == '0' || val == 'W' || val == 'E' || val == 'N' || val == 'S' || val == '2') //est-ce quon peut pas remplacer par ft_strchr() ?
 	{
-		if (game->map->map[y][x] == '2')
-		{
-			if (game->p.health < 100)
-				game->p.health = (game->p.health < 100 - 20) ? game->p.health + 20 : 100;
-			game->map->map[y][x] = '0';
-		}
-		game->p.pos.x += sign * game->p.speed * cos((game->p.yaw / 360.0) * (float) (2 * M_PI));
-		game->p.pos.y += -sign * game->p.speed * sin((game->p.yaw / 360.0) * (float) (2 * M_PI));
+		if (val == '2')
+			regain_life(game, (int)new_pos.x, (int)new_pos.y);
+		game->p.pos.x = new_pos.x;
+		game->p.pos.y = new_pos.y;
 	}
 }
 
@@ -56,25 +57,6 @@ int			direction_change(t_player *player, float inc)
 	if (player->yaw > 360 || player->yaw <= 0)
 		player->yaw = player->yaw > 0 ? player->yaw % 360 : 360;
 	return (1);
-}
-
-t_vector	rotation_matrice(t_game *game, int x, int y)
-{
-	t_vector	vector;
-	float		alpha;
-	float		c;
-	float		s;
-
-	alpha = (game->p.yaw / 360.0) * (float) (2 * M_PI);
-	c = -cos(alpha);
-	s = -sin(alpha);
-	vector.x = (x - (game->image->width / MAP_SIZE) * game->p.pos.x) * c +
-				(y - (game->image->width / MAP_SIZE) * game->p.pos.y) * s +
-			game->image->width / MAP_SIZE * game->p.pos.x;
-	vector.y = -(x - (game->image->width / MAP_SIZE) * game->p.pos.x) * s +
-				(y - (game->image->width / MAP_SIZE) * game->p.pos.y) * c +
-			(game->image->width / MAP_SIZE) * game->p.pos.y;
-	return (vector);
 }
 
 t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta)
@@ -88,7 +70,7 @@ t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta)
 	c = -cos(alpha);
 	s = -sin(alpha);
 	vector.x = (point.x - origin.x) * c +
-				(point.y - origin.y) * s + origin.x;
+			   (point.y - origin.y) * s + origin.x;
 	vector.y = -(point.x - origin.x) * s +
 			   (point.y - origin.y) * c +
 			   origin.y;
@@ -115,9 +97,9 @@ int			handle_key(int key, void *param)
 		while (index > 0)
 		{
 			y = (int)(game->p.pos.y + -1 * index * sin((game->p.yaw / 360.0)
-																 * (float) (2 * M_PI)));
+													   * (float) (2 * M_PI)));
 			x = (int)(game->p.pos.x + 1 * index * cos((game->p.yaw / 360.0)
-																* (float) (2 * M_PI)));
+													  * (float) (2 * M_PI)));
 			if (game->map->map[y][x] == '2')
 			{
 				game->map->map[y][x] = '3';
@@ -159,7 +141,7 @@ int			handle_key(int key, void *param)
 	else if (key == 29)
 		game->p.rot_speed = 7;
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0 ||
-			key == 27 || key == 24 || key == 29)
+		key == 27 || key == 24 || key == 29)
 	{
 		if (!render(game))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));

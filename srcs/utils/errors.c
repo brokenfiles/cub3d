@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 13:43:10 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:42:30 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int quit(t_game *game, int code, char *message)
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
-	if (game && game->image)
-		free(game->image);
-	if (game && game->ptr)
-		free(game->ptr);
-	if (game && game->win)
-		free(game->win);
+//	if (game && game->image)
+//		free(game->image);
+//	if (game && game->ptr)
+//		free(game->ptr);
+//	if (game && game->win)
+//		free(game->win);
 //	if (game && game->map->tex.sp_tex)
 //		free(game->map->tex.sp_tex);
 //	if (game && game->map->tex.ea_tex)
@@ -67,7 +67,7 @@ int quit(t_game *game, int code, char *message)
 //		free_map(game->map->map, index);
 //	if (game)
 //		free(game);
-//	system("leaks cub3d");
+	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

@@ -38,7 +38,6 @@ t_vector	next_inter(t_vector p, t_vector vec, float teta,
 					   int *wall, t_game *game);
 t_vector	next_hit(t_map *map, t_vector p, float teta,
 					 int *wall, t_game *game, t_sprite *sprite, int x);
-t_vector	rotation_matrice(t_game *game, int x, int y);
 t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta);
 char		*to_next_char(char *str, char c);
 char		*get_val(char *line, char *key);
