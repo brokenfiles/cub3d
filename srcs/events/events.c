@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 15:03:03 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/09 15:15:00 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta)
 	c = -cos(alpha);
 	s = -sin(alpha);
 	vector.x = (point.x - origin.x) * c +
-			   (point.y - origin.y) * s + origin.x;
+				(point.y - origin.y) * s + origin.x;
 	vector.y = -(point.x - origin.x) * s +
 			   (point.y - origin.y) * c +
 			   origin.y;
@@ -97,9 +97,9 @@ int			handle_key(int key, void *param)
 		while (index > 0)
 		{
 			y = (int)(game->p.pos.y + -1 * index * sin((game->p.yaw / 360.0)
-													   * (float) (2 * M_PI)));
+																 * (float) (2 * M_PI)));
 			x = (int)(game->p.pos.x + 1 * index * cos((game->p.yaw / 360.0)
-													  * (float) (2 * M_PI)));
+																* (float) (2 * M_PI)));
 			if (game->map->map[y][x] == '2')
 			{
 				game->map->map[y][x] = '3';
@@ -141,7 +141,7 @@ int			handle_key(int key, void *param)
 	else if (key == 29)
 		game->p.rot_speed = 7;
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP || key == 1 || key == 13 || key == 2 || key == 0 ||
-		key == 27 || key == 24 || key == 29)
+			key == 27 || key == 24 || key == 29)
 	{
 		if (!render(game))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));

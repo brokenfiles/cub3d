@@ -46,9 +46,10 @@ char	*ft_strnew(size_t n)
 	char	*string;
 	int		index;
 
-	if (!(string = (char *)malloc(n)))
+	if (!(string = (char *)malloc(n + 1)))
 		return (NULL);
 	index = 0;
+	string[index] = 0;
 	while (index < n)
 		string[index++] = 0;
 	return (string);

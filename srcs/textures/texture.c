@@ -62,10 +62,6 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 	if ((img = malloc(sizeof(t_image))) == NULL)
 		return (NULL);
-	img->width = 0;
-	img->height = 0;
-	img->ptr = NULL;
-	img->bpp = 0;
 	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->width, &img->height)) == NULL)
 		return (0);
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
