@@ -6,19 +6,21 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/06 09:52:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 12:31:17 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	init_player(t_player *player)
+t_player	init_player()
 {
-	player->rot_speed = 4;
-	player->speed = 0.5;
-	player->health = 100;
-	player->size = 1;
-	return (1);
+	t_player	player;
+
+	player.rot_speed = 4;
+	player.speed = 0.5;
+	player.health = 100;
+	player.size = 1;
+	return (player);
 }
 
 t_game		*init_game()
@@ -29,12 +31,13 @@ t_game		*init_game()
 		return (NULL);
 	if (!(game->image = malloc(sizeof(struct s_image))))
 		return (NULL);
-	game->ptr = NULL;
-	if (!(game->p = malloc(sizeof(struct s_player))))
-		return (NULL);
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (NULL);
+	game->ptr = NULL;
+	game->p = init_player();
 	game->win = NULL;
+	game->image->height = 0;
+	game->image->width = 0;
 	return (game);
 }
 

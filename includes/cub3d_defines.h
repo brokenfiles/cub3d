@@ -5,8 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
+/*   Updated: 2020/01/09 13:36:09 by llaurent         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d_defines.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 14:30:10 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 11:03:09 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +30,7 @@
 # define NORTH								90
 # define EAST								0
 # define WEST								180
-# define SOUTH								-90
+# define SOUTH								270
 # define MAX_ROT_SPEED						90
 # define MAP_SIZE							200
 # define MINIMAP_PLAYER_COLOR				0xA896FF
@@ -29,6 +40,11 @@
 # define AIM_CIRCLE_COLOR					0xDC4A44
 # define AIM_CIRCLE_SIZE					7
 # define AIM_COLOR							0xFFFFFF
+# define WALL_COLOR							0x474347
+# define VOID_COLOR							0xFFFFFF
+# define P_COLOR							0x4749FF
+# define MAP_ONLY							"WENS012"
+# define POS_ONLY							"WENS"
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
 # define ARGUMENT_DISABLE_MAP				"--disable-map"

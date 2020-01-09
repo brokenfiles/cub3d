@@ -6,13 +6,14 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/08 10:44:02 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/09 14:19:31 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCSC		=	srcs/parsing/parse_map_last.c\
 				srcs/parsing/parse_map.c\
 				srcs/parsing/parse_map_utils.c\
+				srcs/parsing/valid_map.c\
 				srcs/raytracing/display.c\
 				srcs/raytracing/display_2.c\
 				srcs/textures/texture.c\

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 16:05:47 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 13:18:06 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_value(char **splitted, char *key)
 	return (NULL);
 }
 
-int	get_position(char **map, t_player *p, t_game *game)
+int	get_position2(char **map, t_player p, t_game *game)
 {
 	int		index;
 	int		index2;
@@ -56,15 +56,14 @@ int	get_position(char **map, t_player *p, t_game *game)
 			if (ft_strchr("WENS", map[index][index2]))
 			{
 				game->map->spawn = vector(index, index2);
-				p->pos.y = index;
-				p->pos.x = index2;
-				p->yaw = 90.0;
-				p->yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
-				p->yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
-				p->yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
-				game->map->spawn_yaw = (map[index][index2] == 'S' ? 270.0 : p->yaw);
-				game->map->spawn_yaw = (map[index][index2] == 'E' ? 360.0 : p->yaw);
-				game->map->spawn_yaw = (map[index][index2] == 'W' ? 180.0 : p->yaw);
+				game->p.pos = vector(index2, index);
+				game->p.yaw = 90.0;
+				game->p.yaw = (map[index][index2] == 'S' ? 270.0 : game->p.yaw);
+				game->p.yaw = (map[index][index2] == 'E' ? 360.0 : game->p.yaw);
+				game->p.yaw = (map[index][index2] == 'W' ? 180.0 : game->p.yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'S' ? 270.0 : game->p.yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'E' ? 360.0 : game->p.yaw);
+				game->map->spawn_yaw = (map[index][index2] == 'W' ? 180.0 : game->p.yaw);
 				return (0);
 			}
 			index2++;
@@ -238,11 +237,8 @@ int	fill_values(char **splitted, t_game *game)
 	free_splitted(splitted, 1);
 	free_splitted(floor_split, 1);
 	free_splitted(sky_split, 1);
-	game->map->tex.wall_color = 0x474347;
-	game->map->tex.void_color = 0xFFFFFF;
-	game->map->tex.p_color = 0x4749FF;
 	game->map->tex.size = 10;
-	get_position(game->map->map, game->p, game);
+	get_position2(game->map->map, game->p, game);
 	return (1);
 }
 
@@ -266,6 +262,7 @@ int	fill_map(char *map_name, t_game *game)
 	if (!ft_stronly("1", game->map->map[0]) || !ft_stronly("1", game->map->map[game->map->lines - 1]))
 		return (free_splitted(splitted, 0));
 	last_len = -1;
+//	return (0);
 	while (game->map->map[index])
 	{
 		if (last_len != -1 && last_len != ft_strlen(game->map->map[index]))

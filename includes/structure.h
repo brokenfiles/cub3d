@@ -57,9 +57,6 @@ typedef struct	s_tex
 	t_image		*floor_tex;
 	char		*sky_color;
 	char		*floor_color;
-	int			wall_color;
-	int			void_color;
-	int			p_color;
 	int			size;
 }				t_tex;
 typedef struct	s_map
@@ -92,7 +89,7 @@ typedef struct	s_game
 	void		*ptr;
 	void		*win;
 	t_map		*map;
-	t_player	*p;
+	t_player	p;
 	t_image		*image;
 	int			save_first_image;
 	int			disable_map;

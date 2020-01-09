@@ -13,30 +13,23 @@
 
 #include "../../includes/cub3d.h"
 
-/**
- * used to display a triangle
- * TODO: change pixelput to images
- * @deprecated for now
- * @param t_data data
- * @param t_player player
- * @param t_triangle triangle
- * @return int (1 = success, 0 = fail)
- */
 int display_tri(t_game *game, t_form form)
 {
-	int y;
-	int x;
-	x = form.vector.x;
-	y = form.vector.y;
-	while (x >= form.vector.x - form.dim.x)
+	t_vector point;
+	t_vector rot;
+
+	point.x = form.vector.x;
+	point.y = form.vector.y;
+	while (point.x >= form.vector.x - form.dim.x)
 	{
-		y = form.vector.y - (form.vector.x - x) / 3;
-		while (y <= form.vector.y + (form.vector.x - x) / 3)
+		point.y = form.vector.y - (form.vector.x - point.x) / 3;
+		while (point.y <= form.vector.y + (form.vector.x - point.x) / 3)
 		{
-			image_set_pixel(game->image, rotation_matrice2(vector(x, y), vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), game->p->yaw).x, rotation_matrice2(vector(x, y), vector((game->image->width / MAP_SIZE) * game->p->pos.x, (game->image->width / MAP_SIZE) * game->p->pos.y), game->p->yaw).y, form.color);
-			y++;
+			rot = rotation_matrice2(point, vector(form.vector.x, form.vector.y), game->p.yaw);
+			image_set_pixel(game->image, rot.x, rot.y, form.color);
+			point.y++;
 		}
-		x--;
+		point.x--;
 	}
 	return (1);
 }
@@ -68,7 +61,7 @@ int display_rec(t_game *game, t_form form, t_image **image)
 	return (1);
 }
 
-int display_rec_trans(t_game *game, t_form form, t_image **image)
+int display_rec_trans(t_game *game, t_form form, t_image **image) //Est-ce qu'on peut pas avoir une seule fonction display_rec qui permet de set la transparence ?
 {
 	int y;
 	int x;
@@ -87,7 +80,7 @@ int display_rec_trans(t_game *game, t_form form, t_image **image)
 	return (1);
 }
 
-int		display_circle(t_game *game, t_form circle, float thick)
+int		display_circle(t_game *game, t_form circle, float thick) //A SUPPRIMER
 {
 	float	dist;
 	int		x;
@@ -154,7 +147,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 	float	x_im;
 	float	y_im;
 	int color;
-	int		tex_height, c_1, c_2;
+	int		c_1, c_2;
 	t_image *tex;
 
 	if (wall == 1)
@@ -165,11 +158,8 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		tex = game->map->tex.ea_tex;
 	if (wall == 4)
 		tex = game->map->tex.so_tex;
-	if (wall == 6)
-		tex = game->map->tex.sp_tex;
 	x = form.vector.x;
 	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
-	tex_height = tex->height;
 	c_1 = form.vector.y - (form.dim.y / 2);
 	c_2 = form.vector.y + (form.dim.y / 2);
 	while (form.vector.x + form.dim.x > x)
@@ -179,23 +169,15 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		{
 			if (y > form.vector.y - (form.dim.y / 2) && y <= form.vector.y + (form.dim.y / 2))
 			{
-				y_im = ft_scale(c_1, c_2, 0, tex_height, y);
+				y_im = ft_scale(c_1, c_2, 0, tex->height, y);
 //				dist = 255 / (255 / dist);
 				color = get_pixel(tex, x_im, y_im).value & 0xFFFFFF;
 //				color = convert_rgb(get_pixel(tex, x_im, y_im).rgba.r - dist, get_pixel(tex, x_im, y_im).rgba.g - dist, get_pixel(tex, x_im, y_im).rgba.b - dist);
 //				image_set_pixel(game->image, x, y, color);
 			}
 			else
-			{
-				if (y >= game->image->height / 2)
-					color = game->map->floor_color;
-				else
-					color = game->map->sky_color;
-			}
-			if (color != 0x000000)
-				image_set_pixel(game->image, x, y, color);
-			else
-				set_pixel_transparent(game, vector(x, y), c(color), 255);
+				color = (y >= game->image->height / 2) ? game->map->floor_color : game->map->sky_color;
+			color != 0x000000 ? image_set_pixel(game->image, x, y, color) : set_pixel_transparent(game, vector(x, y), c(color), 255);
 			y++;
 		}
 		x++;
@@ -205,9 +187,9 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 
 int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 {
-	int		y;
+	int		y; //mettre sous forme de vecteur
 	int		x;
-	float	x_im;
+	float	x_im; //mettre sous forme de vecteur
 	float	y_im;
 	int color;
 	int		tex_height, c_1, c_2;
@@ -243,6 +225,6 @@ int		display_aim(t_game *game)
 {
 	display_rec(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT + AIM_WIDTH / 2 + 8), vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
 	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
-	display_circle(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_CIRCLE_SIZE, AIM_CIRCLE_SIZE), AIM_CIRCLE_COLOR), AIM_CIRCLE_THICK);
+	display_circle(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_CIRCLE_SIZE, AIM_CIRCLE_SIZE), AIM_CIRCLE_COLOR), AIM_CIRCLE_THICK); //remplacer par la focntion display_cir
 	return (1);
 }

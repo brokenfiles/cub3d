@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 17:35:57 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:18:01 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,14 @@ int		main(int ac, char **av, char **env)
 				game->save_first_image = 1;
 			game->disable_map = 1;
 		}
-	if (!(game->p = malloc(sizeof(struct s_player))))
-		return (quit(game, EXIT_FAILURE, MSG_CANNOT_ALLOCATE_PLAYER_ERROR));
 	if (!(game->ptr = mlx_init()))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
-//	if (!parse_map(game, av[1]))
-//		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
-	if (!fill_map(av[1], game))
+	if (!parse_map(game, av[1]))
 		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
+//	if (!fill_map(av[1], game))
+//		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
 	if (!(game->win = mlx_new_window(game->ptr, game->image->width, game->image->height, GAME_NAME)))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
-	init_player(game->p);
 	if (!(game->image = new_image(game, game->image->width, game->image->height)))
 		return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
@@ -60,6 +57,4 @@ int		main(int ac, char **av, char **env)
 	if (!render(game))
 		return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 	mlx_loop(game->ptr);
-	free(game->map);
-	free(game->p);
 }
