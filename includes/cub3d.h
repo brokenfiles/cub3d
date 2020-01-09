@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 16:01:33 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/09 16:27:50 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,37 @@ int			render(t_game *game);
 //DISPLAY_FORM
 int			display_tri(t_game *game, t_form form);
 int			display_rec(t_game *game, t_form form, t_image **image);
-//DISPLAY_BONUS
-int			display_bonus(t_game *game);
-
-
-//OTHER
-int save_image(t_game *game);
-
-
-t_player	init_player();
-t_game		*init_game();
-t_form		form(t_vector vector, t_vector dim, int color);
-t_image		*xpm_image(char *xpm, t_game *game);
-t_image		*del_image(t_game *game, t_image *img);
-t_image		*new_image(t_game *game, int w, int h);
-t_color		c(int v);
-t_color		get_pixel(t_image *image, int x, int y);
-t_vector	vector(float x, float y);
-void		ft_puterror(char *s);
-void		image_set_pixel(t_image *image, int x, int y, int color);
+int			display_rec_trans(t_game *game, t_form form, t_image **image);
+int			display_circle(t_game *game, t_form circle, float thick);
 int			display_cir2(t_game *game, t_form forme);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
-int			quit(t_game *game, int code, char *message);
 int			test_line(t_game *game, t_form form,
 						 float x_inter, int wall, float dist);
+int			print_sprite(t_game *game, t_form form, float x_inter, float dist);
+//DISPLAY_BONUS
+int			display_bonus(t_game *game);
+//TEXTURES
+void		image_set_pixel(t_image *image, int x, int y, int color);
+t_image		*del_image(t_game *game, t_image *img);
+t_image		*new_image(t_game *game, int w, int h);
+t_image		*xpm_image(char *xpm, t_game *game);
 int			load_tex(t_game *game, t_image **image, char *tex);
 int			convert_rgb(int r, int g, int b);
-int			print_sprite(t_game *game, t_form form, float x_inter, float dist);
-int			display_circle(t_game *game, t_form circle, float thick);
-int			display_map(t_game *game, t_image **image);
-int			update_map(t_game *game);
-int			display_full_range(t_game *game);
-int			centered_line(t_game *game, t_form form);
-int			display_rec_trans(t_game *game, t_form form, t_image **image);
-int			save_bitmap(t_game *game, char *name);
+//ERRORS
+void		ft_puterror(char *s);
 int			free_map(char **map, int counter);
+int			quit(t_game *game, int code, char *message);
+//HANDLER STRUCT
+t_player	init_player();
+t_game		*init_game();
+t_vector	vector(float x, float y);
+t_form		form(t_vector vector, t_vector dim, int color);
+//SAVE_IMG
+int 		save_image(t_game *game);
+
+
+
+
+t_color		c(int v);
+t_color		get_pixel(t_image *image, int x, int y);
 #endif

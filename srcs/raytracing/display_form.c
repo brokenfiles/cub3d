@@ -80,7 +80,7 @@ int display_rec_trans(t_game *game, t_form form, t_image **image) //Est-ce qu'on
 	return (1);
 }
 
-int		display_circle(t_game *game, t_form circle, float thick) //A SUPPRIMER
+int		display_circle(t_game *game, t_form circle, float thick) //TODO : A SUPPRIMER
 {
 	float	dist;
 	int		x;
