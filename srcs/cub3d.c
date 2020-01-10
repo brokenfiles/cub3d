@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 12:47:25 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 15:15:34 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int		main(int ac, char **av, char **env)
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
 	if (!parse_map(game, av[1]))
 		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
-//	if (!fill_map(av[1], game))
-//		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
 	if (!(game->win = mlx_new_window(game->ptr, game->image->width, game->image->height, GAME_NAME)))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
 	if (!(game->image = new_image(game, game->image->width, game->image->height)))
@@ -56,5 +54,6 @@ int		main(int ac, char **av, char **env)
 	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
 	if (!render(game))
 		return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+//	system("leaks cub3d");
 	mlx_loop(game->ptr);
 }

@@ -49,6 +49,7 @@
 # define ARGUMENT_SAVE						"-save"
 # define ARGUMENT_DISABLE_MAP				"--disable-map"
 # define MSG_MAP_ERROR						"Invalid map."
+# define MSG_MAPNAME_ERROR					"Invalid map name."
 # define MSG_RENDERING_ERROR				"Rendering error."
 # define MSG_RENDERING_ERROR_428			"Rendering error. (ERROR_CODE 428)"
 # define MSG_RENDERING_ERROR_429			"Rendering error. (ERROR_CODE 429)"

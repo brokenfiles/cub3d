@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 14:47:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 15:23:21 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,26 +78,41 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
 	}
 }
 
-void load_nbrs(t_game *game)
+int load_nbrs(t_game *game)
 {
-	load_tex(game, &game->map->tex.nbrs[0], "textures/numbers/0.XPM");
-	load_tex(game, &game->map->tex.nbrs[1], "textures/numbers/1.XPM");
-	load_tex(game, &game->map->tex.nbrs[2], "textures/numbers/2.XPM");
-	load_tex(game, &game->map->tex.nbrs[3], "textures/numbers/3.XPM");
-	load_tex(game, &game->map->tex.nbrs[4], "textures/numbers/4.XPM");
-	load_tex(game, &game->map->tex.nbrs[5], "textures/numbers/5.XPM");
-	load_tex(game, &game->map->tex.nbrs[6], "textures/numbers/6.XPM");
-	load_tex(game, &game->map->tex.nbrs[7], "textures/numbers/7.XPM");
-	load_tex(game, &game->map->tex.nbrs[8], "textures/numbers/8.XPM");
-	load_tex(game, &game->map->tex.nbrs[9], "textures/numbers/9.XPM");
+	int index;
+	char *path;
+	char *extension;
+	char *number;
+
+	index = 0;
+	while (index < 10)
+	{
+		number = ft_itoa(index);
+		path = ft_strjoin("textures/numbers/", index != 0 ? number : "0");
+		extension = ft_strjoin(path, ".XPM");
+		if (!load_tex(game, &game->map->tex.nbrs[index], extension))
+		{
+			free(extension);
+			free(path);
+			free(number);
+			return (quit(game, EXIT_FAILURE, "Texture error."));
+		}
+		free(extension);
+		free(path);
+		free(number);
+		index++;
+	}
+	return (1);
 }
+
 void display_coins(t_game *game)
 {
-	load_nbrs(game);
+//	load_nbrs(game);
 	//printf("1.width %d\n", game->map->tex.nbrs[0]->width);
 	//printf("1.height %d\n", game->map->tex.nbrs[0]->height);
 //	printf("coins : %d,  char 0 : %c\n", game->p.coins, game->p.coins_str[0]);
-	put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
+//	put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
 
 	//if (game->p.coins_str[0] == '0')
 //		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);

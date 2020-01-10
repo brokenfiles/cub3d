@@ -1,9 +1,33 @@
-- Votre programme doit être capable d’afficher un objet (sprite) au lieu d’un mur.
-- Refaire le parsing
-- Normer
+// POUR PUSH
 - Vérifier les leaks
-- Faire un fichier display_bonus
-- Trimer la map avec des espaces
-
+- Terminer le parsing :
+    - trimer en espace
+- Normer
+// AUTRES
+- Verifier que l'image collée ne depasse pas l'image support dans put_image_to_image
+// LISTE BONUS :
+X collision murs
+X minimap
+? textures sol et plafond
+X HUD
+? vue en haut et bas
+O sauter et s'accroupir
+X effet d'ombre sur la distance
+X bar de vie
+X objets dans le lab
+    - rajouter différents objets
+X gain ou perte de vie
+X porte ouverte ou fermée
+X porte secrete
+. animation
+O plusieurs niveaux
+? sons et musique
+O armes et méchants à combattre
+    - changer le pointeur pour différentes armes
+X - déjà fait
+? - peut être pas sur
+O - à faire
+. - pas à faire
 // OPTIONELS
 - Page menu
+- Coins
