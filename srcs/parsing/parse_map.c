@@ -179,11 +179,25 @@ int	read_map(t_game *game, int fd)
 	return (1);
 }
 
+char	*get_extension(char *map_name)
+{
+	int	index;
+
+	index = 0;
+	while (map_name[index] && map_name[index] != '.')
+		index++;
+	if (index == ft_strlen(map_name))
+		return (NULL);
+	return (&map_name[index]);
+}
+
 int	parse_map(t_game *game, char *map_name)
 {
 	int		fd;
 	char	*tmp;
 
+	if (ft_strcmp(get_extension(map_name), ".cub") != 0)
+		return (0);
 	if ((fd = open(map_name, O_RDONLY)) == -1)
 		return (0);
 	if (!read_map(game, fd))
