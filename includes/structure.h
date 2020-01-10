@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 14:09:33 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 16:50:56 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ typedef struct	s_tex
 	t_image		*we_tex;
 	t_image		*ea_tex;
 	t_image		*sp_tex;
+	t_image		*li_tex;
+	t_image		*do_tex;
+	t_image		*co_tex;
+	t_image		*lu_tex;
 	t_image		*sky_tex;
 	t_image		*floor_tex;
 	t_image		*nbrs[10];
@@ -86,9 +90,9 @@ typedef struct	s_sprite
 	t_vector	pos;
 	int			wall;
 	int			defined;
-	int			first_x;
+	t_image		*tex;
 }				t_sprite;
-typedef struct	s_game
+typedef struct	s_game //pq est ce que la structure t_tex est rangée dans map et pas directement dans game ? peut etre pour avoir differentes maps avec des textures associées?
 {
 	void		*ptr;
 	void		*win;

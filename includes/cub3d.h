@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 12:47:26 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 16:56:32 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			display_cir2(t_game *game, t_form forme);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
 int			test_line(t_game *game, t_form form,
 						 float x_inter, int wall, float dist);
-int			print_sprite(t_game *game, t_form form, float x_inter, float dist);
+int			print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image *tex);
 //DISPLAY_BONUS
 int			display_bonus(t_game *game);
 //TEXTURES

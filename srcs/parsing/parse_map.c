@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 15:37:21 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:23:12 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ int	get_texture(t_game *game, char *line, int *tex_counter)
 		all_was_good = load_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "));
 	else if (!ft_strncmp(line, "S ", 2))
 		all_was_good = load_tex(game, &game->map->tex.sp_tex, get_val(line, "S "));
+	else if (!ft_strncmp(line, "LU ", 3))
+		all_was_good = load_tex(game, &game->map->tex.lu_tex, get_val(line, "LU "));
+	else if (!ft_strncmp(line, "LI ", 3))
+		all_was_good = load_tex(game, &game->map->tex.li_tex, get_val(line, "LI "));
+	else if (!ft_strncmp(line, "CO ", 3))
+		all_was_good = load_tex(game, &game->map->tex.co_tex, get_val(line, "CO "));
+	else if (!ft_strncmp(line, "DO ", 3))
+		all_was_good = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
 	all_was_good ? (*tex_counter)++ : all_was_good;
 	return (all_was_good);
 }
@@ -134,7 +142,9 @@ int	fill_the_map(t_game *game, char *line, int *tex_counter, int *map_end)
 		return (get_resolution(game, line));
 	else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
 			 || !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
-			 || !ft_strncmp(line, "S ", 2))
+			 || !ft_strncmp(line, "S ", 2) || !ft_strncmp(line, "LU ", 3)
+			 || !ft_strncmp(line, "LI ", 3) || !ft_strncmp(line, "CO ", 3)
+			 || !ft_strncmp(line, "DO ", 3))
 		return (get_texture(game, line, tex_counter));
 	else if (!ft_strncmp(line, "C ", 2) || !ft_strncmp(line, "F ", 2))
 		return (get_color(game, line, line[0]));

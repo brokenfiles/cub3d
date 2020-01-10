@@ -158,6 +158,10 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 		tex = game->map->tex.ea_tex;
 	if (wall == 4)
 		tex = game->map->tex.so_tex;
+	if (wall == 5 || wall == 6)
+		tex = game->map->tex.do_tex;
+	if (wall == 7 || wall == 8)
+	tex = game->map->tex.lu_tex;
 	x = form.vector.x;
 	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
 	c_1 = form.vector.y - (form.dim.y / 2);
@@ -185,7 +189,7 @@ int		test_line(t_game *game, t_form form, float x_inter, int wall, float dist)
 	return (1);
 }
 
-int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
+int		print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image *tex)
 {
 	int		y; //mettre sous forme de vecteur
 	int		x;
@@ -193,9 +197,7 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist)
 	float	y_im;
 	int color;
 	int		tex_height, c_1, c_2;
-	t_image *tex;
 
-	tex = game->map->tex.sp_tex;
 	x = form.vector.x;
 	x_im = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
 

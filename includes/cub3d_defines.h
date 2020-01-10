@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 12:47:26 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 16:34:59 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@
 # define WALL_COLOR							0x474347
 # define VOID_COLOR							0xFFFFFF
 # define P_COLOR							0x4749FF
-# define MAP_ONLY							"WENS012"
+# define MAP_ONLY							"WENS0123LDHCU"
 # define POS_ONLY							"WENS"
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
