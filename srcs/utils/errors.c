@@ -39,7 +39,7 @@ int quit(t_game *game, int code, char *message)
 	index = 0;
 	if (code == EXIT_FAILURE)
 	{
-		ft_puterror("Error: ");
+		ft_puterror("Error\n");
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
