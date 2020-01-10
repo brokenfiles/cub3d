@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 12:31:17 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 13:13:56 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_player	init_player()
 	player.speed = 0.5;
 	player.health = 100;
 	player.size = 1;
+	player.coins = 1;
+	player.coins_str = ft_itoa(player.coins);
 	return (player);
 }
 

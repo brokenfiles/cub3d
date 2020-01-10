@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 15:19:43 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/07 15:30:35 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 13:06:47 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ char	*get_val(char *line, char *key)
 	if (!key || !line)
 		return (0);
 	if ((tmp = ft_strnstr(line, key, ft_strlen(key))))
-		return (line + ft_strlen(key));
+	{
+		line = line + ft_strlen(key);
+		while(*line == ' ')
+			line++;
+		return (line);
+	}
 	return (NULL);
 }

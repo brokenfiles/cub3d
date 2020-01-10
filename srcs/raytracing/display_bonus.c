@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/09 15:57:39 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 14:47:41 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,62 @@ int display_map(t_game *game, t_image **image)
 	return (1);
 }
 
+void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
+{
+	int x_l;
+	int y_l;
+
+	x_l = 0;
+	y_l = 0;
+	while (y_l < layer->height)
+	{
+		while (x_l < layer->width)
+		{
+			image_set_pixel(image, x_pos + x_l, y_pos + y_l, get_pixel(layer, x_l, y_l).value);
+			x_l++;
+		}
+		x_l = 0;
+		y_l++;
+	}
+}
+
+void load_nbrs(t_game *game)
+{
+	load_tex(game, &game->map->tex.nbrs[0], "textures/numbers/0.XPM");
+	load_tex(game, &game->map->tex.nbrs[1], "textures/numbers/1.XPM");
+	load_tex(game, &game->map->tex.nbrs[2], "textures/numbers/2.XPM");
+	load_tex(game, &game->map->tex.nbrs[3], "textures/numbers/3.XPM");
+	load_tex(game, &game->map->tex.nbrs[4], "textures/numbers/4.XPM");
+	load_tex(game, &game->map->tex.nbrs[5], "textures/numbers/5.XPM");
+	load_tex(game, &game->map->tex.nbrs[6], "textures/numbers/6.XPM");
+	load_tex(game, &game->map->tex.nbrs[7], "textures/numbers/7.XPM");
+	load_tex(game, &game->map->tex.nbrs[8], "textures/numbers/8.XPM");
+	load_tex(game, &game->map->tex.nbrs[9], "textures/numbers/9.XPM");
+}
+void display_coins(t_game *game)
+{
+	load_nbrs(game);
+	//printf("1.width %d\n", game->map->tex.nbrs[0]->width);
+	//printf("1.height %d\n", game->map->tex.nbrs[0]->height);
+//	printf("coins : %d,  char 0 : %c\n", game->p.coins, game->p.coins_str[0]);
+	put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
+
+	//if (game->p.coins_str[0] == '0')
+//		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
+//	if (game->p.coins_str[0] == '1')
+//		put_image_to_image(game->image, game->map->tex.nbrs[1], 200, 200);
+//	if (game->p.coins_str[0] == '2')
+//		put_image_to_image(game->image, game->map->tex.nbrs[2], 200, 200);
+//	if (game->p.coins_str[0] == '3')
+//		put_image_to_image(game->image, game->map->tex.nbrs[3], 200, 200);
+//	if (game->p.coins_str[0] == '4')
+//	{
+//		put_image_to_image(game->image, game->map->tex.nbrs[4], 100, 200);
+//	}
+//	if (game->p.coins_str[0] == '5')
+//		put_image_to_image(game->image, game->map->tex.nbrs[5], 200, 200);
+}
+
 int display_bonus(t_game *game)
 {
 	display_lifebar(game);
@@ -70,5 +126,6 @@ int display_bonus(t_game *game)
 		display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2), MINIMAP_PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
 		image_set_pixel(game->image, (game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y, 0xFF4A25);
 	}
+	display_coins(game);
 	return (1);
 }

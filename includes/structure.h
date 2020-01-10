@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/08 14:34:32 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:09:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct	s_tex
 	t_image		*sp_tex;
 	t_image		*sky_tex;
 	t_image		*floor_tex;
+	t_image		*nbrs[10];
 	char		*sky_color;
 	char		*floor_color;
 	int			size;
@@ -76,6 +77,8 @@ typedef struct	s_player
 	float		speed;
 	int			rot_speed;
 	float		health;
+	int			coins;
+	char		*coins_str;
 	float		size;
 }				t_player;
 typedef struct	s_sprite

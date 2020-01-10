@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 14:59:46 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:43:37 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int	get_resolution(t_game *game, char *line)
 	tmp += get_int_len(game->image->width);
 	if (!(game->image->height = ft_atoi(tmp)))
 		return (0);
+	if (game->image->height >= MAX_HEIGHT)
+		game->image->height = MAX_HEIGHT;
+	if (game->image->width >= MAX_WIDTH)
+		game->image->width = MAX_WIDTH;
+	if (game->image->height <= MIN_HEIGHT)
+		game->image->height = MIN_HEIGHT;
+	if (game->image->width <= MIN_WIDTH)
+		game->image->width = MIN_WIDTH;
 	return (1);
 }
 
@@ -100,13 +108,13 @@ int		fill_temp_map(t_game *game, char *line, char **temp)
 	return (1);
 }
 
-int	get_map(t_game *game, char *line)
+int	get_map(t_game *game, char *line, int *map_end)
 {
-	int		i;
 	char	*temp;
 
-	i = 0;
 	temp = NULL;
+	if (ft_stronly("1", line) && game->map->map)
+		*map_end = 1;
 	if (game->map->map == NULL)
 	{
 		if (!(game->map->map = malloc(sizeof(char *) * 2)))
@@ -120,31 +128,41 @@ int	get_map(t_game *game, char *line)
 	return (1);
 }
 
+int	fill_the_map(t_game *game, char *line, int *tex_counter, int *map_end)
+{
+	if (!ft_strncmp(line, "R ", 2))
+		return (get_resolution(game, line));
+	else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
+			 || !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
+			 || !ft_strncmp(line, "S ", 2))
+		return (get_texture(game, line, tex_counter));
+	else if (!ft_strncmp(line, "C ", 2) || !ft_strncmp(line, "F ", 2))
+		return (get_color(game, line, line[0]));
+	else if (ft_strlen(line) > 0 && line[0] == '1')
+		return (get_map(game, line, map_end));
+	else
+		return (game->map->map && (*map_end) == 0 ? 0 : 1);
+}
+
 int	read_map(t_game *game, int fd)
 {
 	char	*line;
 	int		continue_read;
 	int		tex_counter;
+	int		map_end;
 
 	continue_read = 1;
-	game->map->map = NULL;
 	tex_counter = 0;
+	map_end = 0;
+	game->map->map = NULL;
 	while (get_next_line(fd, &line))
 	{
-		if (!ft_strncmp(line, "R ", 2))
-			continue_read = get_resolution(game, line);
-		else if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "SO ", 3)
-				 || !ft_strncmp(line, "WE ", 3) || !ft_strncmp(line, "EA ", 3)
-				 || !ft_strncmp(line, "S ", 2))
-			continue_read = get_texture(game, line, &tex_counter);
-		else if (!ft_strncmp(line, "C ", 2) || !ft_strncmp(line, "F ", 2))
-			continue_read = get_color(game, line, line[0]);
-		else if (ft_strlen(line) > 0 && line[0] == '1')
-			continue_read = get_map(game, line);
+		continue_read = fill_the_map(game, line, &tex_counter, &map_end);
 		free(line);
 		if (!continue_read)
 			return (0);
 	}
+	fill_the_map(game, line, &tex_counter, &map_end);
 	free(line);
 	if (tex_counter < 5)
 		return (0);

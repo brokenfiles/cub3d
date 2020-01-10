@@ -1,11 +1,11 @@
-R 1400 700
-NO textures/minecraft/orange_wool.xpm
-SO textures/minecraft/blue_wool.xpm
-WE textures/minecraft/red_wool.xpm
-EA textures/minecraft/white_wool.xpm
-S textures/Jord_z_le_fils.xpm
-C 72,142,150
-F 66,150,18
+R     1400 700
+NO    textures/minecraft/orange_wool.xpm
+SO    textures/minecraft/blue_wool.xpm
+WE    textures/minecraft/red_wool.xpm
+EA    textures/minecraft/white_wool.xpm
+S     textures/Jord_z_le_fils.xpm
+C     72,142,150
+F     66,150,18
 
 1111111111111111111111111111111111111111111111111111111111111111111111111111
 1000000000000000000000000000000000000000000000000000000010000000000000000001

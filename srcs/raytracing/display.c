@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 18:26:40 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/10 13:41:00 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ int				render(t_game *game)
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 //	mlx_put_image_to_window(game->ptr, game->win, game->map->tex.sp_tex->image, 0, 0); //PERMET D'AFFICHER UNE IMAGE
 	save_image(game);
+	//printf("layer->height : %d\n", game->map->tex.sp_tex->height);
+	//printf("layer->width : %d\n", game->map->tex.sp_tex->height);
 	return (1);
 }
 
