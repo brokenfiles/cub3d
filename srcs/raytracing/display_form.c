@@ -25,7 +25,7 @@ int display_tri(t_game *game, t_form form)
 		point.y = form.vector.y - (form.vector.x - point.x) / 3;
 		while (point.y <= form.vector.y + (form.vector.x - point.x) / 3)
 		{
-			rot = rotation_matrice2(point, vector(form.vector.x, form.vector.y), game->p.yaw);
+			rot = rotation_matrice(point, vector(form.vector.x, form.vector.y), game->p.yaw);
 			image_set_pixel(game->image, rot.x, rot.y, form.color);
 			point.y++;
 		}
@@ -112,7 +112,7 @@ int display_cir(t_game *game, t_form form)
 	teta = 0;
 	while (teta < 360.0)
 	{
-		image_set_pixel(game->image, rotation_matrice2(point, form.vector, teta).x, rotation_matrice2(point, form.vector, teta).y, form.color);
+		image_set_pixel(game->image, rotation_matrice(point, form.vector, teta).x, rotation_matrice(point, form.vector, teta).y, form.color);
 		//teta += (float) 360.0 / (form.dim.x * 6);
 		teta++;
 	}

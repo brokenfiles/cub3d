@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:56:32 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 21:19:19 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,15 @@
 
 
 //EVENTS
-t_vector	rotation_matrice2(t_vector point, t_vector origin, float teta);
+t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 int			handle_key(int key, void *param);
+//MOVE
+void		move(t_game *game, int key);
+//INTERACTION
+void		interact(t_game *game);
+void		gain_life(t_game *game, int x, int y);
+void		lose_life(t_game *game);
+void		gain_coins(t_game *game, int x, int y);
 //PARSING
 int			parse_map(t_game *game, char *map_name);
 int			fill_map(char *map_name, t_game *game);
@@ -71,11 +78,16 @@ int			free_map(char **map, int counter);
 int			quit(t_game *game, int code, char *message);
 //HANDLER STRUCT
 t_player	init_player();
+void		reinit_player(t_game *game);
 t_game		*init_game();
 t_vector	vector(float x, float y);
 t_form		form(t_vector vector, t_vector dim, int color);
 //SAVE_IMG
 int 		save_image(t_game *game);
+//FT_ITOA
+char	*ft_itoa(int nbr);
+//MATRICE
+t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 
 
 

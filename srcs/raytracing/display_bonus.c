@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 16:03:22 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 19:15:34 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		display_aim(t_game *game)
 }
 
 int display_map(t_game *game, t_image **image)
-{//TODO : mettre la minimap dans une image. Faire une fonction qui permet de combiner deux images
+{//TODO : mettre la minimap dans une image.
 	// TODO: afficher seulement les parties connues de la carte
 	int x;
 	int y;
@@ -49,8 +49,8 @@ int display_map(t_game *game, t_image **image)
 			display_rec_trans(game, form(
 					vector(game->image->width / MAP_SIZE * x, game->image->width / MAP_SIZE * y),
 					vector(game->image->width / MAP_SIZE, game->image->width / MAP_SIZE),
-					game->map->map[y][x] == '1' ? WALL_COLOR : VOID_COLOR), image);
-			if (!ft_strchr("WENSABCD01", game->map->map[y][x]))
+					ft_strchr("1DH", game->map->map[y][x])? WALL_COLOR : VOID_COLOR), image);
+			if (ft_strchr("2LCU", game->map->map[y][x]))
 				display_cir2(game, form(vector(game->image->width / MAP_SIZE * (x + 0.5f), game->image->width / MAP_SIZE * (y+0.5f)), vector (0,5), 0xFF2B12));
 			x++;
 		}
@@ -106,7 +106,7 @@ int load_nbrs(t_game *game)
 	return (1);
 }
 
-void display_coins(t_game *game)
+void display_wallet(t_game *game)
 {
 //	load_nbrs(game);
 	//printf("1.width %d\n", game->map->tex.nbrs[0]->width);
@@ -137,10 +137,9 @@ int display_bonus(t_game *game)
 	if (!game->disable_map)
 	{
 		display_map(game, &game->image);
-		display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3), MINIMAP_PLAYER_COLOR));
-		display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2), MINIMAP_PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
-		image_set_pixel(game->image, (game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y, 0xFF4A25);
+		display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3), PLAYER_COLOR));
+		display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2), PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
 	}
-	display_coins(game);
+	display_wallet(game);
 	return (1);
 }

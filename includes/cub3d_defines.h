@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:34:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 19:57:52 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -23,28 +23,35 @@
 
 #ifndef CUB3D_DEFINES_H
 # define CUB3D_DEFINES_H
+//WINDOW
 # define MIN_WIDTH							500
 # define MIN_HEIGHT							500
 # define MAX_WIDTH							2560
 # define MAX_HEIGHT							1400
+//ANGLES
 # define NORTH								90
 # define EAST								0
 # define WEST								180
 # define SOUTH								270
+//PLAYER
 # define MAX_ROT_SPEED						90
+# define HP									20
+//MINIMAP
 # define MAP_SIZE							200
-# define MINIMAP_PLAYER_COLOR				0xA896FF
+# define PLAYER_COLOR						0xA896FF
+# define WALL_COLOR							0x474347
+# define VOID_COLOR							0xFFFFFF
+//AIM
 # define AIM_HEIGHT							25
 # define AIM_WIDTH							1
 # define AIM_CIRCLE_THICK					1
 # define AIM_CIRCLE_COLOR					0xDC4A44
 # define AIM_CIRCLE_SIZE					7
 # define AIM_COLOR							0xFFFFFF
-# define WALL_COLOR							0x474347
-# define VOID_COLOR							0xFFFFFF
-# define P_COLOR							0x4749FF
-# define MAP_ONLY							"WENS0123LDHCU"
+//MAP
+# define MAP_ONLY							"WENS0123LDHCUFB"
 # define POS_ONLY							"WENS"
+//OTHER
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
 # define ARGUMENT_DISABLE_MAP				"--disable-map"
@@ -60,5 +67,6 @@
 # define MSG_CANNOT_ALLOCATE_PLAYER_ERROR	"Cannot allocate player."
 # define MSG_CANNOT_INIT_MLX_ERROR			"Cannot init MLX."
 # define MSG_CANNOT_INIT_MLX_WINDOW_ERROR	"Cannot init MLX's window."
+
 
 #endif

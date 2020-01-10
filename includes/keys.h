@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:05:51 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:03:22 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:37:38 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,31 @@
 #  define K_L			108
 # else
 #  define K_ESC			53
+#  define K_COMM		12
 #  define K_NUM_MULT	67
 #  define K_NUM_DIV		75
 #  define K_NUM_PLUS	69
 #  define K_NUM_MINUS	78
 #  define K_NUM_ENTER	76
 #  define K_NUM_0		82
+//ARROWS
 #  define K_UP			126
 #  define K_DOWN		125
 #  define K_LEFT		123
 #  define K_RIGHT		124
+//NUMBERS
 #  define K_DIGIT_1		18
+#  define K_DIGIT_0		29
+//LETTERS
+#  define K_A			0
+#  define K_S			1
+#  define K_D			2
+#  define K_W			13
+#  define K_E			14
 #  define K_L			37
+#  define K_Q			259
+//OTHERS
+#  define K_MINUS		27
+#  define K_PLUS		24
 # endif
 #endif

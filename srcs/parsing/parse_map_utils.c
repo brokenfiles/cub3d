@@ -25,13 +25,13 @@ int		get_int_len(unsigned int nb)
 	return (index + 1);
 }
 
-int	free_and_return(void *allocated, int ret)
+int		free_and_return(void *allocated, int ret)
 {
 	free(allocated);
 	return (ret);
 }
 
-int	is_structure_full(t_game *game)
+int		is_structure_full(t_game *game)
 {
 	if (!game->image->width || !game->map->sky_color ||
 		!game->map->floor_color || !game->map->tex.ea_tex ||
@@ -61,7 +61,7 @@ char	*get_val(char *line, char *key)
 	if ((tmp = ft_strnstr(line, key, ft_strlen(key))))
 	{
 		line = line + ft_strlen(key);
-		while(*line == ' ')
+		while (*line == ' ')
 			line++;
 		return (line);
 	}

@@ -3,8 +3,13 @@
 - Terminer le parsing :
     - trimer en espace
 - Normer
+-ATTENTION IL FAUT ABSOLUEMENT VERIFIER LES HEADERS
+
 // AUTRES
 - Verifier que l'image collée ne depasse pas l'image support dans put_image_to_image
+- Il faut vérifier que si dans la map il y a certaines valeurs alors on a bien une texture associée...
+- on pourra définir des textures par défaut pour éviter le pbm
+
 // LISTE BONUS :
 X collision murs
 X minimap
@@ -14,20 +19,24 @@ X HUD
 O sauter et s'accroupir
 X effet d'ombre sur la distance
 X bar de vie
-X objets dans le lab
-    - rajouter différents objets
+X objets dans le maze
 X gain ou perte de vie
-X porte ouverte ou fermée
-X porte secrete
+X portes ouvertes ou fermée
+X portes secretes
 . animation
 O plusieurs niveaux
 ? sons et musique
 O armes et méchants à combattre
     - changer le pointeur pour différentes armes
+
 X - déjà fait
 ? - peut être pas sur
 O - à faire
 . - pas à faire
+
 // OPTIONELS
 - Page menu
-- Coins
+- Affichage Coins
+- si on meurt on doit remettre les méchants apres réinitialisation du jeu
+- refermer les portes
+- attention les sprites disparaissent lorsqu'on est trop proche

@@ -274,6 +274,5 @@ int	fill_map(char *map_name, t_game *game)
 	}
 	if (!fill_values(splitted, game))
 		return (free_splitted(splitted, 0));
-	//printf("res : width %d height %d\n", data->width, data->height);
 	return (1);
 }
