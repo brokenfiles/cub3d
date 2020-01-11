@@ -101,6 +101,7 @@ typedef struct	s_game //pq est ce que la structure t_tex est rangée dans map et
 	t_image		*image;
 	int			save_first_image;
 	int			disable_map;
+	int			disable_bonus;
 	int			level;
 	char		**level_names;
 }				t_game;

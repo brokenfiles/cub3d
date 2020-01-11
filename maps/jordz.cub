@@ -4,6 +4,10 @@ SO    textures/minecraft/blue_wool.xpm
 WE    textures/minecraft/red_wool.xpm
 EA    textures/minecraft/white_wool.xpm
 S     textures/Jord_z_le_fils.xpm
+LI    textures/minecraft/heart.xpm
+DO    textures/tropical.XPM
+CO    textures/planet_rose.XPM
+LU    textures/jesus.XPM
 C     72,142,150
 F     66,150,18
 

@@ -10,6 +10,9 @@
 - Il faut vérifier que si dans la map il y a certaines valeurs alors on a bien une texture associée...
 - on pourra définir des textures par défaut pour éviter le pbm
 - attention les sprites disparaissent lorsqu'on est trop proche
+- il faut mettre par defaut les textures de life, door, coins and level_up
+- attention au changement de niveau qd le nombre dépasse le nombre de cartes renseignées
+- attention lorsqu'on joue sur plusieurs niveaux de s'assurer que la taille de l'écran et la même
 
 // LISTE BONUS :
 X collision murs

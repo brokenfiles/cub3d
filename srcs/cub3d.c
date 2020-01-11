@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/11 03:14:33 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 04:10:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,34 @@ int		set_flags(int ac, char **av, t_game *game)
 
 	nb_flag = 0;
 	game->disable_map = 0;
+	game->disable_bonus = 0;
 	game->save_first_image = 0;
 	if (ft_strcmp(av[ac - 1], ARGUMENT_SAVE) == 0)
 	{
 		game->save_first_image = 1;
 		nb_flag++;
+		if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_MAP) == 0)
+		{
+			game->disable_map = 1;
+			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_BONUS) == 0)
+			{
+				game->disable_bonus = 1;
+				nb_flag++;
+			}
+		}
+		else if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_BONUS) == 0)
+		{
+			game->disable_bonus = 1;
+			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_MAP) == 0)
+			{
+				game->disable_map = 1;
+				nb_flag++;
+			}
+		}
 	}
-	if (ft_strcmp(av[ac - 1], ARGUMENT_DISABLE_MAP) == 0)
+	else if (ft_strcmp(av[ac - 1], ARGUMENT_DISABLE_MAP) == 0)
 	{
 		game->disable_map = 1;
 		nb_flag++;
@@ -38,6 +59,46 @@ int		set_flags(int ac, char **av, t_game *game)
 		{
 			game->save_first_image = 1;
 			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_BONUS) == 0)
+			{
+				game->disable_bonus = 1;
+				nb_flag++;
+			}
+		}
+		else if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_BONUS) == 0)
+		{
+			game->disable_bonus = 1;
+			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_SAVE) == 0)
+			{
+				game->save_first_image = 1;
+				nb_flag++;
+			}
+		}
+	}
+	else if (ft_strcmp(av[ac - 1], ARGUMENT_DISABLE_BONUS) == 0)
+	{
+		game->disable_bonus = 1;
+		nb_flag++;
+		if (ft_strcmp(av[ac - 2], ARGUMENT_SAVE) == 0)
+		{
+			game->save_first_image = 1;
+			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_MAP) == 0)
+			{
+				game->disable_map = 1;
+				nb_flag++;
+			}
+		}
+		else if (ft_strcmp(av[ac - 2], ARGUMENT_DISABLE_MAP) == 0)
+		{
+			game->disable_map = 1;
+			nb_flag++;
+			if (ft_strcmp(av[ac - 2], ARGUMENT_SAVE) == 0)
+			{
+				game->save_first_image = 1;
+				nb_flag++;
+			}
 		}
 	}
 	return (nb_flag);

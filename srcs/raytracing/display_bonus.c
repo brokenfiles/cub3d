@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/11 00:22:58 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 03:55:03 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,23 @@ void display_wallet(t_game *game)
 
 int display_bonus(t_game *game)
 {
-	display_lifebar(game);
-	display_aim(game);
-	if (!game->disable_map)
+	if (!game->disable_bonus)
 	{
-		display_map(game, &game->image);
-		display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3), PLAYER_COLOR));
-		display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x, (game->image->width / MAP_SIZE) * game->p.pos.y), vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2), PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
+		display_lifebar(game);
+		display_aim(game);
+		if (!game->disable_map)
+		{
+			display_map(game, &game->image);
+			display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x,
+										  (game->image->width / MAP_SIZE) * game->p.pos.y),
+								   vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3),
+								   PLAYER_COLOR));
+			display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x,
+											 (game->image->width / MAP_SIZE) * game->p.pos.y),
+									  vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2),
+									  PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
+		}
+		display_wallet(game);
 	}
-	display_wallet(game);
 	return (1);
 }

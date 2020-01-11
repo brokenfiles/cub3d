@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 19:57:52 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 20:19:50 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -54,7 +54,8 @@
 //OTHER
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
-# define ARGUMENT_DISABLE_MAP				"--disable-map"
+# define ARGUMENT_DISABLE_BONUS				"-disable-bonus"
+# define ARGUMENT_DISABLE_MAP				"-disable-map"
 # define MSG_MAP_ERROR						"Invalid map."
 # define MSG_MAPNAME_ERROR					"Invalid map name."
 # define MSG_RENDERING_ERROR				"Rendering error."
