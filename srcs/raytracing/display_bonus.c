@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 19:15:34 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 00:22:58 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,19 @@ int display_map(t_game *game, t_image **image)
 }
 
 void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
-{
+{//verifier quon ne depasse pas la taille de l'image
 	int x_l;
 	int y_l;
+	int value;
 
 	x_l = 0;
 	y_l = 0;
-	while (y_l < layer->height)
+	while (y_l < layer->height && y_pos + y_l < image->height)
 	{
-		while (x_l < layer->width)
+		while (x_l < layer->width && x_pos + x_l < image->width)
 		{
-			image_set_pixel(image, x_pos + x_l, y_pos + y_l, get_pixel(layer, x_l, y_l).value);
+			value = get_pixel(layer, x_l, y_l).value;
+			value != -16777216 ? image_set_pixel(image, x_pos + x_l, y_pos + y_l, value) : 0;
 			x_l++;
 		}
 		x_l = 0;
@@ -78,56 +80,37 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
 	}
 }
 
-int load_nbrs(t_game *game)
+void set_char(t_game *game)
 {
-	int index;
-	char *path;
-	char *extension;
-	char *number;
+	int len;
 
-	index = 0;
-	while (index < 10)
+	len = ft_strlen(game->p.coins_str);
+	if (len == 1)
 	{
-		number = ft_itoa(index);
-		path = ft_strjoin("textures/numbers/", index != 0 ? number : "0");
-		extension = ft_strjoin(path, ".XPM");
-		if (!load_tex(game, &game->map->tex.nbrs[index], extension))
-		{
-			free(extension);
-			free(path);
-			free(number);
-			return (quit(game, EXIT_FAILURE, "Texture error."));
-		}
-		free(extension);
-		free(path);
-		free(number);
-		index++;
+		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 65, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 50, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 35, 10);
 	}
-	return (1);
+	if (len == 2)
+	{
+		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 65, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 50, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[1] - '0'], game->image->width - 35, 10);
+	}
+	if (len == 2)
+	{
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[2]], game->image->width - 65, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[1] - '0'], game->image->width - 50, 10);
+		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 35, 10);
+	}
 }
 
 void display_wallet(t_game *game)
-{
-//	load_nbrs(game);
-	//printf("1.width %d\n", game->map->tex.nbrs[0]->width);
-	//printf("1.height %d\n", game->map->tex.nbrs[0]->height);
-//	printf("coins : %d,  char 0 : %c\n", game->p.coins, game->p.coins_str[0]);
-//	put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
-
-	//if (game->p.coins_str[0] == '0')
-//		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], 200, 200);
-//	if (game->p.coins_str[0] == '1')
-//		put_image_to_image(game->image, game->map->tex.nbrs[1], 200, 200);
-//	if (game->p.coins_str[0] == '2')
-//		put_image_to_image(game->image, game->map->tex.nbrs[2], 200, 200);
-//	if (game->p.coins_str[0] == '3')
-//		put_image_to_image(game->image, game->map->tex.nbrs[3], 200, 200);
-//	if (game->p.coins_str[0] == '4')
-//	{
-//		put_image_to_image(game->image, game->map->tex.nbrs[4], 100, 200);
-//	}
-//	if (game->p.coins_str[0] == '5')
-//		put_image_to_image(game->image, game->map->tex.nbrs[5], 200, 200);
+{ //rajouter la condition si coins > 999 alors coins_str = "999"
+	display_rec(game, form(vector(game->image->width - 100, 5), vector(100, 30), 0x00FFFF),  &game->image),
+	put_image_to_image(game->image, game->map->tex.co_tex, game->image->width - 150, -30);
+	set_char(game);
+	//put_image_to_image(game->image, game->map->tex.co_tex, 200, 200);
 }
 
 int display_bonus(t_game *game)

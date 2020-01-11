@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 21:19:19 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 21:57:38 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,24 @@ void		interact(t_game *game);
 void		gain_life(t_game *game, int x, int y);
 void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
-//PARSING
+
+//PARSE MAP
 int			parse_map(t_game *game, char *map_name);
 int			fill_map(char *map_name, t_game *game);
+int			valid_map(t_game *game);
+//PARSE UTIL
+int			get_resolution(t_game *game, char *line);
+char		*get_val(char *line, char *key);
 int			get_int_len(unsigned int nb);
-int			free_and_return(void *allocated, int ret);
 int			is_structure_full(t_game *game);
 char		*to_next_char(char *str, char c);
-char		*get_val(char *line, char *key);
-int			valid_map(t_game *game);
+//PARSE FREE
+int			free_and_return(void *allocated, int ret);
+int			free_entire_map(char **str);
+//PARSE TEX
+int			get_color(t_game *game, char *line, char c);
+int			get_texture(t_game *game, char *line, int *tex_counter);
+
 //DISPLAY
 t_vector	next_inter(t_vector p, t_vector vec, float teta,
 					   int *wall, t_game *game);

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 12:04:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:03:22 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 22:12:20 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_value(char **splitted, char *key)
 	return (NULL);
 }
 
-int	get_position2(char **map, t_player p, t_game *game)
+int	get_position2(char **map, t_player p, t_game *game) //cest quoi la différence ?
 {
 	int		index;
 	int		index2;
@@ -255,14 +255,11 @@ int	fill_map(char *map_name, t_game *game)
 	if (!(splitted = ft_split(content, "\n")))
 		return (0);
 	free(content);
-	if (!get_only_map(splitted, game->map))
-		return (free_splitted(splitted, 0));
-	if (!checks(splitted))
-		return (free_splitted(splitted, 0));
+	if (!get_only_map(splitted, game->map) && !checks(splitted))
+		return (free_splitted(splitted, 0));//verifier avec louis
 	if (!ft_stronly("1", game->map->map[0]) || !ft_stronly("1", game->map->map[game->map->lines - 1]))
 		return (free_splitted(splitted, 0));
 	last_len = -1;
-//	return (0);
 	while (game->map->map[index])
 	{
 		if (last_len != -1 && last_len != ft_strlen(game->map->map[index]))

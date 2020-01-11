@@ -66,9 +66,7 @@ int	valid_map(t_game *game)
 		last_len = ft_strlen(map->map[index]);
 		index++;
 	}
-	if (!pos_found)
-		return (0);
-	if (index < 3)
+	if (!pos_found || index < 3)
 		return (0);
 	if (!map->spawn_yaw && !game->p.yaw && !game->p.pos.x && !game->p.pos.y)
 		return (0);

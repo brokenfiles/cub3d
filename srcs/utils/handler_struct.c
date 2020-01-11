@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 19:43:58 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 23:04:32 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_player	init_player(void)
 	player.health = 100;
 	player.size = 1;
 	player.coins = 0;
-	player.coins_str = ft_itoa(player.coins);
+	player.coins_str = (player.coins != 0 ? ft_itoa(player.coins) : "0");
 	return (player);
 }
 
@@ -32,7 +32,7 @@ void		reinit_player(t_game *game)
 	game->p.yaw = game->map->spawn_yaw;
 	game->p.health = 100;
 	game->p.coins = 0;
-	game->p.coins_str = ft_itoa(game->p.coins);
+	game->p.coins_str = (game->p.coins != 0 ? ft_itoa(game->p.coins) : "0");
 }
 
 t_game		*init_game(void)

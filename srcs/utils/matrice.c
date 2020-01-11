@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 20:10:15 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/10 22:21:40 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ t_vector	rotation_matrice(t_vector point, t_vector origin, float teta)
 	c = -cos(alpha);
 	s = -sin(alpha);
 	vector.x = (point.x - origin.x) * c +
-			   (point.y - origin.y) * s + origin.x;
+			(point.y - origin.y) * s + origin.x;
 	vector.y = -(point.x - origin.x) * s +
-			   (point.y - origin.y) * c + origin.y;
+			(point.y - origin.y) * c + origin.y;
 	return (vector);
 }
+
 
