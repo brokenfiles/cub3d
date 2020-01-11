@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 21:57:38 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 03:11:16 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		interact(t_game *game);
 void		gain_life(t_game *game, int x, int y);
 void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
+void		level_up(t_game *game, int x, int y);
 
 //PARSE MAP
 int			parse_map(t_game *game, char *map_name);
@@ -89,6 +90,7 @@ int			quit(t_game *game, int code, char *message);
 t_player	init_player();
 void		reinit_player(t_game *game);
 t_game		*init_game();
+void		init_level(t_game *game, int nb_level, char **av);
 t_vector	vector(float x, float y);
 t_form		form(t_vector vector, t_vector dim, int color);
 //SAVE_IMG

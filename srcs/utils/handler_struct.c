@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 23:04:32 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 03:17:19 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		reinit_player(t_game *game)
 	game->p.coins_str = (game->p.coins != 0 ? ft_itoa(game->p.coins) : "0");
 }
 
-t_game		*init_game(void)
+t_game		*init_game(int nb_level, char **av)
 {
 	t_game	*game;
 
@@ -48,9 +48,24 @@ t_game		*init_game(void)
 	game->ptr = NULL;
 	game->win = NULL;
 	game->p = init_player();
+	game->level = 0;
 	game->image->height = 0;
 	game->image->width = 0;
 	return (game);
+}
+
+void 	init_level(t_game *game, int nb_level, char **av)
+{//attention protection malloc et free ?
+	int i;
+
+	i = 0;
+	game->level_names = (char **)malloc(sizeof(char *) * nb_level + 1);
+	while (i < nb_level)
+	{
+		game->level_names[i] = ft_strdup(av[i + 1]);
+		//printf("level name : %s\n", game->level_names[i]);
+		i++;
+	}
 }
 
 t_vector	vector(float x, float y)

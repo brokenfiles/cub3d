@@ -28,6 +28,7 @@ void		move_player(t_game *game, int sign)
 	{
 		gain_life(game, (int)new_pos.x, (int)new_pos.y);
 		gain_coins(game, (int)new_pos.x, (int)new_pos.y);
+		level_up(game, (int)new_pos.x, (int)new_pos.y);
 		game->p.pos.x = new_pos.x;
 		game->p.pos.y = new_pos.y;
 	}

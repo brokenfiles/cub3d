@@ -9,11 +9,13 @@
 - Verifier que l'image collée ne depasse pas l'image support dans put_image_to_image
 - Il faut vérifier que si dans la map il y a certaines valeurs alors on a bien une texture associée...
 - on pourra définir des textures par défaut pour éviter le pbm
+- attention les sprites disparaissent lorsqu'on est trop proche
 
 // LISTE BONUS :
 X collision murs
 X minimap
 ? textures sol et plafond
+	- mettre une image fixe
 X HUD
 ? vue en haut et bas
 O sauter et s'accroupir
@@ -24,7 +26,7 @@ X gain ou perte de vie
 X portes ouvertes ou fermée
 X portes secretes
 . animation
-O plusieurs niveaux
+X plusieurs niveaux
 ? sons et musique
 O armes et méchants à combattre
     - changer le pointeur pour différentes armes
@@ -36,7 +38,12 @@ O - à faire
 
 // OPTIONELS
 - Page menu
-- Affichage Coins
+	- selection
+- page de fin
+X Affichage Coins
+X Vitesse Rotation
+- Vitesse déplacement
 - si on meurt on doit remettre les méchants apres réinitialisation du jeu
 - refermer les portes
-- attention les sprites disparaissent lorsqu'on est trop proche
+- afficher la carte en fonction du parcours
+- player dans la minimap

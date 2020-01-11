@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:03:22 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/11 03:14:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,47 @@ int		close_red_button(t_game *game)
 	return (0);
 }
 
+int		set_flags(int ac, char **av, t_game *game)
+{
+	int nb_flag;
+
+	nb_flag = 0;
+	game->disable_map = 0;
+	game->save_first_image = 0;
+	if (ft_strcmp(av[ac - 1], ARGUMENT_SAVE) == 0)
+	{
+		game->save_first_image = 1;
+		nb_flag++;
+	}
+	if (ft_strcmp(av[ac - 1], ARGUMENT_DISABLE_MAP) == 0)
+	{
+		game->disable_map = 1;
+		nb_flag++;
+		if (ft_strcmp(av[ac - 2], ARGUMENT_SAVE) == 0)
+		{
+			game->save_first_image = 1;
+			nb_flag++;
+		}
+	}
+	return (nb_flag);
+}
+
 int		main(int ac, char **av, char **env)
 {
 	t_game	*game;
+	int		nb_flag;
+	int		nb_levels;
 
 	if (ac < 2)
 		return (quit(game, EXIT_FAILURE, MSG_TOO_FEW_ARGUMENTS));
 	if (!(game = init_game()))
 		return (quit(NULL, EXIT_FAILURE, MSG_CANNOT_ALLOCATE_GAME_ERROR));
-	game->disable_map = 0;
-	game->save_first_image = 0;
-	if (ac == 3)
-	{
-		if (ft_strcmp(av[2], ARGUMENT_SAVE) == 0)
-			game->save_first_image = 1;
-		if (ft_strcmp(av[2], ARGUMENT_DISABLE_MAP) == 0)
-			game->disable_map = 1;
-	}
-	if (ac == 4)
-		if (ft_strcmp(av[3], ARGUMENT_DISABLE_MAP) == 0)
-		{
-			if (ft_strcmp(av[2], ARGUMENT_SAVE) == 0)
-				game->save_first_image = 1;
-			game->disable_map = 1;
-		}
+	nb_flag = set_flags(ac, av, game);
+	nb_levels = ac - 1 - nb_flag;
+	init_level(game, nb_levels, av);
 	if (!(game->ptr = mlx_init()))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
-	if (!parse_map(game, av[1]))
+	if (!parse_map(game, av[game->level + 1]))
 		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
 	if (!(game->win = mlx_new_window(game->ptr, game->image->width, game->image->height, GAME_NAME)))
 		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
