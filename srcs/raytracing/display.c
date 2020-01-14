@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 12:21:01 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 13:36:20 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,20 @@ t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	return (res);
 }
 
+t_vector	hit_posi(t_vector res, t_vector p)
+{
+	t_vector hit;
+
+	hit.x = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+	hit.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+	return (hit);
+}
+
 t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprites, int x)
 {
 	t_vector	res;
 	int			number;
+	t_vector	hit;
 	int			hit_x; //mettre sous forme de vecteur
 	int			hit_y;
 	t_sprite	sprite;
@@ -74,10 +84,13 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 	res = next_inter(p, p, teta, wall, game);
 	if (res.x == 0 && res.y == 0)
 		return (res);
-	hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-	hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+	hit = hit_posi(res, p);
+	hit_x = hit.x;
+	hit_y = hit.y;
+	//hit_y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+	//hit_x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 	clear_sprites(sprites, 9);
-	while (map->map[hit_y][hit_x] && (!ft_strchr("DUH1", map->map[hit_y][hit_x])))
+	while (map->map[(int)hit_y][(int)hit_x] && (!ft_strchr("DUH1", map->map[(int)hit_y][(int)hit_x])))
 	{
 		if (!ft_strchr(MAP_ONLY, map->map[hit_y][hit_x]))  //est-ce que cest encore utile maintenant
 		{
@@ -91,8 +104,9 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 			return (res);
 		}
 		res = next_inter(p, res, teta, wall, game);
-		hit_y = (int)(res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0)); //est-ce qu'on peut pas definir hit_y et hit_x sans le (int) afin de pas recalculer ces valeurs pour le sprite ?
-		hit_x = (int)(res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+		hit = hit_posi(res, p);
+		hit_y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+		hit_x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
 		if (map->map[hit_y][hit_x] == 'D' && *wall % 2 != 0)
 			*wall = 5;
 		else if (map->map[hit_y][hit_x] == 'D')
