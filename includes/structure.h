@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 14:27:29 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/14 17:18:38 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ typedef struct	s_player
 	char		*coins_str;
 	float		size;
 }				t_player;
+typedef struct	s_sprite
+{
+	t_vector	pos;
+	int			wall;
+	int			defined;
+	t_image		*tex;
+}				t_sprite;
 typedef struct	s_ray
 {
 	float		a;
@@ -94,14 +101,9 @@ typedef struct	s_ray
 	t_vector	pos;
 	int			wall;
 	t_image		*tex;
+	float		dist;
+	t_sprite	*sprites;
 }				t_ray;
-typedef struct	s_sprite
-{
-	t_vector	pos;
-	int			wall;
-	int			defined;
-	t_image		*tex;
-}				t_sprite;
 typedef struct	s_game
 {
 	void		*ptr;

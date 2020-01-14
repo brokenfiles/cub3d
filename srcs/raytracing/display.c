@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 16:42:13 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 17:37:01 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_ray		init_ray(float teta)
 	ray.c = cos(ray.a);
 	ray.s = sin(ray.a);
 	ray.t = tan(ray.a);
+	//clear_sprites(ray.sprites, 9);
 	return (ray);
 }
 
@@ -68,7 +69,7 @@ t_vector	next_block(t_vector res, t_vector p)
 	return (hit);
 }
 
-t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprites, int x)
+t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprites)
 {
 	t_ray		ray;
 	t_vector	hit;
@@ -77,11 +78,8 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 
 	number = 0;
 	i = 0;
-	if (!map->map[(int)p.y][(int)p.x])
-		return (ray.pos);
 	ray.pos = next_inter(p, p, teta, wall, game);
 	hit = next_block(ray.pos, p);
-	clear_sprites(sprites, 9);
 	while (!(ray.pos.x == 0 && ray.pos.y == 0)&& map->map[(int)hit.y][(int)hit.x] && (!ft_strchr("DUH1", map->map[(int)hit.y][(int)hit.x])))
 	{
 		if (++number > 1000)
@@ -89,7 +87,7 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		ray.pos = next_inter(p, ray.pos, teta, wall, game);
 		hit = next_block(ray.pos, p);
 		if (map->map[(int)hit.y][(int)hit.x] == 'D' && *wall % 2 != 0)
-			*wall = 5;
+			wall = 5;
 		else if (map->map[(int)hit.y][(int)hit.x] == 'D')
 			*wall = 6;
 		if (map->map[(int)hit.y][(int)hit.x] == 'U' && *wall % 2 != 0)
@@ -105,36 +103,32 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 int				render(t_game *game)
 {
 	t_vector hit;
-	t_sprite sprite;
-	t_sprite *sprites;
 	float angle;
 	float angle_copy; //DEGAGE dans game
 	int x;
-	int wall; //DEGAGE dans t_ray
-	float dist; //DEGAGE dans t_ray
+	t_ray 	ray;
 
 	x = 0;
-	angle = game->image->width * (float)(1.0f / (game->image->height / 17)); //pas besoin de le recalculer a chaque nouveau render TODO : mettre cette valeur dans une structure
+	angle = game->image->width / (game->image->height / 17.0); //pas besoin de le recalculer a chaque nouveau render TODO : mettre cette valeur dans une structure
 	angle_copy = angle;
-	sprites = malloc(sizeof(struct s_sprite) * 10);
+	ray.sprites = malloc(sizeof(struct s_sprite) * 10);
 	while (angle > -angle_copy)
 	{
-		clear_sprites(sprites, 9);
-		sprite.pos = vector(-1, -1);
-		hit = next_hit(game->map, game->p.pos, (float)game->p.yaw + angle, &wall, game, sprites, x);
+		//ray = init_ray((float)game->p.yaw + angle)
+		clear_sprites(ray.sprites, 9); //a mettre dans le init
+		hit = next_hit(game->map, game->p.pos, (float)game->p.yaw + angle, &ray.wall, game, ray.sprites);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		dist = (float)sqrt(sq_dist(game->p.pos, hit));
-		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / dist), 0x0), (wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), wall, dist))
+		ray.dist = (float)sqrt(sq_dist(game->p.pos, hit));
+		if (!test_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height / 0.56) / ray.dist), 0x0), (ray.wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y), ray.wall, ray.dist))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		display_sprite(game, sprites, x, angle);
+		display_sprite(game, ray.sprites, x, angle);
 		angle -= (angle_copy * 2) / game->image->width;
 		x++;
 	}
-	free(sprites);
+	free(ray.sprites);
 	display_bonus(game);
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
-	//mlx_put_image_to_window(game->ptr, game->win, game->map->tex.nbrs[0]->image, 0, 0); //PERMET D'AFFICHER UNE IMAGE
 	save_image(game);
 	return (1);
 }
