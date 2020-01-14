@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 17:37:01 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 18:47:11 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		ray.pos = next_inter(p, ray.pos, teta, wall, game);
 		hit = next_block(ray.pos, p);
 		if (map->map[(int)hit.y][(int)hit.x] == 'D' && *wall % 2 != 0)
-			wall = 5;
+			*wall = 5;
 		else if (map->map[(int)hit.y][(int)hit.x] == 'D')
 			*wall = 6;
 		if (map->map[(int)hit.y][(int)hit.x] == 'U' && *wall % 2 != 0)

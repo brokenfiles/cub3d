@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 17:18:38 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 14:27:29 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,7 @@ typedef struct	s_tex
 	t_image		*do_tex;
 	t_image		*co_tex;
 	t_image		*lu_tex;
-	t_image		*sky_tex;
-	t_image		*floor_tex;
 	t_image		*nbrs[10];
-	char		*sky_color;
-	char		*floor_color;
 	int			size;
 }				t_tex;
 typedef struct	s_map

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 14:56:27 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/14 18:46:28 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		next_level(t_game *game)
 {
+	free_entire_parsing(game);
 	if (!parse_map(game, game->level_names[game->level]))
 		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
 	return (1);

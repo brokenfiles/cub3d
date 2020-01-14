@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 17:05:17 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 17:04:58 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int			load_default_textures(t_game *game);
 int			parse_map(t_game *game, char *map_name);
 int			fill_map(char *map_name, t_game *game);
 int			valid_map(t_game *game);
+int			free_entire_parsing(t_game *game);
 //PARSE UTIL
 int			get_resolution(t_game *game, char *line);
 char		*get_val(char *line, char *key);

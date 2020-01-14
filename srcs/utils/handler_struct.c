@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 14:28:33 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:37:00 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ t_game		*init_game(int nb_level, char **av)
 		return (NULL);
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (NULL);
-	game->ptr = NULL;
-	game->win = NULL;
 	game->p = init_player();
 	game->level = 0;
 	game->total_level = 0;

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 15:19:43 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 21:57:38 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 18:46:28 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int		get_resolution(t_game *game, char *line)
 {
 	char	*tmp;
 
+	if (game->level > 0)
+		return (1);
 	if (!(tmp = get_val(line, "R ")))
 		return (0);
 	if (!(game->image->width = ft_atoi(tmp)))
