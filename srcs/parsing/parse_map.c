@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 21:58:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 13:38:41 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,14 @@ int		parse_map(t_game *game, char *map_name)
 	int		fd;
 	char	*tmp;
 
+	if (ft_strlen(map_name) < 4 && ft_strcmp(map_name + ft_strlen(map_name) - 4, ".cub") != 0)
+		return (0);
+	if (!load_default_textures(game))
+		return (0);
 	if ((fd = open(map_name, O_RDONLY)) == -1)
 		return (0);
 	if (!read_map(game, fd) || !game->map->map)
-		return (0); //vérifier avec louis
+		return (0);
 	if (!(tmp = ft_strnew(ft_strlen(game->map->map[0]))))
 	{
 		free_entire_map(game->map->map);
@@ -114,6 +118,6 @@ int		parse_map(t_game *game, char *map_name)
 	}
 	free(tmp);
 	if (!valid_map(game) || !is_structure_full(game))
-		return (0); //verifier avec louis
+		return (0);
 	return (1);
 }

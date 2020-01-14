@@ -56,13 +56,25 @@ int		get_texture(t_game *game, char *line, int *tex_counter)
 	else if (!ft_strncmp(line, "S ", 2))
 		good = load_tex(game, &game->map->tex.sp_tex, get_val(line, "S "));
 	else if (!ft_strncmp(line, "LU ", 3))
+	{
+		free(game->map->tex.lu_tex);
 		good = load_tex(game, &game->map->tex.lu_tex, get_val(line, "LU "));
+	}
 	else if (!ft_strncmp(line, "LI ", 3))
+	{
+		free(game->map->tex.li_tex);
 		good = load_tex(game, &game->map->tex.li_tex, get_val(line, "LI "));
+	}
 	else if (!ft_strncmp(line, "CO ", 3))
+	{
+		free(game->map->tex.co_tex);
 		good = load_tex(game, &game->map->tex.co_tex, get_val(line, "CO "));
+	}
 	else if (!ft_strncmp(line, "DO ", 3))
+	{
+		free(game->map->tex.do_tex);
 		good = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
+	}
 	good ? (*tex_counter)++ : good;
 	load_nbrs(game); //verifier avec louis
 	return (good);

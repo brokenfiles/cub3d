@@ -38,6 +38,7 @@ void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
 void		level_up(t_game *game, int x, int y);
 //PARSE MAP
+int			load_default_textures(t_game *game);
 int			parse_map(t_game *game, char *map_name);
 int			fill_map(char *map_name, t_game *game);
 int			valid_map(t_game *game);
