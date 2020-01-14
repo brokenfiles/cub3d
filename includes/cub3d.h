@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 16:02:00 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 17:04:58 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int			get_color(t_game *game, char *line, char c);
 int			get_texture(t_game *game, char *line, int *tex_counter);
 
 //DISPLAY
-t_vector	next_inter(t_vector p, t_vector vec, float teta,
-					   int *wall, t_game *game);
 t_vector	next_hit(t_map *map, t_vector p, float teta,
 					 int *wall, t_game *game, t_sprite *sprites, int x);
 int			render(t_game *game);

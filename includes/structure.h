@@ -94,7 +94,6 @@ typedef struct	s_ray
 	t_vector	pos;
 	int			wall;
 	t_image		*tex;
-
 }				t_ray;
 typedef struct	s_sprite
 {

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 16:04:57 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:42:13 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ray		init_ray(float teta)
 }
 
 int		set_wall(t_vector res, t_vector x, t_vector y, t_ray *ray)
-{
+{//to delete
 	if (res.x == x.x && res.y == x.y && ray->c > 0)
 		ray->wall = 1;
 	else if (res.x == x.x && res.y == x.y)
@@ -51,12 +51,12 @@ t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	x.y = -r.t * (float)x.x + c;
 	y.y = (int)vec.y + (vec.y == (int)vec.y && r.s > 0 ? -1 : 0) + (r.s > 0 ? 0 : 1);
 	y.x = (y.y - c) / -r.t;
-	res = (sq_dist(p, y) > sq_dist(p, x) ? x : y);
+	r.pos = (sq_dist(p, y) > sq_dist(p, x) ? x : y);
 	//image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xACACAC);
-	set_wall(res, x, y, &r);
+	set_wall(r.pos, x, y, &r);
 	*wall = r.wall;
 
-	return (res);
+	return (r.pos);
 }
 
 t_vector	next_block(t_vector res, t_vector p)
@@ -70,28 +70,24 @@ t_vector	next_block(t_vector res, t_vector p)
 
 t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t_sprite *sprites, int x)
 {
-	t_vector	res;
-	int			number;
-	t_sprite	sprite;
+	t_ray		ray;
 	t_vector	hit;
 	int			i;
+	int			number;
 
 	number = 0;
 	i = 0;
 	if (!map->map[(int)p.y][(int)p.x])
-		return (res);
-	res = next_inter(p, p, teta, wall, game);
-	if (res.x == 0 && res.y == 0)
-		return (res);
-	hit = next_block(res, p);
+		return (ray.pos);
+	ray.pos = next_inter(p, p, teta, wall, game);
+	hit = next_block(ray.pos, p);
 	clear_sprites(sprites, 9);
-	while (map->map[(int)hit.y][(int)hit.x] && (!ft_strchr("DUH1", map->map[(int)hit.y][(int)hit.x])))
+	while (!(ray.pos.x == 0 && ray.pos.y == 0)&& map->map[(int)hit.y][(int)hit.x] && (!ft_strchr("DUH1", map->map[(int)hit.y][(int)hit.x])))
 	{
-		number++;
-		if (number > 1000)
+		if (++number > 1000)
 			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_429);
-		res = next_inter(p, res, teta, wall, game);
-		hit = next_block(res, p);
+		ray.pos = next_inter(p, ray.pos, teta, wall, game);
+		hit = next_block(ray.pos, p);
 		if (map->map[(int)hit.y][(int)hit.x] == 'D' && *wall % 2 != 0)
 			*wall = 5;
 		else if (map->map[(int)hit.y][(int)hit.x] == 'D')
@@ -103,7 +99,7 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 		if (ft_strchr("2LC", map->map[(int)hit.y][(int)hit.x]) && i < 9)
 			sprites[++i] = set_sprite(hit, wall, game);
 	}
-	return (res);
+	return (ray.pos);
 }
 
 int				render(t_game *game)
