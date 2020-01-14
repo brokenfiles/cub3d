@@ -28,7 +28,6 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/utils/errors.c\
 				srcs/utils/handler_struct.c\
 				srcs/utils/save_img.c\
-				srcs/utils/ft_itoa.c\
 				srcs/utils/matrice.c\
 				srcs/utils/other.c\
 				srcs/cub3d.c\
@@ -53,6 +52,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				libs/libft/ft_lstdelone.c\
 				libs/libft/ft_lstiter.c\
 				libs/libft/ft_lstlast.c\
+				libs/libft/ft_itoa.c\
 				libs/libft/ft_lstmap.c\
 				libs/libft/ft_lstnew.c\
 				libs/libft/ft_bzero.c\

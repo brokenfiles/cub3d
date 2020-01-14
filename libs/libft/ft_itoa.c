@@ -6,48 +6,49 @@
 /*   By: llaurent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/17 16:58:42 by llaurent          #+#    #+#             */
-/*   Updated: 2019/08/18 23:01:21 by elaachac         ###   ########.fr       */
+/*   Updated: 2019/11/06 09:38:53 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int		ft_nbrlen(int nbr, int len, unsigned int unbr)
+static int	get_nbr_length(unsigned int nb)
 {
-	if (nbr < 0)
-		unbr = -nbr;
-	while (unbr)
+	unsigned int	index;
+
+	index = 0;
+	while (nb >= 10)
 	{
-		unbr = unbr / 10;
-		len++;
+		nb /= 10;
+		index++;
 	}
-	return (len);
+	return (index + 1);
 }
 
-char	*ft_itoa(int nbr)
+char		*ft_itoa(int nbr)
 {
-	unsigned int	unbr;
-	int				len;
-	char			*nbr_final;
+	char			*str;
+	unsigned int	nb;
+	unsigned int	index;
+	unsigned int	size;
 
-	len = 0;
-	unbr = nbr;
-	len = ft_nbrlen(nbr, len, unbr);
-	if (!(nbr_final = (char *)malloc(sizeof(char) * (len + 1))))
+	nb = (nbr < 0 ? (unsigned int)(-nbr) : (unsigned int)nbr);
+	size = (unsigned int)get_nbr_length(nb);
+	index = 0;
+	if (!(str = (char*)malloc(sizeof(char) * (size + (nbr < 0 ? 2 : 1)))))
 		return (0);
 	if (nbr < 0)
 	{
-		nbr_final[0] = '-';
-		unbr = -nbr;
+		str[index] = '-';
+		size++;
 	}
-	nbr_final[len] = '\0';
-	len--;
-	while (unbr >= 10)
+	index = size - 1;
+	while (nb >= 10)
 	{
-		nbr_final[len] = unbr % 10 + '0';
-		unbr = unbr / 10;
-		len--;
+		str[index--] = (char)(nb % 10 + 48);
+		nb /= 10;
 	}
-	nbr_final[len] = unbr % 10 + '0';
-	return (nbr_final);
+	str[index] = (char)(nb % 10 + 48);
+	str[size] = '\0';
+	return (str);
 }
