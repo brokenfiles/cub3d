@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 09:00:22 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 14:27:29 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -48,15 +48,22 @@
 # define AIM_CIRCLE_COLOR					0xDC4A44
 # define AIM_CIRCLE_SIZE					9
 # define AIM_COLOR							0xFFFFFF
+//PARSING
+# define MAX_LEVEL							10
+# define LU_DEFAULT_TEX						"textures/jesus.XPM"
+# define DO_DEFAULT_TEX						"textures/tropical.XPM"
+# define LI_DEFAULT_TEX						"textures/minecraft/heart.xpm"
+# define CO_DEFAULT_TEX						"textures/planet_rose.XPM"
 //MAP
-# define MAP_ONLY							"WENS0123LDHCUFB"
+# define MAP_ONLY							"LDHCUFBWENS0123"
 # define POS_ONLY							"WENS"
 //OTHER
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
-# define ARGUMENT_DISABLE_BONUS				"-disable-bonus"
-# define ARGUMENT_DISABLE_MAP				"-disable-map"
-# define MSG_MAP_ERROR						"Invalid map."
+# define ARGUMENT_DISABLE_BONUS				"--disable-bonus"
+# define ARGUMENT_DISABLE_MAP				"--disable-map"
+# define MSG_ARGUMENTS_ERROR				"Wrong arguments."
+# define MSG_MAP_ERROR						"Map error."
 # define MSG_MAPNAME_ERROR					"Invalid map name."
 # define MSG_RENDERING_ERROR				"Rendering error."
 # define MSG_RENDERING_ERROR_428			"Rendering error. (ERROR_CODE 428)"

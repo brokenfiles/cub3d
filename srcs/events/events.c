@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 11:22:24 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 14:56:27 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,16 @@ int			handle_key(int key, void *param)
 		interact(game);
 	move(game, key);
 	if (last_level != game->level)
-	{//attention de verifier que game->level < nb_leve : sinon il faut afficher une image de fin
-		next_level(game);
-		last_level = game->level;
+	{
+		if (game->level < game->total_level)
+		{
+			next_level(game);
+			last_level = game->level;
+		}
+		else
+		{
+//			printf("END\n");
+		}
 	}
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP
 	|| key == K_S || key == K_W || key == K_A || key == K_D || key == K_E

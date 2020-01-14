@@ -6,12 +6,11 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/11 02:04:45 by jchotel          ###   ########.fr        #
+#    Updated: 2020/01/14 13:39:03 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCSC		=	srcs/parsing/parse_map_last.c\
-				srcs/parsing/parse_map.c\
+SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/parsing/parse_tex.c\
 				srcs/parsing/parse_free.c\
 				srcs/parsing/parse_utils.c\
