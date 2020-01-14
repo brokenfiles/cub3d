@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/11 03:55:03 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 08:17:43 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,27 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
 	}
 }
 
-void set_char(t_game *game)
+void display_num(t_game *game)
 {
 	int len;
+	int num_1;
+	int num_2;
+	int num_3;
 
 	len = ft_strlen(game->p.coins_str);
-	if (len == 1)
-	{
-		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 65, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 50, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 35, 10);
-	}
-	if (len == 2)
-	{
-		put_image_to_image(game->image, game->map->tex.nbrs[0], game->image->width - 65, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 50, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[1] - '0'], game->image->width - 35, 10);
-	}
-	if (len == 2)
-	{
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[2]], game->image->width - 65, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[1] - '0'], game->image->width - 50, 10);
-		put_image_to_image(game->image, game->map->tex.nbrs[game->p.coins_str[0] - '0'], game->image->width - 35, 10);
-	}
+	num_1 = (len >= 1 ? game->p.coins_str[len - 1] - '0' : 0);
+	num_2 = (len >= 2 ? game->p.coins_str[len - 2] - '0' : 0);
+	num_3 = (len >= 3 ? game->p.coins_str[len - 3] - '0' : 0);
+	put_image_to_image(game->image, game->map->tex.nbrs[num_3], game->image->width - 65, 10);
+	put_image_to_image(game->image, game->map->tex.nbrs[num_2], game->image->width - 50, 10);
+	put_image_to_image(game->image, game->map->tex.nbrs[num_1], game->image->width - 35, 10);
 }
 
 void display_wallet(t_game *game)
-{ //rajouter la condition si coins > 999 alors coins_str = "999"
+{
 	display_rec(game, form(vector(game->image->width - 100, 5), vector(100, 30), 0x00FFFF),  &game->image),
 	put_image_to_image(game->image, game->map->tex.co_tex, game->image->width - 150, -30);
-	set_char(game);
-	//put_image_to_image(game->image, game->map->tex.co_tex, 200, 200);
+	display_num(game);
 }
 
 int display_bonus(t_game *game)
