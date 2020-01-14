@@ -37,7 +37,7 @@ int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle)
 	t_sprite *sprite;
 	int 	index;
 
-	index = 9;
+	index = 4;
 	while (index >= 0)
 	{
 		sprite = &sprites[index];
