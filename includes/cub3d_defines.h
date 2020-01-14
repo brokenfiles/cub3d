@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 20:19:50 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 09:00:22 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -43,10 +43,10 @@
 # define VOID_COLOR							0xFFFFFF
 //AIM
 # define AIM_HEIGHT							25
-# define AIM_WIDTH							1
-# define AIM_CIRCLE_THICK					1
+# define AIM_WIDTH							2
+# define AIM_CIRCLE_THICK					2
 # define AIM_CIRCLE_COLOR					0xDC4A44
-# define AIM_CIRCLE_SIZE					7
+# define AIM_CIRCLE_SIZE					9
 # define AIM_COLOR							0xFFFFFF
 //MAP
 # define MAP_ONLY							"WENS0123LDHCUFB"

@@ -16,8 +16,8 @@ t_player	init_player(void)
 {
 	t_player	player;
 
-	player.rot_speed = 4;
-	player.speed = 0.5;
+	player.rot_speed = 5;
+	player.speed = 0.2;
 	player.health = 100;
 	player.size = 1;
 	player.coins = 0;
@@ -66,6 +66,17 @@ void 	init_level(t_game *game, int nb_level, char **av)
 		//printf("level name : %s\n", game->level_names[i]);
 		i++;
 	}
+}
+
+t_sprite	init_sprite()
+{
+	t_sprite	sprite;
+
+	sprite.defined = 0;
+	sprite.pos.x = -1;
+	sprite.pos.y = -1;
+	sprite.wall = -1;
+	return (sprite);
 }
 
 t_vector	vector(float x, float y)

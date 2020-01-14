@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/10 16:50:56 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 12:09:04 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,17 @@ typedef struct	s_player
 	char		*coins_str;
 	float		size;
 }				t_player;
+typedef struct	s_ray
+{
+	float		a;
+	float		c;
+	float		s;
+	float		t;
+	t_vector	pos;
+	int			wall;
+	t_image		*tex;
+
+}				t_ray;
 typedef struct	s_sprite
 {
 	t_vector	pos;
@@ -92,7 +103,7 @@ typedef struct	s_sprite
 	int			defined;
 	t_image		*tex;
 }				t_sprite;
-typedef struct	s_game //pq est ce que la structure t_tex est rangée dans map et pas directement dans game ? peut etre pour avoir differentes maps avec des textures associées?
+typedef struct	s_game
 {
 	void		*ptr;
 	void		*win;

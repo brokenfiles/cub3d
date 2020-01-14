@@ -34,14 +34,6 @@ int display_tri(t_game *game, t_form form)
 	return (1);
 }
 
-/**
- * used to display a rectangle but with images
- * //TODO: define pixel color using the tex
- * @apprecieted
- * @param t_game game
- * @param t_rectangle rectangle
- * @return int (1 = success, 0 = fail)
- */
 int display_rec(t_game *game, t_form form, t_image **image)
 {
 	int y;
@@ -80,29 +72,6 @@ int display_rec_trans(t_game *game, t_form form, t_image **image) //Est-ce qu'on
 	return (1);
 }
 
-int		display_circle(t_game *game, t_form circle, float thick) //TODO : A SUPPRIMER
-{
-	float	dist;
-	int		x;
-	int		y;
-
-	x = 0;
-	while (x <= 2 * circle.dim.x)
-	{
-		y = 0;
-		while (y <= 2 * circle.dim.y)
-		{
-			dist = sqrt((x - circle.dim.x) * (x - circle.dim.x) +
-						(y - circle.dim.x) * (y - circle.dim.x));
-			if (dist > circle.dim.x - thick && dist < circle.dim.y)
-				image_set_pixel(game->image, x + circle.vector.x - circle.dim.x, y + circle.vector.y - circle.dim.x, circle.color);
-			y++;
-		}
-		x++;
-	}
-	return (1);
-}
-
 int display_cir(t_game *game, t_form form)
 {
 	t_vector point;
@@ -113,7 +82,6 @@ int display_cir(t_game *game, t_form form)
 	while (teta < 360.0)
 	{
 		image_set_pixel(game->image, rotation_matrice(point, form.vector, teta).x, rotation_matrice(point, form.vector, teta).y, form.color);
-		//teta += (float) 360.0 / (form.dim.x * 6);
 		teta++;
 	}
 	return (1);

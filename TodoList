@@ -3,16 +3,17 @@
 - Terminer le parsing :
     - trimer en espace
 - Normer
--ATTENTION IL FAUT ABSOLUEMENT VERIFIER LES HEADERS
 
 // AUTRES
-- Verifier que l'image collée ne depasse pas l'image support dans put_image_to_image
-- Il faut vérifier que si dans la map il y a certaines valeurs alors on a bien une texture associée...
+- Rajouter l'option transparent sur toutes les formes
+- Mettre la minimap dans une image : afficher seulement les parties connues de la carte
+- Il faut vérifier que si dans la map il y a certaines valeurs alors on ai bien une texture associée...
 - on pourra définir des textures par défaut pour éviter le pbm
 - attention les sprites disparaissent lorsqu'on est trop proche
-- il faut mettre par defaut les textures de life, door, coins and level_up
+- il faut mettre par défaut les textures de life, door, coins and level_up
 - attention au changement de niveau qd le nombre dépasse le nombre de cartes renseignées
 - attention lorsqu'on joue sur plusieurs niveaux de s'assurer que la taille de l'écran et la même
+- afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
 
 // LISTE BONUS :
 X collision murs
@@ -22,7 +23,7 @@ X minimap
 X HUD
 ? vue en haut et bas
 O sauter et s'accroupir
-X effet d'ombre sur la distance
+O effet d'ombre sur la distance
 X bar de vie
 X objets dans le maze
 X gain ou perte de vie
@@ -45,8 +46,8 @@ O - à faire
 - page de fin
 X Affichage Coins
 X Vitesse Rotation
-- Vitesse déplacement
+X Vitesse déplacement
 - si on meurt on doit remettre les méchants apres réinitialisation du jeu
 - refermer les portes
 - afficher la carte en fonction du parcours
-- player dans la minimap
+- transparent

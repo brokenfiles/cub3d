@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 21:12:50 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 11:20:45 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,17 @@ void		change_rot_speed(t_game *game, int key)
 		game->p.rot_speed = 7;
 }
 
-void		move_side(t_game *game, int sign)
+void		change_speed(t_game *game, int key)
+{
+	if (key == K_DIGIT_9)
+		game->p.speed += (game->p.speed + 0.02 < 1 ? 0.02 : 0);
+	else if (key == K_DIGIT_8)
+		game->p.speed -= (game->p.speed - 0.02 >= 0 ? 0.02 : 0);
+	else if (key == K_DIGIT_7)
+		game->p.speed = 0.2;
+}
+
+void		slide(t_game *game, int sign)
 {
 	game->p.yaw += sign * 90;
 	move_player(game, 1);
@@ -72,6 +82,7 @@ void		move(t_game *game, int key)
 	else if (key == K_LEFT || key == K_RIGHT)
 		direction_change(&game->p, (key == K_LEFT ? 1 : -1));
 	else if (key == K_A || key == K_D)
-		move_side(game, (key == K_A ? 1 : -1));
+		slide(game, (key == K_A ? 1 : -1));
 	change_rot_speed(game, key);
+	change_speed(game, key);
 }

@@ -69,7 +69,6 @@ int	load_tex(t_game *game, t_image **image, char *tex)
 	return (1);
 }
 
-
 int convert_rgb(int R, int G, int B)
 {
 	R = (R > 255 ? 255 : R);
@@ -79,4 +78,15 @@ int convert_rgb(int R, int G, int B)
 	G = (G < 0 ? 0 : G);
 	B = (B < 0 ? 0 : B);
 	return (65536 * R + 256 * G + B);
+}
+
+t_image		*get_tex(t_game *game, char c)
+{
+	if (c == '2')
+		return (game->map->tex.sp_tex);
+	if (c == 'L')
+		return (game->map->tex.li_tex);
+	if (c == 'C')
+		return (game->map->tex.co_tex);
+	return (0);
 }

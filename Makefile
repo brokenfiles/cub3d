@@ -19,6 +19,7 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				srcs/raytracing/display.c\
 				srcs/raytracing/display_form.c\
 				srcs/raytracing/display_bonus.c\
+				srcs/raytracing/display_sprite.c\
 				srcs/textures/texture.c\
 				srcs/textures/images.c\
 				srcs/events/events.c\
@@ -29,6 +30,7 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				srcs/utils/save_img.c\
 				srcs/utils/ft_itoa.c\
 				srcs/utils/matrice.c\
+				srcs/utils/other.c\
 				srcs/cub3d.c\
 				libs/libft/ft_putstr.c\
 				libs/libft/ft_split.c\

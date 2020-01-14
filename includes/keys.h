@@ -41,8 +41,11 @@
 #  define K_LEFT		123
 #  define K_RIGHT		124
 //NUMBERS
-#  define K_DIGIT_1		18
 #  define K_DIGIT_0		29
+#  define K_DIGIT_1		18
+#  define K_DIGIT_7		26
+#  define K_DIGIT_8		28
+#  define K_DIGIT_9		25
 //LETTERS
 #  define K_A			0
 #  define K_S			1

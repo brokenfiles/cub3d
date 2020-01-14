@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/14 08:17:43 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 10:55:53 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,41 @@
 
 int		display_lifebar(t_game *game)
 {
-	int	percent;
+	t_vector size;
 	int	color;
+	t_image *i;
 
+	i = game->image;
 	color = convert_rgb(150, 255 / (100 / game->p.health), 55);
-	percent = ((game->image->width / 2 - 20) / (100 / game->p.health)); // je calcule un pourcentage responsive
-	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4), game->image->height - 60), vector(game->image->width / 2 , 50), 0xFFFBBC), &game->image);
-	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 55), vector(percent, 40), color), &game->image);
-	percent = ((game->image->width / 2 - 20) / (float)((float)MAX_ROT_SPEED / (float)game->p.rot_speed));
-	display_rec(game, form(vector((game->image->width / 2) - (game->image->width / 4 - 10), game->image->height - 20), vector(percent, 5), 0xD56DFF), &game->image);
+	size = vector((game->image->width / 2) * (game->p.health / 100), 20);
+	display_rec(game, form(vector(i->width / 4 - 5, i->height - 40),
+			vector(i->width / 2 + 10, 30), 0xFFFBBC), &i);
+	display_rec(game, form(vector(i->width / 4, i->height - 35),
+			size, color), &i);
+	size = vector((i->width / 4) * (game->p.rot_speed / (float)MAX_ROT_SPEED), 5);
+	display_rec(game, form(vector((i->width / 4), i->height - 20), size, 0xD56DFF), &i);
+	size = vector((i->width / 4) * game->p.speed, 5);
+	display_rec(game, form(vector((3 * i->width / 4) - size.x, i->height - 20), size, 0x0000FF), &i);
 	return (1);
 }
 
 int		display_aim(t_game *game)
 {
-	display_rec(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT + AIM_WIDTH / 2 + 8), vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
-	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
-	display_circle(game, form(vector(game->image->width / 2, game->image->height / 2 - AIM_HEIGHT / 2 + 8), vector(AIM_CIRCLE_SIZE, AIM_CIRCLE_SIZE), AIM_CIRCLE_COLOR), AIM_CIRCLE_THICK); //remplacer par la focntion display_cir
+	display_rec(game, form(vector(game->image->width / 2 - AIM_WIDTH / 2,
+			game->image->height / 2 - AIM_HEIGHT / 2),
+			vector(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
+	display_rec(game, form(vector(game->image->width / 2 - AIM_HEIGHT / 2,
+			game->image->height / 2 - AIM_WIDTH / 2),
+			vector(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
+	display_cir2(game, form(vector(game->image->width / 2,
+			game->image->height / 2),
+			vector(AIM_CIRCLE_SIZE - AIM_CIRCLE_THICK, AIM_CIRCLE_SIZE),
+			AIM_CIRCLE_COLOR));
 	return (1);
 }
 
 int display_map(t_game *game, t_image **image)
-{//TODO : mettre la minimap dans une image.
-	// TODO: afficher seulement les parties connues de la carte
+{
 	int x;
 	int y;
 
@@ -59,27 +71,6 @@ int display_map(t_game *game, t_image **image)
 	return (1);
 }
 
-void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
-{//verifier quon ne depasse pas la taille de l'image
-	int x_l;
-	int y_l;
-	int value;
-
-	x_l = 0;
-	y_l = 0;
-	while (y_l < layer->height && y_pos + y_l < image->height)
-	{
-		while (x_l < layer->width && x_pos + x_l < image->width)
-		{
-			value = get_pixel(layer, x_l, y_l).value;
-			value != -16777216 ? image_set_pixel(image, x_pos + x_l, y_pos + y_l, value) : 0;
-			x_l++;
-		}
-		x_l = 0;
-		y_l++;
-	}
-}
-
 void display_num(t_game *game)
 {
 	int len;
@@ -98,7 +89,7 @@ void display_num(t_game *game)
 
 void display_wallet(t_game *game)
 {
-	display_rec(game, form(vector(game->image->width - 100, 5), vector(100, 30), 0x00FFFF),  &game->image),
+	display_rec(game, form(vector(game->image->width - 100, 5), vector(100, 30), 0x00FFFF), &game->image),
 	put_image_to_image(game->image, game->map->tex.co_tex, game->image->width - 150, -30);
 	display_num(game);
 }
@@ -113,13 +104,13 @@ int display_bonus(t_game *game)
 		{
 			display_map(game, &game->image);
 			display_tri(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x,
-										  (game->image->width / MAP_SIZE) * game->p.pos.y),
-								   vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3),
-								   PLAYER_COLOR));
-			display_circle(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x,
-											 (game->image->width / MAP_SIZE) * game->p.pos.y),
-									  vector(game->image->width / MAP_SIZE / 2, game->image->width / MAP_SIZE / 2),
-									  PLAYER_COLOR), game->image->width / MAP_SIZE / 2);
+						(game->image->width / MAP_SIZE) * game->p.pos.y),
+						vector(game->image->width / MAP_SIZE + 3, game->image->width / MAP_SIZE + 3),
+								PLAYER_COLOR));
+			display_cir2(game, form(vector((game->image->width / MAP_SIZE) * game->p.pos.x,
+								(game->image->width / MAP_SIZE) * game->p.pos.y),
+								vector(0, game->image->width / MAP_SIZE / 2),
+									PLAYER_COLOR));
 		}
 		display_wallet(game);
 	}
