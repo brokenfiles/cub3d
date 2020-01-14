@@ -16,6 +16,7 @@ SRCSC		=	srcs/parsing/parse_map_last.c\
 				srcs/parsing/parse_free.c\
 				srcs/parsing/parse_utils.c\
 				srcs/parsing/valid_map.c\
+				srcs/parsing/default_textures.c\
 				srcs/raytracing/display.c\
 				srcs/raytracing/display_form.c\
 				srcs/raytracing/display_bonus.c\
