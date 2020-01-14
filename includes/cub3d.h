@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 11:42:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:02:00 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 # include "keys.h"
 # include "libft.h"
 # include "get_next_line.h"
+# include "cub3d_defines.h"
 # include "structure.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <math.h>
-# include "cub3d_defines.h"
 
 
 //EVENTS
@@ -63,6 +63,7 @@ t_vector	next_hit(t_map *map, t_vector p, float teta,
 int			render(t_game *game);
 //DISPLAY_SPRITE
 void		clear_sprites(t_sprite *sprites, int n);
+t_sprite	set_sprite(t_vector hit, int *wall, t_game *game);
 int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle);
 //DISPLAY_FORM
 int			display_tri(t_game *game, t_form form);

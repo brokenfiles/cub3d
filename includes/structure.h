@@ -115,6 +115,6 @@ typedef struct	s_game
 	int			disable_bonus;
 	int			level;
 	int			total_level;
-	char		*level_names[10];
+	char		*level_names[MAX_LEVEL];
 }				t_game;
 #endif

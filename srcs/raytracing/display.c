@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 13:36:20 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:04:57 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@ t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *gam
 	//image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xACACAC);
 	set_wall(res, x, y, &r);
 	*wall = r.wall;
+
 	return (res);
 }
 
-t_vector	hit_posi(t_vector res, t_vector p)
+t_vector	next_block(t_vector res, t_vector p)
 {
 	t_vector hit;
 
-	hit.x = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-	hit.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
+	hit.x = res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0);
+	hit.y = res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0);
 	return (hit);
 }
 
@@ -71,10 +72,8 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 {
 	t_vector	res;
 	int			number;
-	t_vector	hit;
-	int			hit_x; //mettre sous forme de vecteur
-	int			hit_y;
 	t_sprite	sprite;
+	t_vector	hit;
 	int			i;
 
 	number = 0;
@@ -84,47 +83,25 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 	res = next_inter(p, p, teta, wall, game);
 	if (res.x == 0 && res.y == 0)
 		return (res);
-	hit = hit_posi(res, p);
-	hit_x = hit.x;
-	hit_y = hit.y;
-	//hit_y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-	//hit_x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
+	hit = next_block(res, p);
 	clear_sprites(sprites, 9);
-	while (map->map[(int)hit_y][(int)hit_x] && (!ft_strchr("DUH1", map->map[(int)hit_y][(int)hit_x])))
+	while (map->map[(int)hit.y][(int)hit.x] && (!ft_strchr("DUH1", map->map[(int)hit.y][(int)hit.x])))
 	{
-		if (!ft_strchr(MAP_ONLY, map->map[hit_y][hit_x]))  //est-ce que cest encore utile maintenant
-		{
-			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_428);
-			return (res);
-		}
 		number++;
 		if (number > 1000)
-		{
 			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_429);
-			return (res);
-		}
 		res = next_inter(p, res, teta, wall, game);
-		hit = hit_posi(res, p);
-		hit_y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-		hit_x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
-		if (map->map[hit_y][hit_x] == 'D' && *wall % 2 != 0)
+		hit = next_block(res, p);
+		if (map->map[(int)hit.y][(int)hit.x] == 'D' && *wall % 2 != 0)
 			*wall = 5;
-		else if (map->map[hit_y][hit_x] == 'D')
+		else if (map->map[(int)hit.y][(int)hit.x] == 'D')
 			*wall = 6;
-		if (map->map[hit_y][hit_x] == 'U' && *wall % 2 != 0)
+		if (map->map[(int)hit.y][(int)hit.x] == 'U' && *wall % 2 != 0)
 			*wall = 7;
-		else if (map->map[hit_y][hit_x] == 'U')
+		else if (map->map[(int)hit.y][(int)hit.x] == 'U')
 			*wall = 8;
-		if (ft_strchr("2LC", map->map[hit_y][hit_x]))
-		{
-			sprite.pos.y = (res.y - (p.y > res.y && res.y == (int)res.y ? 0.0001 : 0));
-			sprite.pos.x = (res.x - (p.x > res.x && res.x == (int)res.x ? 0.0001 : 0));
-			sprite.wall = *wall;
-			sprite.defined = 1;
-			sprite.tex = get_tex(game, map->map[hit_y][hit_x]);
-			i++;
-			sprites[i] = sprite;
-		}
+		if (ft_strchr("2LC", map->map[(int)hit.y][(int)hit.x]) && i < 9)
+			sprites[++i] = set_sprite(hit, wall, game);
 	}
 	return (res);
 }

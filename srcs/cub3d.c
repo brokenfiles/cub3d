@@ -39,6 +39,8 @@ int		get_flags(int ac, char **av, t_game *game)
 		}
 		av++;
 	}
+	if (game->total_level == 0)
+		return (0);
 	return (1);
 }
 

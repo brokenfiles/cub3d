@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/14 11:35:54 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 16:02:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@ void		clear_sprites(t_sprite *sprites, int n)
 {
 	while (n-- > 0)
 		sprites[n + 1] = init_sprite();
+}
+
+t_sprite	set_sprite(t_vector hit, int *wall, t_game *game)
+{
+	t_sprite sprite;
+
+	sprite.pos = hit;
+	sprite.wall = *wall;
+	sprite.defined = 1;
+	sprite.tex = get_tex(game, game->map->map[(int)hit.y][(int)hit.x]);
+	return (sprite);
 }
 
 int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle)
