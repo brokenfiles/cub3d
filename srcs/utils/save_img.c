@@ -72,8 +72,7 @@ int		save_bitmap(t_game *game, char *name)
 	int			step;
 
 	ft_putstr("Saving screenshot...\n");
-	//step = (4 - ((int)game->image->width * 3) % 4) % 4;
-	step = 4; //verfier avec louis
+	step = 0;
 	size = 54 + (3 * ((int)game->image->width + step) * (int)game->image->height); //cest quoi ce 54
 	if ((file = open(name, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR)) < 0)
 		return (0);
