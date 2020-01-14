@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 12:09:04 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/14 14:27:29 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct	s_game
 	int			disable_map;
 	int			disable_bonus;
 	int			level;
-	char		**level_names;
+	int			total_level;
+	char		*level_names[10];
 }				t_game;
 #endif
