@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:41:26 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int		free_entire_map(char **str)
 
 int		free_entire_parsing(t_game *game)
 {
+	int	index;
+
+	index = 0;
 	free_entire_map(game->map->map);
 	free(game->map->tex.no_tex);
 	free(game->map->tex.so_tex);
@@ -46,5 +49,8 @@ int		free_entire_parsing(t_game *game)
 	free(game->map->tex.do_tex);
 	free(game->map->tex.co_tex);
 	free(game->map->tex.lu_tex);
+	while (index < 10)
+		free(game->map->tex.nbrs[index++]);
+	free(game->map->tex.nbrs);
 	return (1);
 }
