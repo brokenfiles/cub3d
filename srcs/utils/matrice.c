@@ -28,5 +28,3 @@ t_vector	rotation_matrice(t_vector point, t_vector origin, float teta)
 			(point.y - origin.y) * c + origin.y;
 	return (vector);
 }
-
-

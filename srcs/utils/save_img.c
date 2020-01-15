@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:52:36 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	write_data(int file, t_game *game, int step)
 	return (1);
 }
 
-int		save_bitmap(t_game *game, char *name)
+int			save_bitmap(t_game *game, char *name)
 {
 	int			size;
 	int			file;
@@ -73,7 +73,7 @@ int		save_bitmap(t_game *game, char *name)
 
 	ft_putstr("Saving screenshot...\n");
 	step = 0;
-	size = 54 + (3 * ((int)game->dim.x + step) * (int)game->dim.y); //cest quoi ce 54
+	size = 54 + (3 * ((int)game->dim.x + step) * (int)game->dim.y);
 	if ((file = open(name, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR)) < 0)
 		return (0);
 	if (!write_header(file, size, game))
@@ -86,7 +86,7 @@ int		save_bitmap(t_game *game, char *name)
 	return (1);
 }
 
-int save_image(t_game *game)
+int			save_image(t_game *game)
 {
 	if (game->save_first_image)
 	{

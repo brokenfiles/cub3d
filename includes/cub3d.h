@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 20:35:55 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:46:48 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ int			init_ray(t_ray *ray, float teta);
 t_sprite	init_sprite();
 t_game		*init_game();
 void		init_level(t_game *game, int nb_level, char **av);
-t_vector	vec(float x, float y);
-t_form		form(t_vector vector, t_vector dim, int color);
 //SAVE_IMG
 int 		save_image(t_game *game);
 //FT_ITOA
@@ -89,6 +87,8 @@ t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 float		sq_dist(t_vector origin, t_vector point);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
 int			convert_rgb(int r, int g, int b);
+t_vector	vec(float x, float y);							//changer leur posi
+t_form		form(t_vector vector, t_vector dim, int color); //changer leur posi
 
 
 //A RANGER
