@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 16:38:08 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:12:50 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 
 
 //EVENTS
+t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 int			handle_key(int key, void *param);
 //MOVE
 void		move(t_game *game, int key);
 //INTERACTION
-void		interact(t_game *game, int key);
+void		interact(t_game *game);
 void		gain_life(t_game *game, int x, int y);
 void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
