@@ -6,13 +6,13 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 19:26:19 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:56:19 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		display_lifebar(t_game *game)
+int		display_lifebar(t_game *game, int t)
 {
 	t_vector	size;
 	int			color;
@@ -22,14 +22,15 @@ int		display_lifebar(t_game *game)
 	color = convert_rgb(150, 255 / (100 / game->p.health), 55);
 	size = vec((game->dim.x / 2) * (game->p.health / 100), 20);
 	display_rec(game, form(vec(i->w / 4 - 5, i->h - 40),
-			vec(i->w / 2 + 10, 30), 0xFFFBBC), &i);
+			vec(i->w / 2 + 10, 30), 0xFFFBBC), &i, t);
 	display_rec(game, form(vec(i->w / 4, i->h - 35),
-			size, color), &i);
+			size, color), &i, t);
 	size = vec((i->w / 4) * (game->p.rot_speed / (float)MAX_ROT_SPEED), 5);
-	display_rec(game, form(vec((i->w / 4), i->h - 20), size, 0xD56DFF), &i);
+	display_rec(game, form(vec((i->w / 4), i->h - 20),
+			size, 0xD56DFF), &i, t);
 	size = vec((i->w / 4) * game->p.speed, 5);
 	display_rec(game, form(vec((3 * i->w / 4) - size.x, i->h - 20),
-			size, 0x0000FF), &i);
+			size, 0x0000FF), &i, t);
 	return (1);
 }
 
@@ -37,14 +38,14 @@ int		display_aim(t_game *game)
 {
 	display_rec(game, form(vec(game->dim.x / 2 - AIM_WIDTH / 2,
 			game->dim.y / 2 - AIM_HEIGHT / 2),
-			vec(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image);
+			vec(AIM_WIDTH, AIM_HEIGHT), AIM_COLOR), &game->image, 0);
 	display_rec(game, form(vec(game->dim.x / 2 - AIM_HEIGHT / 2,
 			game->dim.y / 2 - AIM_WIDTH / 2),
-			vec(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image);
+			vec(AIM_HEIGHT, AIM_WIDTH), AIM_COLOR), &game->image, 0);
 	display_cir2(game, form(vec(game->dim.x / 2,
 			game->dim.y / 2),
 			vec(AIM_CIRCLE_SIZE - AIM_CIRCLE_THICK, AIM_CIRCLE_SIZE),
-			AIM_CIRCLE_COLOR));
+			AIM_CIRCLE_COLOR), 0);
 	return (1);
 }
 
@@ -73,21 +74,21 @@ void	display_num(t_game *game)
 void	display_wallet(t_game *game)
 {
 	display_rec(game, form(vec(game->dim.x - 100, 5),
-			vec(100, 30), 0x00FFFF), &game->image);
+			vec(100, 30), 0x00FFFF), &game->image, 0);
 	put_image_to_image(game->image, game->map->tex.co_tex,
 			game->dim.x - 150, -30);
 	display_num(game);
 }
 
-int		display_bonus(t_game *game)
+int		display_bonus(t_game *game, int t)
 {
 	if (!game->disable_bonus)
 	{
-		display_lifebar(game);
+		display_lifebar(game, t);
 		display_aim(game);
 		if (!game->disable_map)
 		{
-			display_map(game, &game->image);
+			display_map(game, &game->image, t);
 			display_tri(game, form(vec((game->dim.x / MAP_SIZE) * game->p.pos.x,
 				(game->dim.x / MAP_SIZE) * game->p.pos.y),
 				vec(game->dim.x / MAP_SIZE + 3, game->dim.x / MAP_SIZE + 3),
@@ -95,7 +96,7 @@ int		display_bonus(t_game *game)
 			display_cir2(game, form(vec((game->dim.x / MAP_SIZE)
 				* game->p.pos.x, (game->dim.x / MAP_SIZE) * game->p.pos.y),
 				vec(0, game->dim.x / MAP_SIZE / 2),
-				PLAYER_COLOR));
+				PLAYER_COLOR), 240);
 		}
 		display_wallet(game);
 	}

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:59:33 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:46:20 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,13 @@ t_sprite	set_sprite(t_vector hit, int *wall, t_game *game);
 int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle);
 //DISPLAY_FORM
 int			display_tri(t_game *game, t_form form);
-int			display_rec(t_game *game, t_form form, t_image **image);
-int			display_rec_trans(t_game *game, t_form form, t_image **image);
-int			display_cir2(t_game *game, t_form forme);
+int			display_rec(t_game *game, t_form form, t_image **image, int t);
+int			display_cir2(t_game *game, t_form forme, int t);
 int			print_line(t_game *game, t_form form, t_ray *ray);
 //DISPLAY_MAP
-int		display_map(t_game *game, t_image **image);
+int			display_map(t_game *game, t_image **image, int t);
 //DISPLAY_BONUS
-int			display_bonus(t_game *game);
+int			display_bonus(t_game *game, int t);
 //RAYTRACING
 int			render(t_game *game);
 
