@@ -44,9 +44,11 @@ int		load_nbrs(t_game *game)
 int		val_tex(t_game *game, t_image **image, char *val, int *tc)
 {
 	int	good;
+	int	already_set;
 
+	already_set = *image == NULL;
 	good = load_tex(game, image, val);
-	if (good)
+	if (good && already_set)
 		(*tc)++;
 	return (good);
 }
