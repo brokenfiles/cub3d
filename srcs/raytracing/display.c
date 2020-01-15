@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 18:47:11 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:16:32 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_vector	next_hit(t_map *map, t_vector p, float teta, int *wall, t_game *game, t
 int				render(t_game *game)
 {
 	t_vector hit;
-	float angle;
+	float git ;
 	float angle_copy; //DEGAGE dans game
 	int x;
 	t_ray 	ray;

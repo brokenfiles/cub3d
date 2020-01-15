@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/14 19:36:38 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:21:55 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		get_flags(int ac, char **av, t_game *game)
 	return (1);
 }
 
-int		main(int ac, char **av, char **env)
+int		main(int ac, char **av)
 {
 	t_game	*game;
 
