@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 18:59:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		move_player(t_game *game, int sign)
 		gain_life(game, (int)new_pos.x, (int)new_pos.y);
 		gain_coins(game, (int)new_pos.x, (int)new_pos.y);
 		level_up(game, (int)new_pos.x, (int)new_pos.y);
-		game->p.pos = vector(new_pos.x, new_pos.y);
+		game->p.pos = vec(new_pos.x, new_pos.y);
 	}
 }
 

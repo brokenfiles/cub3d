@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:42:21 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 18:59:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	get_position(t_game *game, char *map_line, int y)
 	while (map_line[x])
 	{
 		if (ft_strchr(POS_ONLY, map_line[x]))
-			return (set_pos(game, vector(x, y), map_line[x]));
+			return (set_pos(game, vec(x, y), map_line[x]));
 		x++;
 	}
 	return (0);

@@ -1,10 +1,8 @@
 // POUR PUSH
-- Vérifier les leaks
-- Terminer le parsing :
-    - trimer en espace
 - Normer
 
 // AUTRES
+- si une texture est en doube au detrimant dune autre, il y a un pbm
 - Rajouter l'option transparent sur toutes les formes
 - Mettre la minimap dans une image : afficher seulement les parties connues de la carte
 - Il faut vérifier que si dans la map il y a certaines valeurs alors on ai bien une texture associée...
@@ -12,7 +10,6 @@
 - attention les sprites disparaissent lorsqu'on est trop proche
 - il faut mettre par défaut les textures de life, door, coins and level_up
 - attention au changement de niveau qd le nombre dépasse le nombre de cartes renseignées
-- attention lorsqu'on joue sur plusieurs niveaux de s'assurer que la taille de l'écran et la même
 - afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
 - bloquer la hauteur des sprites a l'affichage
 
@@ -52,3 +49,17 @@ X Vitesse déplacement
 - refermer les portes
 - afficher la carte en fonction du parcours
 - transparent
+
+
+
+
+
+
+
+
+//POUR VERIFIER LES CUB3d
+- SPRITE
+	- vérifier la superposition des sprites
+
+- NIVEAU
+	- au dernier niveau vérifier quon est bien bloqué

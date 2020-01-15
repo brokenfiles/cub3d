@@ -97,7 +97,7 @@ typedef struct	s_ray
 	int			wall;
 	float		dist;
 	float		inter;
-	int			sprite_num;
+	int			sp_num;
 	t_sprite	*sprites;
 }				t_ray;
 typedef struct	s_game

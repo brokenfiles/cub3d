@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:12:14 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 18:59:33 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_sprite	init_sprite()
 	return (sprite);
 }
 
-t_vector	vector(float x, float y)
+t_vector	vec(float x, float y)
 {
 	t_vector	vector;
 

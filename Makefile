@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr        #
+#    Updated: 2020/01/15 18:34:06 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/raytracing/display_form.c\
 				srcs/raytracing/display_bonus.c\
 				srcs/raytracing/display_sprite.c\
+				srcs/raytracing/raytracing.c\
 				srcs/textures/texture.c\
 				srcs/textures/images.c\
 				srcs/events/events.c\

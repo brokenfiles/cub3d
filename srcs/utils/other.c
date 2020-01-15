@@ -16,3 +16,14 @@ float		sq_dist(t_vector origin, t_vector point)
 {
 	return (pow(point.x - origin.x, 2) + pow(point.y - origin.y, 2));
 }
+
+int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
+{
+	float k;
+	float c;
+
+	k = (float) (nmax - nmin) / (ymax - ymin);
+	c = (float) nmin - (float) k * ymin;
+	return ((k * y + c));
+}
+
