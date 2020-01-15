@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:12:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:12:14 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void		reinit_player(t_game *game)
 	game->p.coins = 0;
 }
 
-int			set_ray(t_ray *ray, float teta)
+int			init_ray(t_ray *ray, float teta)
 {
 	ray->alpha = (teta / 360.0) * (float)(2 * M_PI);
 	ray->cos = cos(ray->alpha);
 	ray->sin = sin(ray->alpha);
 	ray->tan = tan(ray->alpha);
+	clear_sprites(ray->sprites, 9);
 	return (1);
 }
 

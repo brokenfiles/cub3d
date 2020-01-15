@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/15 16:26:12 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ t_color		get_pixel(t_image *image, int x, int y)
 											* image->bpp)));
 }
 
+/**
+ *
+ * @param xpm
+ * @param game
+ * @return
+ */
 t_image	*xpm_image(char *xpm, t_game *game)
 {
 	t_image		*img;
@@ -43,6 +49,14 @@ t_image	*xpm_image(char *xpm, t_game *game)
 	return (img);
 }
 
+/**
+ * used to load a texture.
+ * @example load_texture(game, &game->map->tex->so_texture, "tex/brick.xmp")
+ * @param t_game game
+ * @param &t_image image
+ * @param char *tex
+ * @return t_image *
+ */
 int	load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;

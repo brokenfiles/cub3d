@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 18:12:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void		move_player(t_game *game, int sign)
 		gain_life(game, (int)new_pos.x, (int)new_pos.y);
 		gain_coins(game, (int)new_pos.x, (int)new_pos.y);
 		level_up(game, (int)new_pos.x, (int)new_pos.y);
-		game->p.pos.x = new_pos.x;
-		game->p.pos.y = new_pos.y;
+		game->p.pos = vector(new_pos.x, new_pos.y);
 	}
 }
 
@@ -68,13 +67,6 @@ void		change_speed(t_game *game, int key)
 		game->p.speed = 0.2;
 }
 
-void		slide(t_game *game, int sign)
-{
-	game->p.yaw += sign * 90;
-	move_player(game, 1);
-	game->p.yaw -= sign * 90;
-}
-
 void		move(t_game *game, int key)
 {
 	if (key == K_UP || key == K_W || key == K_DOWN || key == K_S)
@@ -82,7 +74,11 @@ void		move(t_game *game, int key)
 	else if (key == K_LEFT || key == K_RIGHT)
 		direction_change(&game->p, (key == K_LEFT ? 1 : -1));
 	else if (key == K_A || key == K_D)
-		slide(game, (key == K_A ? 1 : -1));
+	{
+		game->p.yaw += (key == K_A ? 1 : -1) * 90;
+		move_player(game, 1);
+		game->p.yaw -= (key == K_A ? 1 : -1) * 90;
+	}
 	change_rot_speed(game, key);
 	change_speed(game, key);
 }

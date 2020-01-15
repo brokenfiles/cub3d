@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:12:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:12:14 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ int				render(t_game *game)
 	ray.sprites = malloc(sizeof(struct s_sprite) * 10);
 	while (angle > -game->angle)
 	{
-		set_ray(&ray, (float)game->p.yaw + angle);
-		clear_sprites(ray.sprites, 9); //a mettre dans le init
+		init_ray(&ray, (float)game->p.yaw + angle);
 		hit = next_hit(game, &ray);
 		if (hit.x == 0 && hit.y == 0)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
