@@ -119,5 +119,6 @@ int		parse_map(t_game *game, char *map_name)
 	free(tmp);
 	if (!valid_map(game) || !is_structure_full(game))
 		return (0);
+	game->angle = 17.0 * game->image->width / (game->image->height);
 	return (1);
 }

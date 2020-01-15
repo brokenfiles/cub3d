@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 13:32:28 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void		reinit_player(t_game *game)
 	game->p.health = 100;
 	game->p.coins = 0;
 	game->p.coins_str = (game->p.coins != 0 ? ft_itoa(game->p.coins) : "0");
+}
+
+int			set_ray(t_ray *ray, float teta)
+{
+	ray->alpha = (teta / 360.0) * (float)(2 * M_PI);
+	ray->cos = cos(ray->alpha);
+	ray->sin = sin(ray->alpha);
+	ray->tan = tan(ray->alpha);
+	return (1);
 }
 
 t_game		*init_game(int nb_level, char **av)

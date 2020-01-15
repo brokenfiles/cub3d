@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:05:28 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,15 @@ typedef struct	s_sprite
 }				t_sprite;
 typedef struct	s_ray
 {
-	float		a;
-	float		c;
-	float		s;
-	float		t;
+	float		alpha;
+	float		cos;
+	float		sin;
+	float		tan;
 	t_vector	pos;
 	int			wall;
-	t_image		*tex;
 	float		dist;
+	float		inter;
+	int			sprite_num;
 	t_sprite	*sprites;
 }				t_ray;
 typedef struct	s_game
@@ -107,6 +108,7 @@ typedef struct	s_game
 	t_map		*map;
 	t_player	p;
 	t_image		*image;
+	float		angle;
 	int			save_first_image;
 	int			disable_map;
 	int			disable_bonus;

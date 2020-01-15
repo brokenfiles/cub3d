@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 13:49:39 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int			fill_map(char *map_name, t_game *game);
 int			valid_map(t_game *game);
 int			free_entire_parsing(t_game *game);
 //PARSE UTIL
+
+//t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *game)
+
 int			get_resolution(t_game *game, char *line);
 char		*get_val(char *line, char *key);
 int			get_int_len(unsigned int nb);
@@ -57,8 +60,7 @@ int			get_color(t_game *game, char *line, char c);
 int			get_texture(t_game *game, char *line, int *tex_counter);
 
 //DISPLAY
-t_vector	next_hit(t_map *map, t_vector p, float teta,
-					 int *wall, t_game *game, t_sprite *sprites);
+t_vector	next_hit(t_game *game, t_ray *ray);
 int			render(t_game *game);
 //DISPLAY_SPRITE
 void		clear_sprites(t_sprite *sprites, int n);
@@ -70,8 +72,7 @@ int			display_rec(t_game *game, t_form form, t_image **image);
 int			display_rec_trans(t_game *game, t_form form, t_image **image);
 int			display_cir2(t_game *game, t_form forme);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
-int			test_line(t_game *game, t_form form,
-						 float x_inter, int wall, float dist);
+int			print_line(t_game *game, t_form form, t_ray *ray);
 int			print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image *tex);
 //DISPLAY_BONUS
 int			display_bonus(t_game *game);
@@ -93,6 +94,7 @@ int			quit(t_game *game, int code, char *message);
 //HANDLER STRUCT
 t_player	init_player();
 void		reinit_player(t_game *game);
+int			set_ray(t_ray *ray, float teta);
 t_sprite	init_sprite();
 t_game		*init_game();
 void		init_level(t_game *game, int nb_level, char **av);
