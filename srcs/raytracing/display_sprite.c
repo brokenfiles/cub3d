@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 19:02:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:19:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image 
 	int		color;
 
 	screen.x = form.vector.x;
-	im.x = ft_scale(0.0, 1.0, 0.0, tex->width, x_inter);
+	im.x = ft_scale(0.0, 1.0, 0.0, tex->w, x_inter);
 	calc.x = form.vector.y - (form.dim.x / 2);
 	calc.y = form.vector.y + (form.dim.x / 2);
 	screen.y = form.vector.y - (form.dim.y / 2);
 	while (screen.y <= form.vector.y + (form.dim.y / 2))
 	{
-		im.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->height, screen.y);
+		im.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
 		color = get_pixel(tex, im.x, im.y).value & 0xFFFFFF;
 		if (color != 0x000000)
 			image_set_pixel(game->image, screen.x, screen.y, color);

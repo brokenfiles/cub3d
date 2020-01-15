@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 11:12:38 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:19:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	image_set_pixel(t_image *image, int x, int y, int color)
 {
-	if (!(x < 0 || y < 0 || x >= image->width || y >= image->height))
-		*(int *)(image->ptr + ((x + y * image->width) * image->bpp)) = color;
+	if (!(x < 0 || y < 0 || x >= image->w || y >= image->h))
+		*(int *)(image->ptr + ((x + y * image->w) * image->bpp)) = color;
 }
 
 int		set_pixel_transparent(t_game *game, t_vector pos, t_color color, float alpha)
@@ -53,8 +53,8 @@ t_image	*new_image(t_game *game, int w, int h)
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
 								 &img->endian);
 	img->bpp /= 8;
-	img->width = w;
-	img->height = h;
+	img->w = w;
+	img->h = h;
 	return (img);
 }
 
@@ -66,9 +66,9 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos)
 
 	x_l = (x_pos < 0 ? -x_pos : 0);
 	y_l = (y_pos < 0 ? -y_pos : 0);
-	while (y_l < layer->height && y_pos + y_l < image->height)
+	while (y_l < layer->h && y_pos + y_l < image->h)
 	{
-		while (x_l < layer->width && x_pos + x_l < image->width)
+		while (x_l < layer->w && x_pos + x_l < image->w)
 		{
 			value = get_pixel(layer, x_l, y_l).value;
 			value != -16777216 ? image_set_pixel(image, x_pos + x_l, y_pos + y_l, value) : 0;

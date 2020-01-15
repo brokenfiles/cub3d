@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:10:48 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:20:41 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct	s_image
 	int			bpp;
 	int			stride;
 	int			endian;
-	int			width;
-	int			height;
+	int			w;
+	int			h;
 }				t_image;
 typedef struct	s_vector
 {

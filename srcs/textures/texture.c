@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:19:26 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_color		c(int v)
 
 t_color		get_pixel(t_image *image, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= image->width || y >= image->height)
+	if (x < 0 || y < 0 || x >= image->w || y >= image->h)
 		return ((t_color)0x0);
-	return ((t_color)*(int *)(image->ptr + ((x + y * image->width)
+	return ((t_color)*(int *)(image->ptr + ((x + y * image->w)
 											* image->bpp)));
 }
 
@@ -40,12 +40,12 @@ t_image	*xpm_image(char *xpm, t_game *game)
 
 	if ((img = malloc(sizeof(t_image))) == NULL)
 		return (NULL);
-	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->width, &img->height)) == NULL)
+	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->w, &img->h)) == NULL)
 		return (0);
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
 	img->bpp /= 8;
-	img->width = img->stride / img->bpp;
-	img->height = img->stride / img->bpp;
+	img->w = img->stride / img->bpp;
+	img->h = img->stride / img->bpp;
 	return (img);
 }
 

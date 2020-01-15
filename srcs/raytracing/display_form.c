@@ -124,7 +124,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	int			color;
 
 	set_texture(game, ray, &tex);
-	img.x = ft_scale(0.0, 1.0, 0.0, tex->width, ray->inter);
+	img.x = ft_scale(0.0, 1.0, 0.0, tex->w, ray->inter);
 	calc.x = form.vector.y - (form.dim.y / 2);
 	calc.y = form.vector.y + (form.dim.y / 2);
 	screen.y = 0;
@@ -133,7 +133,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 		if (screen.y > form.vector.y - (form.dim.y / 2) &&
 		screen.y <= form.vector.y + (form.dim.y / 2))
 		{
-			img.y = ft_scale((int) calc.x, (int) calc.y, 0, tex->height, screen.y);
+			img.y = ft_scale((int) calc.x, (int) calc.y, 0, tex->h, screen.y);
 			ray->dist = 255 / (255 / (ray->dist));
 			color = get_pixel(tex, img.x, img.y).value & 0xFFFFFF;
 //				color = convert_rgb(get_pixel(tex, img.x, img.y).rgba.r - ray->dist, get_pixel(tex, img.x, img.y).rgba.g - ray->dist, get_pixel(tex, img.x, img.y).rgba.b - ray->dist);

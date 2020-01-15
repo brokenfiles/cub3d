@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 19:02:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:08:09 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				render(t_game *game)
 	int			x;
 
 	x = 0;
-	angle = game->angle; //pas besoin de le recalculer a chaque nouveau render TODO : mettre cette valeur dans une structure
+	angle = game->angle;
 	ray.sprites = malloc(sizeof(struct s_sprite) * 10);
 	while (angle > -game->angle)
 	{
