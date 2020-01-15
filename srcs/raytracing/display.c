@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:27:09 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int				render(t_game *game)
 {
 	t_vector hit;
 	float git ;
-	float angle_copy; //DEGAGE dans game
+	float	angle;
+	float	angle_copy; //DEGAGE dans game
 	int x;
 	t_ray 	ray;
 
