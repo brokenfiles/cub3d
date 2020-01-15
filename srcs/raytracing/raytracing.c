@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 19:09:41 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:36:46 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				render(t_game *game)
 		ray.inter = (ray.wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y);
 		if (!print_line(game, form(vec(x, game->dim.y / 2), vec(1, (float)(game->dim.y) / (0.56 * ray.dist)), 0x0), &ray))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-		display_sprite(game, ray.sprites, x, angle);
+		display_sprite(game, &ray, x);
 		angle -= (game->angle * 2) / game->dim.x;
 		x++;
 	}

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 19:52:42 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 19:53:19 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ int		display_cir(t_game *game, t_form form, int t)
 	teta = 0;
 	while (teta < 360.0)
 	{
-		set_pixel_transparent(game, rotation_matrice(point, form.vector, teta), c(form.color), t);
+		set_pixel_transparent(game,
+				rotation_matrice(point, form.vector, teta),
+				c(form.color), t);
 		teta++;
 	}
 	return (1);

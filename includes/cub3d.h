@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 19:46:20 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:35:55 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_vector	next_hit(t_game *game, t_ray *ray);
 //DISPLAY_SPRITE
 void		clear_sprites(t_sprite *sprites, int n);
 t_sprite	set_sprite(t_vector hit, int *wall, t_game *game);
-int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle);
+int			display_sprite(t_game *game, t_ray *r, int x);
 //DISPLAY_FORM
 int			display_tri(t_game *game, t_form form);
 int			display_rec(t_game *game, t_form form, t_image **image, int t);
@@ -65,7 +65,6 @@ t_image		*new_image(t_game *game, int w, int h);
 void		put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos);
 t_image		*xpm_image(char *xpm, t_game *game);
 int			load_tex(t_game *game, t_image **image, char *tex);
-int			convert_rgb(int r, int g, int b);
 t_image		*get_tex(t_game *game, char c);
 //ERRORS
 void		ft_puterror(char *s);
@@ -83,12 +82,13 @@ t_form		form(t_vector vector, t_vector dim, int color);
 //SAVE_IMG
 int 		save_image(t_game *game);
 //FT_ITOA
-char	*ft_itoa(int nbr);
+char		*ft_itoa(int nbr);
 //MATRICE
 t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 //OTHER
 float		sq_dist(t_vector origin, t_vector point);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
+int			convert_rgb(int r, int g, int b);
 
 
 //A RANGER

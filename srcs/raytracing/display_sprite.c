@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 19:19:26 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:45:54 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,33 @@ t_sprite	set_sprite(t_vector hit, int *wall, t_game *game)
 	return (sprite);
 }
 
-int		print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image *tex)
+float	calc_inter(t_ray *r, t_sprite *sp)
+{
+	float		inter;
+	t_vector	k;
+	t_vector	v;
+
+	v = vec(sp->pos.x - (int)sp->pos.x, sp->pos.y - (int)sp->pos.y);
+	k = vec(r->sin * r->sin, r->cos * r->cos);
+	if (r->alpha > 3 * M_PI_2 && r->alpha <= 2 * M_PI)
+		return (sp->wall % 2 == 0 ? (1 - v.x) * k.x : 1 - (1 - v.y) * k.y);
+	else if (r->alpha > M_PI_2 && r->alpha <= M_PI)
+		return (sp->wall % 2 == 0 ? v.x * k.x : 1 - (v.y) * k.y);
+	else if (r->alpha > M_PI && r->alpha <= 3 * M_PI_2)
+		return (sp->wall % 2 == 0 ? 1 - (v.x) * k.x : (1 - v.y) * k.y);
+	else
+		return (sp->wall % 2 == 0 ? 1 - (1 - v.x) * k.x : (v.y) * k.y);
+}
+
+int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *tex)
 {
 	t_vector	screen;
 	t_vector	im;
 	t_vector	calc;
-	int		color;
+	int			color;
 
 	screen.x = form.vector.x;
-	im.x = ft_scale(0.0, 1.0, 0.0, tex->w, x_inter);
+	im.x = ft_scale(0.0, 1.0, 0.0, tex->w, inter);
 	calc.x = form.vector.y - (form.dim.x / 2);
 	calc.y = form.vector.y + (form.dim.x / 2);
 	screen.y = form.vector.y - (form.dim.y / 2);
@@ -52,32 +70,26 @@ int		print_sprite(t_game *game, t_form form, float x_inter, float dist, t_image 
 	return (1);
 }
 
-int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle)
+int		display_sprite(t_game *game, t_ray *r, int x)
 {
-	float teta;
-	float dist;
-	float x_inter;
-	t_sprite *sprite;
-	int 	index;
+	float		dist;
+	float		inter;
+	t_sprite	*sprite;
+	int			index;
 
 	index = 4;
 	while (index >= 0)
 	{
-		sprite = &sprites[index];
+		sprite = &r->sprites[index];
 		if (sprite->defined == 1)
 		{
-			dist = sqrt(sq_dist(game->p.pos, vec((int)sprite->pos.x, (int)sprite->pos.y)));
-			teta = (((float)game->p.yaw + angle)/ 360.0) * (float)(2 * M_PI);
-			teta = teta < 0 ? 2 * M_PI + teta : teta;
-			if (teta > 3 * M_PI/2 && teta <= 2 * M_PI)
-				x_inter = sprite->wall % 2 == 0 ? (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
-			else if (teta > M_PI/2 && teta <= M_PI)
-				x_inter = sprite->wall % 2 == 0 ? (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : 1 - (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
-			else if (teta > M_PI && teta <= 3 * M_PI / 2)
-				x_inter = sprite->wall % 2 == 0 ? 1 - (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
-			else
-				x_inter = sprite->wall % 2 == 0 ? 1 - (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
-			if (!print_sprite(game, form(vec(x, game->dim.y / 2), vec((float)(game->dim.y / 0.56) / dist, (float)(game->dim.y / 0.56) / dist), 0x0), x_inter, dist, sprite->tex))
+			dist = sqrt(sq_dist(game->p.pos, vec((int)sprite->pos.x,
+					(int)sprite->pos.y)));
+			inter = calc_inter(r, sprite);
+			if (!print_sprite(game, form(vec(x, game->dim.y / 2),
+				vec((float)(game->dim.y / 0.56) / dist,
+				(float)(game->dim.y / 0.56) / dist), 0x0),
+				inter, dist, sprite->tex))
 				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		}
 		index--;

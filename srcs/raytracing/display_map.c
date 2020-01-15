@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 20:14:11 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 20:14:17 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int		display_map(t_game *game, t_image **image, int t)
 		x = 0;
 		while (game->map->map[y][x])
 		{
-			c = ft_strchr("1DH", game->map->map[y][x]) ? WALL_COLOR : VOID_COLOR;
+			c = ft_strchr("1DH", game->map->map[y][x]) ?
+					WALL_COLOR : VOID_COLOR;
 			display_rec(game, form(
 					vec(game->dim.x / MAP_SIZE * x, game->dim.x / MAP_SIZE * y),
 					vec(game->dim.x / MAP_SIZE, game->dim.x / MAP_SIZE),

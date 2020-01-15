@@ -27,3 +27,13 @@ int ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 	return ((k * y + c));
 }
 
+int convert_rgb(int R, int G, int B)
+{
+	R = (R > 255 ? 255 : R);
+	G = (G > 255 ? 255 : G);
+	B = (B > 255 ? 255 : B);
+	R = (R < 0 ? 0 : R);
+	G = (G < 0 ? 0 : G);
+	B = (B < 0 ? 0 : B);
+	return (65536 * R + 256 * G + B);
+}
