@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:58:59 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,6 @@ int quit(t_game *game, int code, char *message)
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
-//	if (game && game->image)
-//		free(game->image);
-//	if (game && game->ptr)
-//		free(game->ptr);
-//	if (game && game->win)
-//		free(game->win);
-//	if (game && game->map->tex.sp_tex)
-//		free(game->map->tex.sp_tex);
-//	if (game && game->map->tex.ea_tex)
-//		free(game->map->tex.ea_tex);
-//	if (game && game->map)
-//		free(game->map->tex.we_tex);
-//	if (game && game->map)
-//		free(game->map->tex.so_tex);
-//	if (game && game->map)
-//		free(game->map->tex.no_tex);
-
-//TODO: unmute that shit
-//	while (game && game->map->map[index])
-//		index++;
-//	if (game)
-//		free_map(game->map->map, index);
-//	if (game)
-//		free(game);
 //	system("leaks cub3d");
 	exit(code);
 	return (code);

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 14:05:28 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:02:09 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_tex
 	t_image		*do_tex;
 	t_image		*co_tex;
 	t_image		*lu_tex;
-	t_image		*nbrs[10];
+	t_image		**nbrs;
 	int			size;
 }				t_tex;
 typedef struct	s_map
@@ -78,7 +78,6 @@ typedef struct	s_player
 	int			rot_speed;
 	float		health;
 	int			coins;
-	char		*coins_str;
 	float		size;
 }				t_player;
 typedef struct	s_sprite
@@ -107,6 +106,7 @@ typedef struct	s_game
 	void		*win;
 	t_map		*map;
 	t_player	p;
+	t_vector	dim;
 	t_image		*image;
 	float		angle;
 	int			save_first_image;

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 13:32:28 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:02:09 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_player	init_player(void)
 	player.health = 100;
 	player.size = 1;
 	player.coins = 0;
-	player.coins_str = (player.coins != 0 ? ft_itoa(player.coins) : "0");
 	return (player);
 }
 
@@ -32,7 +31,6 @@ void		reinit_player(t_game *game)
 	game->p.yaw = game->map->spawn_yaw;
 	game->p.health = 100;
 	game->p.coins = 0;
-	game->p.coins_str = (game->p.coins != 0 ? ft_itoa(game->p.coins) : "0");
 }
 
 int			set_ray(t_ray *ray, float teta)
@@ -50,15 +48,13 @@ t_game		*init_game(int nb_level, char **av)
 
 	if (!(game = malloc(sizeof(struct s_game))))
 		return (NULL);
-	if (!(game->image = malloc(sizeof(struct s_image))))
-		return (NULL);
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (NULL);
 	game->p = init_player();
 	game->level = 0;
 	game->total_level = 0;
-	game->image->height = 0;
-	game->image->width = 0;
+	game->dim.y = 0;
+	game->dim.x = 0;
 	game->disable_map = 0;
 	game->disable_bonus = 0;
 	game->save_first_image = 0;

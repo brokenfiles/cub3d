@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/10 21:49:29 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 16:37:45 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ int		load_nbrs(t_game *game)
 {
 	int index;
 	char *path;
-	char *extension;
-	char *number;
+	char *tmp;
 
 	index = 0;
+	if (!(game->map->tex.nbrs = (t_image **)malloc(sizeof(struct s_image *) * 10)))
+		return (0);
 	while (index < 10)
 	{
-		number = ft_itoa(index);
-		path = ft_strjoin("textures/numbers/", index != 0 ? number : "0");
-		extension = ft_strjoin(path, ".XPM");
-		if (!load_tex(game, &game->map->tex.nbrs[index], extension))
+		path = ft_itoa(index);
+		tmp = path;
+		path = ft_strjoin("textures/numbers/", index != 0 ? path : "0");
+		free(tmp);
+		tmp = path;
+		path = ft_strjoin(path, ".XPM");
+		free(tmp);
+		if (!load_tex(game, &game->map->tex.nbrs[index], path))
 		{
-			free(extension);
 			free(path);
-			free(number);
 			return (quit(game, EXIT_FAILURE, "Texture error."));
 		}
-		free(extension);
 		free(path);
-		free(number);
 		index++;
 	}
 	return (1);
@@ -76,7 +77,6 @@ int		get_texture(t_game *game, char *line, int *tex_counter)
 		good = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
 	}
 	good ? (*tex_counter)++ : good;
-	load_nbrs(game); //verifier avec louis
 	return (good);
 }
 

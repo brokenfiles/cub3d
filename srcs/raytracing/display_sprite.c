@@ -54,7 +54,7 @@ int			display_sprite(t_game *game, t_sprite *sprites, int x, float angle)
 				x_inter = sprite->wall % 2 == 0 ? 1 - (sprite->pos.x - (int)sprite->pos.x) * sin(teta) * sin(teta) : (1 - sprite->pos.y + (int)sprite->pos.y) * cos(teta) * cos(teta);
 			else
 				x_inter = sprite->wall % 2 == 0 ? 1 - (1 - sprite->pos.x + (int)sprite->pos.x) * sin(teta) * sin(teta) : (sprite->pos.y - (int)sprite->pos.y) * cos(teta) * cos(teta);
-			if (!print_sprite(game, form(vector(x, game->image->height / 2), vector((float)(game->image->height / 0.56) / dist, (float)(game->image->height / 0.56) / dist), 0x0), x_inter, dist, sprite->tex))
+			if (!print_sprite(game, form(vector(x, game->dim.y / 2), vector((float)(game->dim.y / 0.56) / dist, (float)(game->dim.y / 0.56) / dist), 0x0), x_inter, dist, sprite->tex))
 				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		}
 		index--;

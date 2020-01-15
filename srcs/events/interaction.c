@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/11 02:54:06 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:06:58 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		gain_coins(t_game *game, int x, int y)
 	if (game->map->map[y][x] == 'C')
 	{
 		game->p.coins++;
-		game->p.coins_str = (game->p.coins > 999 ? ft_itoa(999): ft_itoa(game->p.coins));
+//		game->p.coins_str = game->p.coins > 999 ? ft_itoa(999): ft_itoa(game->p.coins);
 		game->map->map[y][x] = '0';
 	}
 }

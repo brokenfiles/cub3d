@@ -33,8 +33,8 @@ static int	write_header(int fd, int size, t_game *game)
 	put_int_in_char(header + 2, size);
 	header[10] = (unsigned char)(54);
 	header[14] = (unsigned char)(40);
-	put_int_in_char(header + 18, game->image->width);
-	put_int_in_char(header + 22, game->image->height);
+	put_int_in_char(header + 18, game->dim.x);
+	put_int_in_char(header + 22, game->dim.y);
 	header[27] = (unsigned char)(1);
 	header[28] = (unsigned char)(24);
 	return (!(write(fd, header, 54) < 0));
@@ -47,11 +47,11 @@ static int	write_data(int file, t_game *game, int step)
 	int					y;
 	int					color;
 
-	y = game->image->height;
+	y = game->dim.y;
 	while (y > 0)
 	{
 		x = 0;
-		while (x < game->image->width)
+		while (x < game->dim.x)
 		{
 			color = get_pixel(game->image, x, y).value;
 			if (write(file, &color, 3) < 0)
@@ -73,7 +73,7 @@ int		save_bitmap(t_game *game, char *name)
 
 	ft_putstr("Saving screenshot...\n");
 	step = 0;
-	size = 54 + (3 * ((int)game->image->width + step) * (int)game->image->height); //cest quoi ce 54
+	size = 54 + (3 * ((int)game->dim.x + step) * (int)game->dim.y); //cest quoi ce 54
 	if ((file = open(name, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR)) < 0)
 		return (0);
 	if (!write_header(file, size, game))

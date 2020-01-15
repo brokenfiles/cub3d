@@ -6,11 +6,47 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:42:21 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:37:12 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+int	ft_strlen_wc(char *str, char c)
+{
+	int	counter;
+
+	counter = 0;
+	while (*str)
+		if (*(str++) != c)
+			counter++;
+	return (counter);
+}
+
+int	remove_spaces(char **line)
+{
+	int		index;
+	int		chars;
+	char	*new_str;
+
+	if (!(new_str = (char *)malloc(sizeof(char) * (ft_strlen_wc(*line, ' ') + 1))))
+		return (0);
+	index = 0;
+	chars = 0;
+	while ((*line)[index])
+	{
+		if ((*line)[index] != ' ')
+		{
+			new_str[chars] = (*line)[index];
+			chars++;
+		}
+		index++;
+	}
+	new_str[chars] = 0;
+	*line = new_str;
+	free(*line);
+	return (1);
+}
 
 int	set_pos(t_game *game, t_vector vector, char id)
 {

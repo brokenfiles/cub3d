@@ -138,7 +138,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	calc.x = form.vector.y - (form.dim.y / 2);
 	calc.y = form.vector.y + (form.dim.y / 2);
 	screen.y = 0;
-	while (game->image->height > screen.y)
+	while (game->dim.y > screen.y)
 	{
 		if (screen.y > form.vector.y - (form.dim.y / 2) &&
 		screen.y <= form.vector.y + (form.dim.y / 2))
@@ -149,7 +149,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 //				color = convert_rgb(get_pixel(tex, img.x, img.y).rgba.r - ray->dist, get_pixel(tex, img.x, img.y).rgba.g - ray->dist, get_pixel(tex, img.x, img.y).rgba.b - ray->dist);
 		}
 		else
-			color = (screen.y >= game->image->height / 2) ?
+			color = (screen.y >= game->dim.y / 2) ?
 					game->map->floor_color : game->map->sky_color;
 		image_set_pixel(game->image, form.vector.x, screen.y++, color);
 	}

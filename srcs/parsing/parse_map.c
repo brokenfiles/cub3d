@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 11:27:06 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:55:32 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		get_map(t_game *game, char *line, int *map_end)
 	char	*temp;
 
 	temp = NULL;
+	if (!remove_spaces(&line))
+		return (0);
 	if (ft_stronly("1", line) && game->map->map)
 		*map_end = 1;
 	if (game->map->map == NULL)
@@ -76,6 +78,8 @@ int		read_map(t_game *game, int fd)
 	continue_read = 1;
 	tex_counter = 0;
 	map_end = 0;
+	if (!load_nbrs(game))
+		return (0);
 	game->map->map = NULL;
 	while (get_next_line(fd, &line))
 	{
@@ -119,6 +123,6 @@ int		parse_map(t_game *game, char *map_name)
 	free(tmp);
 	if (!valid_map(game) || !is_structure_full(game))
 		return (0);
-	game->angle = 17.0 * game->image->width / (game->image->height);
+	game->angle = 17.0 * game->dim.x / (game->dim.y);
 	return (1);
 }

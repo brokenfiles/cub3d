@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 13:49:39 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:20:22 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ int			parse_map(t_game *game, char *map_name);
 int			fill_map(char *map_name, t_game *game);
 int			valid_map(t_game *game);
 int			free_entire_parsing(t_game *game);
+int			load_nbrs(t_game *game);
 //PARSE UTIL
-
-//t_vector	next_inter(t_vector p, t_vector vec, float teta, int *wall, t_game *game)
-
+int			remove_spaces(char **line);
 int			get_resolution(t_game *game, char *line);
 char		*get_val(char *line, char *key);
 int			get_int_len(unsigned int nb);

@@ -27,10 +27,10 @@ int		get_int_len(unsigned int nb)
 
 int		is_structure_full(t_game *game)
 {
-	if (!game->image->width || !game->map->sky_color ||
+	if (!game->dim.x || !game->map->sky_color ||
 		!game->map->floor_color || !game->map->tex.ea_tex ||
 		!game->map->tex.no_tex || !game->map->tex.so_tex ||
-		!game->map->tex.we_tex || !game->image->height)
+		!game->map->tex.we_tex || !game->dim.y)
 		return (0);
 	return (1);
 }
@@ -70,18 +70,18 @@ int		get_resolution(t_game *game, char *line)
 		return (1);
 	if (!(tmp = get_val(line, "R ")))
 		return (0);
-	if (!(game->image->width = ft_atoi(tmp)))
+	if (!(game->dim.x = ft_atoi(tmp)))
 		return (0);
-	tmp += get_int_len(game->image->width);
-	if (!(game->image->height = ft_atoi(tmp)))
+	tmp += get_int_len(game->dim.x);
+	if (!(game->dim.y = ft_atoi(tmp)))
 		return (0);
-	if (game->image->height >= MAX_HEIGHT)
-		game->image->height = MAX_HEIGHT;
-	if (game->image->width >= MAX_WIDTH)
-		game->image->width = MAX_WIDTH;
-	if (game->image->height <= MIN_HEIGHT)
-		game->image->height = MIN_HEIGHT;
-	if (game->image->width <= MIN_WIDTH)
-		game->image->width = MIN_WIDTH;
+	if (game->dim.y >= MAX_HEIGHT)
+		game->dim.y = MAX_HEIGHT;
+	if (game->dim.x >= MAX_WIDTH)
+		game->dim.x = MAX_WIDTH;
+	if (game->dim.y <= MIN_HEIGHT)
+		game->dim.y = MIN_HEIGHT;
+	if (game->dim.x <= MIN_WIDTH)
+		game->dim.x = MIN_WIDTH;
 	return (1);
 }

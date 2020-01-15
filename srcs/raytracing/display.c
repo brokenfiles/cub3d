@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 14:22:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:46:09 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ int				render(t_game *game)
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		ray.dist = (float)sqrt(sq_dist(game->p.pos, hit));
 		ray.inter = (ray.wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y);
-		if (!print_line(game, form(vector(x, game->image->height / 2), vector(1, (float)(game->image->height) / (0.56 * ray.dist)), 0x0), &ray))
+		if (!print_line(game, form(vector(x, game->dim.y / 2), vector(1, (float)(game->dim.y) / (0.56 * ray.dist)), 0x0), &ray))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 		display_sprite(game, ray.sprites, x, angle);
-		angle -= (game->angle * 2) / game->image->width;
+		angle -= (game->angle * 2) / game->dim.x;
 		x++;
 	}
 	free(ray.sprites);
