@@ -43,6 +43,16 @@ int			init_ray(t_ray *ray, float teta)
 	return (1);
 }
 
+int			init_tex(t_game *game)
+{
+	game->map->tex.ea_tex = NULL;
+	game->map->tex.we_tex = NULL;
+	game->map->tex.so_tex = NULL;
+	game->map->tex.no_tex = NULL;
+	game->map->tex.sp_tex = NULL;
+	return (1);
+}
+
 t_game		*init_game(int nb_level, char **av)
 {
 	t_game	*game;
@@ -51,6 +61,7 @@ t_game		*init_game(int nb_level, char **av)
 		return (NULL);
 	if (!(game->map = malloc(sizeof(struct s_map))))
 		return (NULL);
+	init_tex(game);
 	game->p = init_player();
 	game->level = 0;
 	game->total_level = 0;
