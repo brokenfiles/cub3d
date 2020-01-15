@@ -14,6 +14,7 @@
 - attention au changement de niveau qd le nombre dépasse le nombre de cartes renseignées
 - attention lorsqu'on joue sur plusieurs niveaux de s'assurer que la taille de l'écran et la même
 - afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
+- bloquer la hauteur des sprites a l'affichage
 
 // LISTE BONUS :
 X collision murs

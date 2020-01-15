@@ -27,12 +27,11 @@
 
 
 //EVENTS
-t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 int			handle_key(int key, void *param);
 //MOVE
 void		move(t_game *game, int key);
 //INTERACTION
-void		interact(t_game *game);
+void		interact(t_game *game, int key);
 void		gain_life(t_game *game, int x, int y);
 void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
