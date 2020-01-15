@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 15:20:22 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:38:08 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			free_and_return(void *allocated, int ret);
 int			free_entire_map(char **str);
 //PARSE TEX
 int			get_color(t_game *game, char *line, char c);
-int			get_texture(t_game *game, char *line, int *tex_counter);
+int			get_texture(t_game *game, char *line, int *tc);
 
 //DISPLAY
 t_vector	next_hit(t_game *game, t_ray *ray);

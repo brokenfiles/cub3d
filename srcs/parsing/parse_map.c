@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 16:55:32 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:51:41 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		get_map(t_game *game, char *line, int *map_end)
 	return (1);
 }
 
-int		fill_the_map(t_game *game, char *line, int *tex_counter, int *map_end)
+int		fill_the_map(t_game *game, char *line, int *tc, int *map_end)
 {
 	if (!ft_strncmp(line, "R ", 2))
 		return (get_resolution(game, line));
@@ -59,7 +59,7 @@ int		fill_the_map(t_game *game, char *line, int *tex_counter, int *map_end)
 		|| !ft_strncmp(line, "S ", 2) || !ft_strncmp(line, "LU ", 3)
 		|| !ft_strncmp(line, "LI ", 3) || !ft_strncmp(line, "CO ", 3)
 		|| !ft_strncmp(line, "DO ", 3))
-		return (get_texture(game, line, tex_counter));
+		return (get_texture(game, line, tc));
 	else if (!ft_strncmp(line, "C ", 2) || !ft_strncmp(line, "F ", 2))
 		return (get_color(game, line, line[0]));
 	else if (ft_strlen(line) > 0 && line[0] == '1')
@@ -72,25 +72,25 @@ int		read_map(t_game *game, int fd)
 {
 	char	*line;
 	int		continue_read;
-	int		tex_counter;
+	int		tc;
 	int		map_end;
 
 	continue_read = 1;
-	tex_counter = 0;
+	tc = 0;
 	map_end = 0;
 	if (!load_nbrs(game))
 		return (0);
 	game->map->map = NULL;
 	while (get_next_line(fd, &line))
 	{
-		continue_read = fill_the_map(game, line, &tex_counter, &map_end);
+		continue_read = fill_the_map(game, line, &tc, &map_end);
 		free(line);
 		if (!continue_read)
 			return (0);
 	}
-	fill_the_map(game, line, &tex_counter, &map_end);
+	fill_the_map(game, line, &tc, &map_end);
 	free(line);
-	if (tex_counter < 5)
+	if (tc < 5)
 		return (0);
 	return (1);
 }

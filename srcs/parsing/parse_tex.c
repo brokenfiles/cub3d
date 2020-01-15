@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 16:37:45 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:03:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,52 @@ int		load_nbrs(t_game *game)
 	return (1);
 }
 
-int		get_texture(t_game *game, char *line, int *tex_counter)
+int		val_tex(t_game *game, t_image **image, char *val, int *tc)
 {
 	int	good;
 
-	good = 1;
+	good = load_tex(game, image, val);
+	if (good)
+		(*tc)++;
+	return (good);
+}
+
+int		get_texture(t_game *game, char *line, int *tc)
+{
+	int	g;
+
+	g = 1;
 	if (!ft_strncmp(line, "NO ", 3))
-		good = load_tex(game, &game->map->tex.no_tex, get_val(line, "NO "));
+		g = val_tex(game, &game->map->tex.no_tex, get_val(line, "NO "), tc);
 	else if (!ft_strncmp(line, "SO ", 3))
-		good = load_tex(game, &game->map->tex.so_tex, get_val(line, "SO "));
+		g = val_tex(game, &game->map->tex.so_tex, get_val(line, "SO "), tc);
 	else if (!ft_strncmp(line, "WE ", 3))
-		good = load_tex(game, &game->map->tex.we_tex, get_val(line, "WE "));
+		g = val_tex(game, &game->map->tex.we_tex, get_val(line, "WE "), tc);
 	else if (!ft_strncmp(line, "EA ", 3))
-		good = load_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "));
+		g = val_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "), tc);
 	else if (!ft_strncmp(line, "S ", 2))
-		good = load_tex(game, &game->map->tex.sp_tex, get_val(line, "S "));
+		g = val_tex(game, &game->map->tex.sp_tex, get_val(line, "S "), tc);
 	else if (!ft_strncmp(line, "LU ", 3))
 	{
 		free(game->map->tex.lu_tex);
-		good = load_tex(game, &game->map->tex.lu_tex, get_val(line, "LU "));
+		g = load_tex(game, &game->map->tex.lu_tex, get_val(line, "LU "));
 	}
 	else if (!ft_strncmp(line, "LI ", 3))
 	{
 		free(game->map->tex.li_tex);
-		good = load_tex(game, &game->map->tex.li_tex, get_val(line, "LI "));
+		g = load_tex(game, &game->map->tex.li_tex, get_val(line, "LI "));
 	}
 	else if (!ft_strncmp(line, "CO ", 3))
 	{
 		free(game->map->tex.co_tex);
-		good = load_tex(game, &game->map->tex.co_tex, get_val(line, "CO "));
+		g = load_tex(game, &game->map->tex.co_tex, get_val(line, "CO "));
 	}
 	else if (!ft_strncmp(line, "DO ", 3))
 	{
 		free(game->map->tex.do_tex);
-		good = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
+		g = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
 	}
-	good ? (*tex_counter)++ : good;
-	return (good);
+	return (g);
 }
 
 int		get_color(t_game *game, char *line, char c)
