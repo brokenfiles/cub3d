@@ -52,5 +52,6 @@ int		free_entire_parsing(t_game *game)
 	while (index < 10)
 		free(game->map->tex.nbrs[index++]);
 	free(game->map->tex.nbrs);
+	init_tex(game);
 	return (1);
 }

@@ -105,6 +105,7 @@ int			fill_map(char *map_name, t_game *game);
 int			valid_map(t_game *game);
 int			free_entire_parsing(t_game *game);
 int			load_nbrs(t_game *game);
+int			init_tex(t_game *game);
 //PARSE UTIL
 int			remove_spaces(char **line);
 int			get_resolution(t_game *game, char *line);
