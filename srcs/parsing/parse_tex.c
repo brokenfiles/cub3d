@@ -6,20 +6,30 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 18:03:44 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:34:17 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+int		free_and_load(t_game *game, t_image *tex, char *str, char *line)
+{
+	int g;
+
+	free(tex);
+	g = load_tex(game, &tex, get_val(line, str));
+	return g;
+}
+
 int		load_nbrs(t_game *game)
 {
-	int index;
-	char *path;
-	char *tmp;
+	int		index;
+	char	*path;
+	char	*tmp;
 
 	index = 0;
-	if (!(game->map->tex.nbrs = (t_image **)malloc(sizeof(struct s_image *) * 10)))
+	if (!(game->map->tex.nbrs =
+			(t_image **)malloc(sizeof(struct s_image *) * 10)))
 		return (0);
 	while (index < 10)
 	{

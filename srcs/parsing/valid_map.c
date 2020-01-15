@@ -29,7 +29,8 @@ int	remove_spaces(char **line)
 	int		chars;
 	char	*new_str;
 
-	if (!(new_str = (char *)malloc(sizeof(char) * (ft_strlen_wc(*line, ' ') + 1))))
+	if (!(new_str = (char *)malloc(sizeof(char)
+			* (ft_strlen_wc(*line, ' ') + 1))))
 		return (0);
 	index = 0;
 	chars = 0;
