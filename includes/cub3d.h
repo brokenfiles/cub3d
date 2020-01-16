@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:47:49 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void		gain_coins(t_game *game, int x, int y);
 void		level_up(t_game *game, int x, int y);
 
 //DISPLAY
+int			display_step(t_game *game);
 t_vector	next_hit(t_game *game, t_ray *ray);
 //DISPLAY_SPRITE
 void		clear_sprites(t_sprite *sprites, int n);
@@ -47,6 +48,7 @@ int			display_sprite(t_game *game, t_ray *r, int x);
 int			display_tri(t_game *game, t_form form);
 int			display_rec(t_game *game, t_form form, t_image **image, int t);
 int			display_cir2(t_game *game, t_form forme, int t);
+int			display_rec_deg(t_game *game, t_form form, t_image **image, int t, int color);
 int			print_line(t_game *game, t_form form, t_ray *ray);
 //DISPLAY_MAP
 int			display_map(t_game *game, t_image **image, int t);
@@ -62,7 +64,7 @@ int			set_pixel_transparent(t_game *game,
 									 t_vector pos, t_color color, float alpha);
 t_image		*del_image(t_game *game, t_image *img);
 t_image		*new_image(t_game *game, int w, int h);
-void		put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos);
+void		put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos, float k);
 t_image		*xpm_image(char *xpm, t_game *game);
 int			load_tex(t_game *game, t_image **image, char *tex);
 t_image		*get_tex(t_game *game, char c);
@@ -94,8 +96,6 @@ t_form		form(t_vector vector, t_vector dim, int color); //changer leur posi
 //A RANGER
 t_color		c(int v);
 t_color		get_pixel(t_image *image, int x, int y);
-
-
 
 //A METTRE DANS UN AUTRE FICHIER
 //PARSE MAP

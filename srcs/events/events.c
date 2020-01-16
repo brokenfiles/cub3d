@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:40:36 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,10 @@ int		handle_key(int key, void *param)
 	game = (t_game *)param;
 	if (is_key(key, last_key) == 2)
 		quit(game, EXIT_SUCCESS, NULL);
-	if (next != 1 && is_key(key, last_key) != 3)
-	{
-		put_image_to_image(game->image, game->map->tex.li_tex,
-						   game->dim.x / 2, game->dim.y / 2);
-		mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+	if (is_key(key, last_key) == 3 && game->step == STEP_START)
+		game->step = STEP_PLAYING;
+	if (game->step != STEP_PLAYING)
 		return (1);
-	}
-	else
-		next = 1;
 	interact(game, key);
 	move(game, key);
 	if (last_level != game->level)
@@ -60,12 +55,7 @@ int		handle_key(int key, void *param)
 		if (game->level < game->total_level)
 			last_level = next_level(game);
 		else
-		{
-			put_image_to_image(game->image, game->map->tex.co_tex,
-							   game->dim.x / 2, game->dim.y / 2);
-			mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
-			return (1);
-		}
+			game->step = STEP_END;
 	}
 	if (is_key(key, last_key) == 1 || is_key(key, last_key) == 3)
 		if (!render(game))

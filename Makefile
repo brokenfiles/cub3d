@@ -21,6 +21,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/raytracing/display_bonus.c\
 				srcs/raytracing/display_sprite.c\
 				srcs/raytracing/display_map.c\
+				srcs/raytracing/display_step.c\
 				srcs/raytracing/raytracing.c\
 				srcs/textures/texture.c\
 				srcs/textures/images.c\

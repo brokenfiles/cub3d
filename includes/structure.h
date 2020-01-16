@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:21:01 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ typedef struct	s_tex
 	t_image		*do_tex;
 	t_image		*co_tex;
 	t_image		*lu_tex;
+	t_image		*m_enter_tex;
+	t_image		*m_g_o_tex;
+	t_image		*m_n_tex;
+	t_image		*logo_tex;
 	t_image		**nbrs;
 	int			size;
 }				t_tex;
@@ -110,6 +114,7 @@ typedef struct	s_game
 	t_vector	dim;
 	t_image		*image;
 	float		angle;
+	int			step;
 	int			save_first_image;
 	int			disable_map;
 	int			disable_bonus;

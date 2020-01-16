@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:37:02 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:48:31 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,32 @@ int		display_rec(t_game *game, t_form form, t_image **image, int t)
 	}
 	return (1);
 }
+
+int		display_rec_deg(t_game *game, t_form form, t_image **image, int t, int color)
+{
+	int	y;
+	int	x;
+	int	r;
+	int	g;
+	int	b;
+
+	x = form.vector.x;
+	while (form.vector.x + form.dim.x > x)
+	{
+		y = form.vector.y;
+		while (form.vector.y + form.dim.y > y)
+		{
+			r = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.r, c(color).rgba.r, y);
+			g = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.g, c(color).rgba.g, y);
+			b = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.b, c(color).rgba.b, y);
+			set_pixel_transparent(game, vec(x, y), c(convert_rgb(r, g, b)), t);
+			y++;
+		}
+		x++;
+	}
+	return (1);
+}
+
 
 int		display_cir(t_game *game, t_form form, int t)
 {

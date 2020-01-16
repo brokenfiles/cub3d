@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 13:52:10 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	display_num(t_game *game)
 	num_3 = (len >= 3 ? tmp[len - 3] - '0' : 0);
 	free(tmp);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_3],
-			game->dim.x - 65, 10);
+			game->dim.x - 65, 10, 1);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_2],
-			game->dim.x - 50, 10);
+			game->dim.x - 50, 10, 1);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_1],
-			game->dim.x - 35, 10);
+			game->dim.x - 35, 10, 1);
 }
 
 void	display_wallet(t_game *game)
@@ -76,7 +76,7 @@ void	display_wallet(t_game *game)
 	display_rec(game, form(vec(game->dim.x - 100, 5),
 			vec(100, 30), 0x00FFFF), &game->image, 0);
 	put_image_to_image(game->image, game->map->tex.co_tex,
-			game->dim.x - 150, -30);
+			game->dim.x - 150, -30, 1);
 	display_num(game);
 }
 
@@ -99,6 +99,7 @@ int		display_bonus(t_game *game, int t)
 				PLAYER_COLOR), 240);
 		}
 		display_wallet(game);
+		display_step(game);
 	}
 	return (1);
 }

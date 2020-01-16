@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:21:02 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -36,6 +36,10 @@
 //PLAYER
 # define MAX_ROT_SPEED						90
 # define HP									20
+// STEPS
+# define STEP_START							0
+# define STEP_PLAYING						1
+# define STEP_END							2
 //MINIMAP
 # define MAP_SIZE							200
 # define PLAYER_COLOR						0xA896FF
@@ -51,10 +55,14 @@
 # define BONUS_OPACITY						100
 //PARSING
 # define MAX_LEVEL							10
-# define LU_DEFAULT_TEX						"textures/jesus.XPM"
-# define DO_DEFAULT_TEX						"textures/tropical.XPM"
-# define LI_DEFAULT_TEX						"textures/minecraft/heart.xpm"
-# define CO_DEFAULT_TEX						"textures/planet_rose.XPM"
+# define LU_DEFAULT_TEX		"textures/jesus.XPM"
+# define DO_DEFAULT_TEX		"textures/tropical.XPM"
+# define LI_DEFAULT_TEX		"textures/minecraft/heart.xpm"
+# define CO_DEFAULT_TEX		"textures/planet_rose.XPM"
+# define M_ENTER_TEX		"textures/menus/click_enter_menu.xpm"
+# define M_GAME_OVER_TEX	"textures/menus/game_over_menu.xpm"
+# define M_NAME_TEX			"textures/menus/name_menu.xpm"
+# define M_LOGO_TEX			"textures/menus/logo.xpm"
 //MAP
 # define MAP_ONLY							"LDHCUFBWENS0123"
 # define POS_ONLY							"WENS"

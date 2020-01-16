@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/16 11:52:23 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:10:31 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_color		c(int v)
 
 t_color		get_pixel(t_image *image, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= image->w || y >= image->h)
+	if (x < 0 || y < 0 || x > image->w || y > image->h)
 		return ((t_color)0x0);
 	return ((t_color)*(int *)(image->ptr + ((x + y * image->w)
 											* image->bpp)));

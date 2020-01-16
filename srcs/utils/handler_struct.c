@@ -69,6 +69,7 @@ t_game		*init_game(int nb_level, char **av)
 	game->total_level = 0;
 	game->dim.y = 0;
 	game->dim.x = 0;
+	game->step = STEP_START;
 	game->disable_map = 0;
 	game->disable_bonus = 0;
 	game->save_first_image = 0;
