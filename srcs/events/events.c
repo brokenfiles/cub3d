@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:10:48 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		is_key(int key, int last_key)
 		return (1);
 	if ((last_key == K_Q && key == K_COMM) || key == K_ESC)
 		return (2);
+	if (key == 36)
+		return (3);
 	return (0);
 }
 
@@ -36,19 +38,36 @@ int		handle_key(int key, void *param)
 {
 	static int	last_key;
 	static int	last_level;
+	static int	next;
 	t_game		*game;
 
 	game = (t_game *)param;
 	if (is_key(key, last_key) == 2)
 		quit(game, EXIT_SUCCESS, NULL);
+	if (next != 1 && is_key(key, last_key) != 3)
+	{
+		put_image_to_image(game->image, game->map->tex.li_tex,
+						   game->dim.x / 2, game->dim.y / 2);
+		mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+		return (1);
+	}
+	else
+		next = 1;
 	interact(game, key);
 	move(game, key);
 	if (last_level != game->level)
 	{
 		if (game->level < game->total_level)
-			last_level = next_level(game); //rajouter un else ici pour END
+			last_level = next_level(game);
+		else
+		{
+			put_image_to_image(game->image, game->map->tex.co_tex,
+							   game->dim.x / 2, game->dim.y / 2);
+			mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
+			return (1);
+		}
 	}
-	if (is_key(key, last_key) == 1)
+	if (is_key(key, last_key) == 1 || is_key(key, last_key) == 3)
 		if (!render(game))
 			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
 	last_key = key;

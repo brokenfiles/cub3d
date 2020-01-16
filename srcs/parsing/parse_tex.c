@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:03:40 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		free_and_load(t_game *game, t_image *tex, char *str, char *line)
 {
-	int	g;
+	int g;
 
 	free(tex);
 	g = load_tex(game, &tex, get_val(line, str));
@@ -55,18 +55,11 @@ int		val_tex(t_game *game, t_image **image, char *val, int *tc)
 {
 	int	good;
 	int	already_set;
-	int	fd;
 
-	already_set = *image != NULL;
-	if ((fd = open(val, O_RDONLY)) == -1)
-		return (0);
-	close(fd);
-	if (!already_set)
-		good = load_tex(game, image, val);
-	if (good && !already_set)
+	already_set = *image == NULL;
+	good = load_tex(game, image, val);
+	if (good && already_set)
 		(*tc)++;
-	if (!good)
-		free(*image);
 	return (good);
 }
 

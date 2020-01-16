@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/utils/save_img.c\
 				srcs/utils/matrice.c\
 				srcs/utils/other.c\
+				srcs/utils/page.c\
 				srcs/cub3d.c\
 				libs/libft/ft_putstr.c\
 				libs/libft/ft_split.c\

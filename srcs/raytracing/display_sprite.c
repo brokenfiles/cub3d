@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		display_sprite(t_game *game, t_ray *r, int x)
 			dist = sqrt(sq_dist(game->p.pos, vec((int)sprite->pos.x,
 					(int)sprite->pos.y)));
 			inter = calc_inter(r, sprite);
-			if (!print_sprite(game, form(vec(x, game->dim.y / 2),
+			if (!print_sprite(game, form(vec(x, game->p.vision),
 				vec((float)(game->dim.y / 0.56) / dist,
 				(float)(game->dim.y / 0.56) / dist), 0x0),
 				inter, dist, sprite->tex))

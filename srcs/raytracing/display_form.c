@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		display_cir2(t_game *game, t_form forme, int t)
 int		set_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	if (ray->wall == 1)
-		*tex = game->map->tex.we_tex;
+		*tex = game->map->tex.we_tex;	//mettre dans texture?
 	if (ray->wall == 2)
 		*tex = game->map->tex.no_tex;
 	if (ray->wall == 3)

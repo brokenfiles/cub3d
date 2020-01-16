@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_player	init_player(void)
 	player.health = 100;
 	player.size = 1;
 	player.coins = 0;
+	player.vision = 0;
 	return (player);
 }
 
@@ -29,6 +30,7 @@ void		reinit_player(t_game *game)
 //TODO : remettre les méchants
 	game->p.pos = game->map->spawn;
 	game->p.yaw = game->map->spawn_yaw;
+	game->p.vision = game->dim.y / 2;
 	game->p.health = 100;
 	game->p.coins = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 12:59:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct	s_player
 {
 	t_vector	pos;
 	int			yaw;
+	int			vision;
 	float		speed;
 	int			rot_speed;
 	float		health;

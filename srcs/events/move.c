@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 11:16:05 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,18 @@ void		change_speed(t_game *game, int key)
 		game->p.speed = 0.2;
 }
 
+void		look_up_down(t_game *game, int key)
+{
+	if (key == K_UP && game->p.vision < 3 * game->dim.y / 4)
+		game->p.vision += 10;
+	else if (key == K_DOWN && game->p.vision > game->dim.y / 4)
+		game->p.vision -= 10;
+}
+
 void		move(t_game *game, int key)
 {
-	if (key == K_UP || key == K_W || key == K_DOWN || key == K_S)
-		move_player(game, (key == K_UP || key == K_W ? 1 : -1));
+	if (key == K_W || key == K_S)
+		move_player(game, (key == K_W ? 1 : -1));
 	else if (key == K_LEFT || key == K_RIGHT)
 		direction_change(&game->p, (key == K_LEFT ? 1 : -1));
 	else if (key == K_A || key == K_D)
@@ -79,6 +87,7 @@ void		move(t_game *game, int key)
 		move_player(game, 1);
 		game->p.yaw -= (key == K_A ? 1 : -1) * 90;
 	}
+	look_up_down(game, key);
 	change_rot_speed(game, key);
 	change_speed(game, key);
 }
