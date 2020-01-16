@@ -6,22 +6,11 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:42:21 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 10:30:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-int	ft_strlen_wc(char *str, char c)
-{
-	int	counter;
-
-	counter = 0;
-	while (*str)
-		if (*(str++) != c)
-			counter++;
-	return (counter);
-}
 
 int	remove_spaces(char **line)
 {
@@ -84,8 +73,8 @@ int	valid_map(t_game *game)
 	int		index;
 	int		last_len;
 	int		pos_found;
-	t_map	*map;
 
+	t_map	*map;
 	index = 0;
 	last_len = 0;
 	pos_found = 0;

@@ -23,3 +23,14 @@ size_t	ft_strlen(const char *str)
 		index++;
 	return (index);
 }
+
+size_t	ft_strlen_wc(const char *str, char c)
+{
+	int	counter;
+
+	counter = 0;
+	while (*str)
+		if (*(str++) != c)
+			counter++;
+	return (counter);
+}

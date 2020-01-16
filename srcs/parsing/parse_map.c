@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 17:51:41 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 10:43:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ int		read_map(t_game *game, int fd)
 	{
 		continue_read = fill_the_map(game, line, &tc, &map_end);
 		free(line);
+//		printf("-------------- LEAK TEST --------------\n");
+//		system("leaks cub3d");
+//		printf("-------------- LEAK TEST --------------\n");
 		if (!continue_read)
 			return (0);
 	}

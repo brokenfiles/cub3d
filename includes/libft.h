@@ -34,6 +34,7 @@ int					ft_atoi(const char *str);
 char				*ft_strnstr(const char *haystack,
 		const char *needle, size_t n);
 size_t				ft_strlen(const char *str);
+size_t				ft_strlen_wc(const char *str, char c);
 int					ft_strcmp(const char *str1, const char *str2);
 int					ft_strncmp(const char *str1, const char *str2, size_t nb);
 char				*ft_strrchr(char const *str, int c);
