@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/15 21:34:17 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 10:18:55 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ int		val_tex(t_game *game, t_image **image, char *val, int *tc)
 	int	good;
 	int	already_set;
 
-	already_set = *image == NULL;
-	good = load_tex(game, image, val);
-	if (good && already_set)
+	already_set = *image != NULL;
+	if (!already_set)
+		good = load_tex(game, image, val);
+	if (good && !already_set)
 		(*tc)++;
 	return (good);
 }
