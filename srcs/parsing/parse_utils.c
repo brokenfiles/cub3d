@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 15:19:43 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/15 18:16:10 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 17:48:57 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int		get_int_len(unsigned int nb)
 
 int		is_structure_full(t_game *game)
 {
+	if (!game->map)
+		return (0);
 	if (!game->dim.x || !game->map->sky_color ||
 		!game->map->floor_color || !game->map->tex.ea_tex ||
 		!game->map->tex.no_tex || !game->map->tex.so_tex ||
-		!game->map->tex.we_tex || !game->dim.y)
+		!game->map->tex.we_tex || !game->dim.y || game->map->floor_color == -1
+		|| game->map->sky_color == -1)
 		return (0);
 	return (1);
 }

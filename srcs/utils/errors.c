@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 18:47:39 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int quit(t_game *game, int code, char *message)
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
-//	system("leaks cub3d");
+	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

@@ -49,6 +49,10 @@ int		free_entire_parsing(t_game *game)
 	free(game->map->tex.do_tex);
 	free(game->map->tex.co_tex);
 	free(game->map->tex.lu_tex);
+	free(game->map->tex.m_enter_tex);
+	free(game->map->tex.m_g_o_tex);
+	free(game->map->tex.logo_tex);
+	free(game->map->tex.m_n_tex);
 	while (index < 10)
 		free(game->map->tex.nbrs[index++]);
 	free(game->map->tex.nbrs);

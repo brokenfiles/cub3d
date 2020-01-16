@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:35:05 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 17:45:43 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,12 @@ int		get_color(t_game *game, char *line, char c)
 	char	*tmp;
 
 	index = 0;
-	tmp = line;
-	while (index++ < 3)
+	tmp = line + 2;
+	if (!tmp)
+		return (0);
+	while (index < 3)
 	{
-		colors[index - 1] = ft_atoi(tmp);
+		colors[index++] = ft_atoi(tmp);
 		if (!(tmp = to_next_char(tmp, ',')))
 			break ;
 	}

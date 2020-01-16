@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 11:12:38 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 16:13:50 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:14:13 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos, fl
 
 	x_l = (x_pos < 0 ? -x_pos : 0);
 	y_l = (y_pos < 0 ? -y_pos : 0);
-	while (y_l + 2 < layer->h * k && y_pos + y_l < image->h)
+	while (y_l + 1 < layer->h * k && y_pos + y_l < image->h)
 	{
 		y_scale = ft_scale(0, layer->h * k, 0, layer->h, y_l);
-		while (x_l + 2 < layer->w * k && x_pos + x_l < image->w)
+		while (x_l + 1 < layer->w * k && x_pos + x_l < image->w)
 		{
 			x_scale = ft_scale(0, layer->w * k, 0, layer->w, x_l);
 			value = get_pixel(layer, x_scale, y_scale).value;
