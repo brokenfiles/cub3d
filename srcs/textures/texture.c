@@ -6,7 +6,7 @@
 /*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:52:23 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,13 @@ t_image	*xpm_image(char *xpm, t_game *game)
 int	load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;
+	int			fd;
 
 	if (!tex)
 		return (0);
+	if ((fd = open(tex, O_RDONLY)) == -1)
+		return (0);
+	close(fd);
 	if ((img = xpm_image(tex, game)) == NULL)
 		return (0);
 	*image = img;
