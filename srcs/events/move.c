@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 14:44:48 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:27:31 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,19 @@ void		change_speed(t_game *game, int key)
 void		look_up_down(t_game *game, int key)
 {
 	if (key == K_UP && game->p.vision < 3 * game->dim.y / 4)
-		game->p.vision += 10;
+		game->p.vision += game->dim.y / 70;
 	else if (key == K_DOWN && game->p.vision > game->dim.y / 4)
-		game->p.vision -= 10;
+		game->p.vision -= game->dim.y / 70;
+}
+
+void		kneel(t_game *game, int key)
+{
+	if (key == 49)
+		printf("salut\n");
+	if (key == 49 && game->p.vision < 3 * game->dim.y / 4 && game->p.vision < game->dim.y / 2)
+		game->p.vision += game->dim.y / 4;
+	else if (key == 49 && game->p.vision > game->dim.y / 4 && game->p.vision > game->dim.y / 2)
+		game->p.vision -= game->dim.y / 4;
 }
 
 void		move(t_game *game, int key)
@@ -88,6 +98,7 @@ void		move(t_game *game, int key)
 		game->p.yaw -= (key == K_A ? 1 : -1) * 90;
 	}
 	look_up_down(game, key);
+	kneel(game, key);
 	change_rot_speed(game, key);
 	change_speed(game, key);
 }

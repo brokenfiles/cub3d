@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 13:52:10 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:17:04 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		display_lifebar(t_game *game, int t)
 	color = convert_rgb(150, 255 / (100 / game->p.health), 55);
 	size = vec((game->dim.x / 2) * (game->p.health / 100), 20);
 	display_rec(game, form(vec(i->w / 4 - 5, i->h - 40),
-			vec(i->w / 2 + 10, 30), 0xFFFBBC), &i, t);
+			vec(i->w / 2 + 10, 30), 0xFFFFFF), &i, t);
 	display_rec(game, form(vec(i->w / 4, i->h - 35),
 			size, color), &i, t);
 	size = vec((i->w / 4) * (game->p.rot_speed / (float)MAX_ROT_SPEED), 5);

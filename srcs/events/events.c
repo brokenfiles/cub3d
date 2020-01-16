@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 14:40:36 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 19:20:25 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		is_key(int key, int last_key)
 {
 	if (key == K_RIGHT || key == K_LEFT || key == K_DOWN || key == K_UP
 		|| key == K_S || key == K_W || key == K_A || key == K_D || key == K_E
-		|| key == K_MINUS || key == K_PLUS || key == K_DIGIT_0
+		|| key == K_MINUS || key == K_PLUS || key == K_DIGIT_0 || key == 49
 		|| key == K_DIGIT_9 || key == K_DIGIT_7 || key == K_DIGIT_8)
 		return (1);
 	if ((last_key == K_Q && key == K_COMM) || key == K_ESC)
