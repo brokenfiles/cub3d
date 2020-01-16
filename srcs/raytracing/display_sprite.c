@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 21:56:58 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *t
 	while (screen.y <= form.vector.y + (form.dim.y / 2))
 	{
 		im.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
-		color = get_pixel(tex, im.x, im.y).value & 0xFFFFFF;
+		//color = get_pixel(tex, im.x, im.y).value;
+		color = convert_rgb(get_pixel(tex, im.x, im.y).rgba.r * (1 - dist * 15 / 255), get_pixel(tex, im.x, im.y).rgba.g * (1 - dist * 15 / 255), get_pixel(tex, im.x, im.y).rgba.b * (1 - dist * 15 / 255)); //ligne à opti
 		if (color != 0x000000)
 			image_set_pixel(game->image, screen.x, screen.y, color);
 		screen.y++;

@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 19:27:31 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 21:22:21 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,20 @@ void		look_up_down(t_game *game, int key)
 
 void		kneel(t_game *game, int key)
 {
+	static int kneeling;
+
 	if (key == 49)
-		printf("salut\n");
-	if (key == 49 && game->p.vision < 3 * game->dim.y / 4 && game->p.vision < game->dim.y / 2)
-		game->p.vision += game->dim.y / 4;
-	else if (key == 49 && game->p.vision > game->dim.y / 4 && game->p.vision > game->dim.y / 2)
-		game->p.vision -= game->dim.y / 4;
+		printf("%d\n", game->p.vision);
+	if (key == 49 && !kneeling)
+	{
+		game->p.vision -= game->dim.y / 2;
+		kneeling = 1;
+	}
+	else if (key == 49)
+	{
+		game->p.vision += game->dim.y / 2;
+		kneeling = 0;
+	}
 }
 
 void		move(t_game *game, int key)

@@ -2,21 +2,20 @@
 - Normer
 
 // AUTRES
-- Mettre la minimap dans une image : afficher seulement les parties connues de la carte
-- attention les sprites disparaissent lorsqu'on est trop proche
+- attention les portes "UHD" disparaissent lorsqu'on est trop proche
 - afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
 - bloquer la hauteur des sprites a l'affichage
 - quest ce quil se passe si on a deux perso sur la carte
 
 // LISTE BONUS :
 X collision murs
-X minimap
-? textures sol et plafond
+. skybox
+O textures sol et plafond
 	- mettre une image fixe
 X HUD
-? vue en haut et bas
-O sauter et s'accroupir
-O effet d'ombre sur la distance
+X vue en haut et bas
+X sauter et s'accroupir
+X effet d'ombre sur la distance
 X bar de vie
 X objets dans le maze
 X gain ou perte de vie
@@ -24,7 +23,7 @@ X portes ouvertes ou fermée
 X portes secretes
 . animation
 X plusieurs niveaux
-? sons et musique
+. sons et musique
 O armes et méchants à combattre
     - changer le pointeur pour différentes armes
 
@@ -34,9 +33,10 @@ O - à faire
 . - pas à faire
 
 // OPTIONELS
-- Page menu
+X Page menu
 	- selection
-- page de fin
+X Page de fin
+X Minimap
 X Affichage Coins
 X Vitesse Rotation
 X Vitesse déplacement
@@ -44,6 +44,7 @@ X Vitesse déplacement
 - refermer les portes
 - afficher la carte en fonction du parcours
 X transparent
+- Mettre la minimap dans une image : afficher seulement les parties connues de la carte
 
 
 
@@ -56,5 +57,9 @@ X transparent
 - SPRITE
 	- vérifier la superposition des sprites
 
-- NIVEAU
+- regarder les fonctions type pour des explication
+	- lerp
+	-
+
+- NIVEAUX
 	- au dernier niveau vérifier quon est bien bloqué

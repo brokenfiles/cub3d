@@ -14,8 +14,6 @@
 
 int	put_image_screen(t_game *game, t_image *image, t_vector pos, float k)
 {
-//	printf("k : %f, image->w : %d, image->w * k : %f, image->w / k : %f\n", k, image->w, (float)image->w * k, (float)image->w / k);
-	//display_rec(game, form(vec(pos.x - (float)image->w * k / 2, pos.y - (float)image->h * k / 4), vec(2, 2), 0xFAFAFA), &game->image, 0);
 	put_image_to_image(game->image, image, pos.x - (float)image->w * k / 2, pos.y - (float)image->h * k / 2, k);
 	return (1);
 }

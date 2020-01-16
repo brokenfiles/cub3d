@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 15:48:31 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/16 21:53:59 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,8 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 		screen.y <= form.vector.y + (form.dim.y / 2))
 		{
 			img.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
-			ray->dist = 255 / (255 / (ray->dist));
-//			color = convert_rgb(get_pixel(tex, img.x, img.y).rgba.r - ray->dist, get_pixel(tex, img.x, img.y).rgba.g - ray->dist, get_pixel(tex, img.x, img.y).rgba.b - ray->dist);
-			color = get_pixel(tex, img.x, img.y).value & 0xFFFFFF;
+			color = convert_rgb(get_pixel(tex, img.x, img.y).rgba.r * (1 - ray->dist * 15 / 255), get_pixel(tex, img.x, img.y).rgba.g * (1 - ray->dist * 15 / 255), get_pixel(tex, img.x, img.y).rgba.b * (1 - ray->dist * 15 / 255)); //ligne à opti
+			//color = get_pixel(tex, img.x, img.y).value
 		}
 		else
 			color = (screen.y >= game->p.vision) ?
