@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:37:02 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 			color = get_pixel(tex, img.x, img.y).value & 0xFFFFFF;
 		}
 		else
-			color = (screen.y >= game->dim.y / 2) ?
+			color = (screen.y >= game->p.vision) ?
 					game->map->floor_color : game->map->sky_color;
 		image_set_pixel(game->image, form.vector.x, screen.y++, color);
 	}

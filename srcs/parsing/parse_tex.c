@@ -55,10 +55,15 @@ int		val_tex(t_game *game, t_image **image, char *val, int *tc)
 {
 	int	good;
 	int	already_set;
+	int	fd;
 
-	already_set = *image == NULL;
-	good = load_tex(game, image, val);
-	if (good && already_set)
+	already_set = *image != NULL;
+	if ((fd = open(val, O_RDONLY)) == -1)
+		return (0);
+	close(fd);
+	if (!already_set)
+		good = load_tex(game, image, val);
+	if (good && !already_set)
 		(*tc)++;
 	return (good);
 }

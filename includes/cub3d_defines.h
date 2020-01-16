@@ -48,6 +48,7 @@
 # define AIM_CIRCLE_COLOR					0xDC4A44
 # define AIM_CIRCLE_SIZE					9
 # define AIM_COLOR							0xFFFFFF
+# define BONUS_OPACITY						100
 //PARSING
 # define MAX_LEVEL							10
 # define LU_DEFAULT_TEX						"textures/jesus.XPM"

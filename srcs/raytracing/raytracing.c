@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/16 11:40:49 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				render(t_game *game)
 		x++;
 	}
 	free(ray.sprites);
-	display_bonus(game, 100);
+	display_bonus(game, BONUS_OPACITY);
 	mlx_put_image_to_window(game->ptr, game->win, game->image->image, 0, 0);
 	save_image(game);
 	return (1);
