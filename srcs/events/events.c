@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 19:20:25 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 15:14:08 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,17 @@ int		is_key(int key, int last_key)
 	return (0);
 }
 
+void	check_level(t_game *game, int *last_level)
+{
+	if (*last_level != game->level)
+	{
+		if (game->level < game->total_level)
+			*last_level = next_level(game);
+		else
+			game->step = STEP_END;
+	}
+}
+
 int		handle_key(int key, void *param)
 {
 	static int	last_key;
@@ -44,19 +55,15 @@ int		handle_key(int key, void *param)
 	game = (t_game *)param;
 	if (is_key(key, last_key) == 2)
 		quit(EXIT_SUCCESS, NULL);
+	if (game->disable_bonus)
+		game->step = 1;
 	if (is_key(key, last_key) == 3 && game->step == STEP_START)
 		game->step = STEP_PLAYING;
 	if (game->step != STEP_PLAYING)
 		return (1);
 	interact(game, key);
 	move(game, key);
-	if (last_level != game->level)
-	{
-		if (game->level < game->total_level)
-			last_level = next_level(game);
-		else
-			game->step = STEP_END;
-	}
+	check_level(game, &last_level);
 	if (is_key(key, last_key) == 1 || is_key(key, last_key) == 3)
 		if (!render(game))
 			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));

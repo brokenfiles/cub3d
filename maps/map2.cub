@@ -1,0 +1,24 @@
+R     1100 500
+NO    ./textures/pink2.xpm
+SO    ./textures/blue1.xpm
+WE    ./textures/rainbow.xpm
+EA    ./textures/side.xpm
+S     ./textures/lama.XPM
+LI    ./textures/mini_heart.xpm
+DO    ./textures/tropical.XPM
+CO    ./textures/planet_rose.XPM
+LU    ./textures/jesus.XPM
+F     221,183,145
+C     122,160,204
+
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 1 1 1 1 0 0 N 0 0 1 1 1 1 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1

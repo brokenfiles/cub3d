@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/17 13:40:48 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/17 15:15:05 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/textures/images.c\
 				srcs/events/events.c\
 				srcs/events/move.c\
+				srcs/events/move2.c\
 				srcs/events/interaction.c\
 				srcs/utils/errors.c\
 				srcs/utils/handler_struct.c\
@@ -72,9 +73,8 @@ AR			= ar rc
 RM			= rm -f
 CFLAGS		= -Wall -Wextra -Werror
 
-.c.o: ${OBJS}
-	@${CC} -c $< -o ${<:.c=.o}
-	@echo "\033[1;32mCompiling ${<:.c=.o}"
+.c.o:		${OBJS}
+			@${CC} -c $< -o ${<:.c=.o}
 
 $(NAME):	${OBJS} ${SRCSH}
 			@${CC} ${OBJS} -L ./ -lmlx -framework AppKit -framework OpenGL -o ${NAME}
