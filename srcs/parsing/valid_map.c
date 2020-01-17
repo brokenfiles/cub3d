@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 12:42:21 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 11:30:57 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,36 +68,42 @@ int	get_position(t_game *game, char *map_line, int y)
 	return (0);
 }
 
+int	check_line(t_game *game, float *last_len, float *pos_found, int index)
+{
+	char	*line;
+
+	line = game->map->map[index];
+	if ((index != 0 && ft_strlen(line) != *last_len) || !ft_stronly(MAP_ONLY,
+			line))
+		return (0);
+	if (index == 0)
+		if (!ft_stronly("1", line))
+			return (0);
+	if (line[0] != '1' || line[ft_strlen(line) - 1] != '1')
+		return (0);
+	(!*pos_found && get_position(game, line, index)) ? *pos_found = 1 :
+			*pos_found;
+	*last_len = ft_strlen(line);
+	return (1);
+}
+
 int	valid_map(t_game *game)
 {
-	int		index;
-	int		last_len;
-	int		pos_found;
+	int			index;
+	t_vector	calc;
 
-	t_map	*map;
 	index = 0;
-	last_len = 0;
-	pos_found = 0;
-	map = game->map;
-	while (map->map[index])
-	{
-		if ((index != 0 && ft_strlen(map->map[index]) != last_len) || !ft_stronly(MAP_ONLY, map->map[index]))
+	calc = vec(0, 0);
+	while (game->map->map[index])
+		if (!check_line(game, &calc.x, &calc.y, index++))
 			return (0);
-		if (index == 0)
-			if (!ft_stronly("1", map->map[index]))
-				return (0);
-		if (map->map[index][0] != '1' || map->map[index][ft_strlen(map->map[index]) - 1] != '1')
-			return (0);
-		(!pos_found && get_position(game, map->map[index], index)) ? pos_found = 1 : pos_found;
-		last_len = ft_strlen(map->map[index]);
-		index++;
-	}
-	if (!pos_found || index < 3)
+	if (!calc.y || index < 3)
 		return (0);
-	if (!map->spawn_yaw && !game->p.yaw && !game->p.pos.x && !game->p.pos.y)
+	if (!game->map->spawn_yaw && !game->p.yaw && !game->p.pos.x &&
+	!game->p.pos.y)
 		return (0);
-	map->lines = index;
-	if (!ft_stronly("1", map->map[index - 1]))
+	game->map->lines = index;
+	if (!ft_stronly("1", game->map->map[index - 1]))
 		return (1);
 	return (1);
 }

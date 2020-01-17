@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 10:31:27 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 11:36:04 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int		free_and_load(t_game *game, t_image *tex, char *str, char *line)
 {
-	int g;
+	int	g;
 
 	free(tex);
 	g = load_tex(game, &tex, get_val(line, str));
-	return g;
+	return (g);
 }
 
 int		load_nbrs(t_game *game)
@@ -41,10 +41,7 @@ int		load_nbrs(t_game *game)
 		path = ft_strjoin(path, ".XPM");
 		free(tmp);
 		if (!load_tex(game, &game->map->tex.nbrs[index], path))
-		{
-			free(path);
-			return (quit(EXIT_FAILURE, "Texture error."));
-		}
+			return (fnq(free, path, EXIT_FAILURE, "Texture error."));
 		free(path);
 		index++;
 	}
