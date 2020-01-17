@@ -32,7 +32,7 @@ int				render(t_game *game)
 		ray.inter = (ray.wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y);
 		if (!print_line(game, form(vec(x, game->p.vision), vec(1, (float)(game->dim.y) / (0.56 * ray.dist)), 0x0), &ray))
 			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
-//		display_sprite(game, &ray, x);
+		display_sprite(game, &ray, x);
 		angle -= (game->angle * 2) / game->dim.x;
 		x++;
 	}
