@@ -6,19 +6,29 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 11:36:04 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:22:46 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		free_and_load(t_game *game, t_image *tex, char *str, char *line)
+int		fnl(t_game *game, t_image **tex, char *val)
 {
-	int	g;
+	free(*tex);
+	return (load_tex(game, tex, val));
+}
 
-	free(tex);
-	g = load_tex(game, &tex, get_val(line, str));
-	return (g);
+int		v_tex(t_game *game, t_image **image, char *val, int *tc)
+{
+	int	good;
+	int	already_set;
+
+	already_set = *image != NULL;
+	if (!already_set)
+		good = load_tex(game, image, val);
+	if (good && !already_set)
+		(*tc)++;
+	return (good);
 }
 
 int		load_nbrs(t_game *game)
@@ -48,55 +58,27 @@ int		load_nbrs(t_game *game)
 	return (1);
 }
 
-int		val_tex(t_game *game, t_image **image, char *val, int *tc)
-{
-	int	good;
-	int	already_set;
-
-	already_set = *image != NULL;
-	if (!already_set)
-		good = load_tex(game, image, val);
-	if (good && !already_set)
-		(*tc)++;
-	return (good);
-}
-
 int		get_texture(t_game *game, char *line, int *tc)
 {
-	int	g;
-
-	g = 1;
 	if (!ft_strncmp(line, "NO ", 3))
-		g = val_tex(game, &game->map->tex.no_tex, get_val(line, "NO "), tc);
+		return (v_tex(game, &game->map->tex.no_tex, get_val(line, "NO "), tc));
 	else if (!ft_strncmp(line, "SO ", 3))
-		g = val_tex(game, &game->map->tex.so_tex, get_val(line, "SO "), tc);
+		return (v_tex(game, &game->map->tex.so_tex, get_val(line, "SO "), tc));
 	else if (!ft_strncmp(line, "WE ", 3))
-		g = val_tex(game, &game->map->tex.we_tex, get_val(line, "WE "), tc);
+		return (v_tex(game, &game->map->tex.we_tex, get_val(line, "WE "), tc));
 	else if (!ft_strncmp(line, "EA ", 3))
-		g = val_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "), tc);
+		return (v_tex(game, &game->map->tex.ea_tex, get_val(line, "EA "), tc));
 	else if (!ft_strncmp(line, "S ", 2))
-		g = val_tex(game, &game->map->tex.sp_tex, get_val(line, "S "), tc);
+		return (v_tex(game, &game->map->tex.sp_tex, get_val(line, "S "), tc));
 	else if (!ft_strncmp(line, "LU ", 3))
-	{
-		free(game->map->tex.lu_tex);
-		g = load_tex(game, &game->map->tex.lu_tex, get_val(line, "LU "));
-	}
+		return (fnl(game, &game->map->tex.lu_tex, get_val(line, "LU ")));
 	else if (!ft_strncmp(line, "LI ", 3))
-	{
-		free(game->map->tex.li_tex);
-		g = load_tex(game, &game->map->tex.li_tex, get_val(line, "LI "));
-	}
+		return (fnl(game, &game->map->tex.li_tex, get_val(line, "LI ")));
 	else if (!ft_strncmp(line, "CO ", 3))
-	{
-		free(game->map->tex.co_tex);
-		g = load_tex(game, &game->map->tex.co_tex, get_val(line, "CO "));
-	}
+		return (fnl(game, &game->map->tex.co_tex, get_val(line, "CO ")));
 	else if (!ft_strncmp(line, "DO ", 3))
-	{
-		free(game->map->tex.do_tex);
-		g = load_tex(game, &game->map->tex.do_tex, get_val(line, "DO "));
-	}
-	return (g);
+		return (fnl(game, &game->map->tex.do_tex, get_val(line, "DO ")));
+	return (1);
 }
 
 int		get_color(t_game *game, char *line, char c)
@@ -118,7 +100,8 @@ int		get_color(t_game *game, char *line, char c)
 	if (index < 3)
 		return (0);
 	if (c == 'F')
-		game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2], 1);
+		game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2],
+				1);
 	else if (c == 'C')
 		game->map->sky_color = convert_rgb(colors[0], colors[1], colors[2], 1);
 	return (1);
