@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 14:06:19 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 17:36:47 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int		display_rec_deg(t_game *game, t_form form, t_image **image, int t, int colo
 	return (1);
 }
 
-
 int		display_cir(t_game *game, t_form form, int t)
 {
 	t_vector	point;
@@ -113,7 +112,7 @@ int		display_cir2(t_game *game, t_form forme, int t)
 int		set_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	if (ray->wall == 1)
-		*tex = game->map->tex.we_tex;	//mettre dans texture?
+		*tex = game->map->tex.we_tex;
 	if (ray->wall == 2)
 		*tex = game->map->tex.no_tex;
 	if (ray->wall == 3)
@@ -143,11 +142,11 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	while (game->dim.y > screen.y)
 	{
 		if (screen.y > form.vector.y - (form.dim.y / 2) &&
-		screen.y <= form.vector.y + (form.dim.y / 2))
+		screen.y + 1 < form.vector.y + (form.dim.y / 2))
 		{
 			img.y = ft_scale(vec((int)calc.x, (int)calc.y), vec(0, tex->h), screen.y);
 			c = get_pixel(tex, img.x, img.y);
-			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255)); //ligne à opti
+			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255));
 		}
 		else
 			c.value = (screen.y >= game->p.vision) ?
