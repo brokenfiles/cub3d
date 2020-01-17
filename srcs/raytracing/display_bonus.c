@@ -64,11 +64,11 @@ void	display_num(t_game *game)
 	num_3 = (len >= 3 ? tmp[len - 3] - '0' : 0);
 	free(tmp);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_3],
-			game->dim.x - 65, 10, 1);
+			vec(game->dim.x - 65, 10), 1);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_2],
-			game->dim.x - 50, 10, 1);
+			vec(game->dim.x - 50, 10), 1);
 	put_image_to_image(game->image, game->map->tex.nbrs[num_1],
-			game->dim.x - 35, 10, 1);
+			vec(game->dim.x - 35, 10), 1);
 }
 
 void	display_wallet(t_game *game)
@@ -76,7 +76,7 @@ void	display_wallet(t_game *game)
 	display_rec(game, form(vec(game->dim.x - 100, 5),
 			vec(100, 30), 0x00FFFF), &game->image, 0);
 	put_image_to_image(game->image, game->map->tex.co_tex,
-			game->dim.x - 150, -30, 1);
+			vec(game->dim.x - 150, -30), 1);
 	display_num(game);
 }
 

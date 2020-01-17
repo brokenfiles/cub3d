@@ -52,7 +52,8 @@ int		main(int ac, char **av)
 		return (quit(EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
 	if (!parse_map(game, game->level_names[0]))
 		return (quit(EXIT_FAILURE, MSG_MAP_ERROR));
-	if (!(game->win = mlx_new_window(game->ptr, game->dim.x, game->dim.y, GAME_NAME)))
+	if (!(game->win = mlx_new_window(game->ptr, game->dim.x, game->dim.y,
+			GAME_NAME)))
 		return (quit(EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
 	if (!(game->image = new_image(game, game->dim.x, game->dim.y)))
 		return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));

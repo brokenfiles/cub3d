@@ -14,7 +14,7 @@
 
 int	put_image_screen(t_game *game, t_image *image, t_vector pos, float k)
 {
-	put_image_to_image(game->image, image, pos.x - (float)image->w * k / 2, pos.y - (float)image->h * k / 2, k);
+	put_image_to_image(game->image, image, vec(pos.x - (float)image->w * k / 2, pos.y - (float)image->h * k / 2), k);
 	return (1);
 }
 

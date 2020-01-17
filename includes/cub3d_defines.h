@@ -5,47 +5,30 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/09 12:53:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 14:52:31 by llaurent         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d_defines.h                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/09 11:03:09 by llaurent         ###   ########.fr       */
+/*   Created: 2020/01/17 16:57:59 by llaurent          #+#    #+#             */
+/*   Updated: 2020/01/17 16:57:59 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_DEFINES_H
 # define CUB3D_DEFINES_H
-//WINDOW
 # define MIN_WIDTH							500
 # define MIN_HEIGHT							500
 # define MAX_WIDTH							2560
 # define MAX_HEIGHT							1400
-//ANGLES
 # define NORTH								90
 # define EAST								0
 # define WEST								180
 # define SOUTH								270
-//PLAYER
 # define MAX_ROT_SPEED						90
 # define HP									20
-// STEPS
 # define STEP_START							0
 # define STEP_PLAYING						1
 # define STEP_END							2
-//MINIMAP
 # define MAP_SIZE							200
 # define PLAYER_COLOR						0xA896FF
 # define WALL_COLOR							0x474347
 # define VOID_COLOR							0xFFFFFF
-//AIM
 # define AIM_HEIGHT							25
 # define AIM_WIDTH							2
 # define AIM_CIRCLE_THICK					2
@@ -53,7 +36,6 @@
 # define AIM_CIRCLE_SIZE					9
 # define AIM_COLOR							0xFFFFFF
 # define BONUS_OPACITY						100
-//PARSING
 # define MAX_LEVEL							10
 # define LU_DEFAULT_TEX		"textures/jesus.XPM"
 # define DO_DEFAULT_TEX		"textures/tropical.XPM"
@@ -63,10 +45,8 @@
 # define M_GAME_OVER_TEX	"textures/menus/game_over_menu.xpm"
 # define M_NAME_TEX			"textures/menus/name_menu.xpm"
 # define M_LOGO_TEX			"textures/menus/logo.xpm"
-//MAP
 # define MAP_ONLY							"LDHCUFBWENS0123"
 # define POS_ONLY							"WENS"
-//OTHER
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
 # define ARGUMENT_DISABLE_BONUS				"--disable-bonus"
@@ -84,6 +64,4 @@
 # define MSG_CANNOT_ALLOCATE_PLAYER_ERROR	"Cannot allocate player."
 # define MSG_CANNOT_INIT_MLX_ERROR			"Cannot init MLX."
 # define MSG_CANNOT_INIT_MLX_WINDOW_ERROR	"Cannot init MLX's window."
-
-
 #endif

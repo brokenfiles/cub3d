@@ -28,36 +28,24 @@ t_color		get_pixel(t_image *image, int x, int y)
 											* image->bpp)));
 }
 
-/**
- *
- * @param xpm
- * @param game
- * @return
- */
-t_image	*xpm_image(char *xpm, t_game *game)
+t_image		*xpm_image(char *xpm, t_game *game)
 {
 	t_image		*img;
 
 	if ((img = malloc(sizeof(t_image))) == NULL)
 		return (NULL);
-	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->w, &img->h)) == NULL)
+	if ((img->image = mlx_xpm_file_to_image(game->ptr, xpm, &img->w,
+			&img->h)) == NULL)
 		return (0);
-	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
+	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
+			&img->endian);
 	img->bpp /= 8;
 	img->w = img->stride / img->bpp;
 	img->h = img->stride / img->bpp;
 	return (img);
 }
 
-/**
- * used to load a texture.
- * @example load_texture(game, &game->map->tex->so_texture, "tex/brick.xmp")
- * @param t_game game
- * @param &t_image image
- * @param char *tex
- * @return t_image *
- */
-int	load_tex(t_game *game, t_image **image, char *tex)
+int			load_tex(t_game *game, t_image **image, char *tex)
 {
 	t_image		*img;
 	int			fd;
