@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 14:06:19 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 14:35:39 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ float	calc_inter2(t_ray *r, t_sprite *sp)
 	t_vector	v;
 
 	v = vec(sp->pos.x - (int)sp->pos.x, sp->pos.y - (int)sp->pos.y);
-	//k = vec(r->sin * r->sin, r->cos * r->cos);
-	if (sp->wall % 2 == 0) //x_inter
-		return (0);
-	else //y_inter
-		return (r->sin + v.y * r->cos);
+	if (r->alpha <= M_PI_2)
+		return (sp->wall % 2 == 0 ? r->cos + v.x * r->sin : v.y * r->cos);
+	else if (r->alpha > M_PI_2 && r->alpha <= M_PI)
+		return (sp->wall % 2 == 0 ? r->sin * v.x : r->sin - (1 - v.y) * r->cos);
+	else if (r->alpha > M_PI && r->alpha <= 3 * M_PI_2)
+		return (sp->wall % 2 == 0 ? -r->sin * v.x : -r->sin - v.y * r->cos);
+	else
+		return (sp->wall % 2 == 0 ? r->sin * (v.x - 1) : -r->sin + v.y * r->cos);
 }
 
 
@@ -73,8 +76,8 @@ int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *t
 	im.x = ft_scale(vec(0.0, 1.0), vec(0.0, tex->w), inter);
 	calc.x = form.vector.y - (form.dim.x / 2);
 	calc.y = form.vector.y + (form.dim.x / 2);
-	screen.y = form.vector.y - (form.dim.y / 2);
-	while (screen.y <= form.vector.y + (form.dim.y / 2))
+	screen.y = (form.vector.y - (form.dim.y / 2) <= 0 ? 0 : form.vector.y - (form.dim.y / 2));
+	while (screen.y <= form.vector.y + (form.dim.y / 2) && screen.y < game->dim.y)
 	{
 		im.y = ft_scale(vec((int)calc.x, (int)calc.y), vec(0, tex->h), screen.y);
 		c = get_pixel(tex, im.x, im.y);
