@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/17 13:57:28 by jchotel          ###   ########.fr        #
+#    Updated: 2020/01/17 13:40:48 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ CFLAGS		= -Wall -Wextra -Werror
 
 .c.o: ${OBJS}
 	@${CC} -c $< -o ${<:.c=.o}
+	@echo "\033[1;32mCompiling ${<:.c=.o}"
 
 $(NAME):	${OBJS} ${SRCSH}
 			@${CC} ${OBJS} -L ./ -lmlx -framework AppKit -framework OpenGL -o ${NAME}
@@ -107,5 +108,6 @@ run: ${NAME}
 	@echo "\033[1;34mRunning ${NAME}...\033[0;0m"
 	@sh check_errors.sh $(call args,defaultstring)
 
+bonus: ${NAME}
 
 .PHONY:		all clean fclean re

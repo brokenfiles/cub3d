@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:24:46 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 13:57:28 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 14:06:19 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_player	init_player(void)
 
 void		reinit_player(t_game *game)
 {
-//TODO : remettre les méchants
 	game->p.pos = game->map->spawn;
 	game->p.yaw = game->map->spawn_yaw;
 	game->p.vision = game->dim.y / 2;
@@ -42,16 +41,6 @@ int			init_ray(t_ray *ray, float teta)
 	ray->sin = sin(ray->alpha);
 	ray->tan = tan(ray->alpha);
 	clear_sprites(ray->sprites, 9);
-	return (1);
-}
-
-int			init_tex(t_game *game)
-{
-	game->map->tex.ea_tex = NULL;
-	game->map->tex.we_tex = NULL;
-	game->map->tex.so_tex = NULL;
-	game->map->tex.no_tex = NULL;
-	game->map->tex.sp_tex = NULL;
 	return (1);
 }
 
@@ -74,34 +63,4 @@ t_game		*init_game(int nb_level, char **av)
 	game->disable_bonus = 0;
 	game->save_first_image = 0;
 	return (game);
-}
-
-t_sprite	init_sprite()
-{
-	t_sprite	sprite;
-
-	sprite.defined = 0;
-	sprite.pos.x = -1;
-	sprite.pos.y = -1;
-	sprite.wall = -1;
-	return (sprite);
-}
-
-t_vector	vec(float x, float y)
-{
-	t_vector	vector;
-
-	vector.x = x;
-	vector.y = y;
-	return (vector);
-}
-
-t_form		form(t_vector vector, t_vector dim, int color)
-{
-	t_form	form;
-
-	form.dim = dim;
-	form.vector = vector;
-	form.color = color;
-	return (form);
 }
