@@ -6,6 +6,11 @@
 - afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
 - bloquer la hauteur des sprites a l'affichage
 - quest ce quil se passe si on a deux perso sur la carte
+- calcul de tan : sin/cos pour opti
+
+
+//Ligne a ajouter dans next inter pour afficher le quadrillage de vision
+image_set_pixel(game->image, res.x*game->map->tex.size, res.y*game->map->tex.size, 0xACACAC);
 
 // LISTE BONUS :
 X collision murs

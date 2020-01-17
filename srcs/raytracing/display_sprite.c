@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 10:34:01 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 13:26:59 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ float	calc_inter(t_ray *r, t_sprite *sp)
 		return (sp->wall % 2 == 0 ? 1 - (1 - v.x) * k.x : (v.y) * k.y);
 }
 
+float	calc_inter2(t_ray *r, t_sprite *sp)
+{
+	float		inter;
+	//t_vector	k;
+	t_vector	v;
+
+	v = vec(sp->pos.x - (int)sp->pos.x, sp->pos.y - (int)sp->pos.y);
+	//k = vec(r->sin * r->sin, r->cos * r->cos);
+	if (sp->wall % 2 == 0) //x_inter
+		return (0);
+	else //y_inter
+		return (r->sin + v.y * r->cos);
+}
+
+
 int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *tex)
 {
 	t_vector	screen;
@@ -86,7 +101,7 @@ int		display_sprite(t_game *game, t_ray *r, int x)
 		{
 			dist = sqrt(sq_dist(game->p.pos, vec((int)sprite->pos.x,
 					(int)sprite->pos.y)));
-			inter = calc_inter(r, sprite);
+			inter = calc_inter2(r, sprite);
 			if (!print_sprite(game, form(vec(x, game->p.vision),
 				vec((float)(game->dim.y / 0.56) / dist,
 				(float)(game->dim.y / 0.56) / dist), 0x0),
