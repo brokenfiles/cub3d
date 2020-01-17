@@ -6,7 +6,7 @@
 #    By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/27 14:21:29 by llaurent          #+#    #+#              #
-#    Updated: 2020/01/16 18:43:55 by llaurent         ###   ########.fr        #
+#    Updated: 2020/01/17 13:40:48 by llaurent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,10 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				srcs/events/interaction.c\
 				srcs/utils/errors.c\
 				srcs/utils/handler_struct.c\
+				srcs/utils/handler_struct2.c\
 				srcs/utils/save_img.c\
 				srcs/utils/matrice.c\
 				srcs/utils/other.c\
-				srcs/utils/page.c\
 				srcs/cub3d.c\
 				libs/libft/ft_putstr.c\
 				libs/libft/ft_split.c\

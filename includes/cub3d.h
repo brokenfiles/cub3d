@@ -89,7 +89,7 @@ char		*ft_itoa(int nbr);
 t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 //OTHER
 float		sq_dist(t_vector origin, t_vector point);
-int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
+int		ft_scale(t_vector y_x, t_vector n_v, float y);
 int			convert_rgb(int r, int g, int b, float k);
 t_vector	vec(float x, float y);							//changer leur posi
 t_form		form(t_vector vector, t_vector dim, int color); //changer leur posi

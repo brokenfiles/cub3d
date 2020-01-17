@@ -67,9 +67,9 @@ int		display_rec_deg(t_game *game, t_form form, t_image **image, int t, int colo
 		y = form.vector.y;
 		while (form.vector.y + form.dim.y > y)
 		{
-			r = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.r, c(color).rgba.r, y);
-			g = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.g, c(color).rgba.g, y);
-			b = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.b, c(color).rgba.b, y);
+			r = ft_scale(vec(form.vector.y, form.vector.y + form.dim.y), vec(c(form.color).rgba.r, c(color).rgba.r), y);
+			g = ft_scale(vec(form.vector.y, form.vector.y + form.dim.y), vec(c(form.color).rgba.g, c(color).rgba.g), y);
+			b = ft_scale(vec(form.vector.y, form.vector.y + form.dim.y), vec(c(form.color).rgba.b, c(color).rgba.b), y);
 			set_pixel_transparent(game, vec(x, y), c(convert_rgb(r, g, b, 1)), t);
 			y++;
 		}
@@ -136,7 +136,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	t_color		c;
 
 	set_texture(game, ray, &tex);
-	img.x = ft_scale(0.0, 1.0, 0.0, tex->w, ray->inter);
+	img.x = ft_scale(vec(0.0, 1.0), vec(0.0, tex->w), ray->inter);
 	calc.x = form.vector.y - (form.dim.y / 2);
 	calc.y = form.vector.y + (form.dim.y / 2);
 	screen.y = 0;
@@ -145,7 +145,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 		if (screen.y > form.vector.y - (form.dim.y / 2) &&
 		screen.y <= form.vector.y + (form.dim.y / 2))
 		{
-			img.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
+			img.y = ft_scale(vec((int)calc.x, (int)calc.y), vec(0, tex->h), screen.y);
 			c = get_pixel(tex, img.x, img.y);
 			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255)); //ligne à opti
 		}

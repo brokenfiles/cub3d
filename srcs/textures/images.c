@@ -70,10 +70,10 @@ void put_image_to_image(t_image *image, t_image *layer, int x_pos, int y_pos, fl
 	y_l = (y_pos < 0 ? -y_pos : 0);
 	while (y_l + 1 < layer->h * k && y_pos + y_l < image->h)
 	{
-		y_scale = ft_scale(0, layer->h * k, 0, layer->h, y_l);
+		y_scale = ft_scale(vec(0, layer->h * k), vec(0, layer->h), y_l);
 		while (x_l + 1 < layer->w * k && x_pos + x_l < image->w)
 		{
-			x_scale = ft_scale(0, layer->w * k, 0, layer->w, x_l);
+			x_scale = ft_scale(vec(0, layer->w * k), vec(0, layer->w), x_l);
 			value = get_pixel(layer, x_scale, y_scale).value;
 			value != -16777216 ? image_set_pixel(image, x_pos + x_l, y_pos + y_l, value) : 0;
 			x_l++;

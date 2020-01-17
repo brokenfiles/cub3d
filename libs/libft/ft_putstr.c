@@ -25,3 +25,11 @@ void	ft_putstr(char *str)
 		index++;
 	}
 }
+
+void	ft_puterror(char *str)
+{
+	if (!str)
+		return ;
+	while (*str)
+		write(2, &*(str++), 1);
+}
