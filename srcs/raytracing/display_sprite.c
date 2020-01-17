@@ -55,10 +55,14 @@ float	calc_inter2(t_ray *r, t_sprite *sp)
 
 	v = vec(sp->pos.x - (int)sp->pos.x, sp->pos.y - (int)sp->pos.y);
 	//k = vec(r->sin * r->sin, r->cos * r->cos);
-	if (sp->wall % 2 == 0) //x_inter
-		return (0);
-	else //y_inter
-		return (r->sin + v.y * r->cos);
+	if (r->alpha <= M_PI_2) //x_inter
+		return (sp->wall % 2 == 0 ? r->cos + v.x * r->sin : v.y * r->cos);
+	else if (r->alpha > M_PI_2 && r->alpha <= M_PI)
+		return (sp->wall % 2 == 0 ? r->sin * v.x : r->sin - (1 - v.y) * r->cos);
+	else if (r->alpha > M_PI && r->alpha <= 3 * M_PI_2)
+		return (sp->wall % 2 == 0 ? 1 : 2);
+	else
+		return (sp->wall % 2 == 0 ? 0 : 3);
 }
 
 

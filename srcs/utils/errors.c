@@ -6,13 +6,19 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 13:38:48 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:57:28 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int		free_map(char **map, int counter)
+void ft_puterror(char *s)
+{
+	while (*s)
+		write(2, &*(s++), 1);
+}
+
+int free_map(char **map, int counter)
 {
 	if (!map || !*map)
 		return (0);
@@ -26,7 +32,7 @@ int		free_map(char **map, int counter)
 	return (0);
 }
 
-int		quit(int code, char *message)
+int quit(int code, char *message)
 {
 	int index;
 
@@ -42,13 +48,13 @@ int		quit(int code, char *message)
 	return (code);
 }
 
-int		fnq(void (*f)(void *), void *mem, int code, char *message)
+int	fnq(void (*f)(void *), void *mem, int code, char *message)
 {
 	f(mem);
 	return (quit(code, message));
 }
 
-int		close_red_button(void)
+int		close_red_button()
 {
 	return (quit(EXIT_SUCCESS, NULL));
 }

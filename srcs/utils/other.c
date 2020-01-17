@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 13:53:17 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 13:57:28 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ float	sq_dist(t_vector origin, t_vector point)
 	return (pow(point.x - origin.x, 2) + pow(point.y - origin.y, 2));
 }
 
-int		ft_scale(t_vector y_vec, t_vector n_vec, float y)
+int		ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 {
-	float	k;
-	float	c;
+	float k;
+	float c;
 
-	k = (float)(n_vec.y - n_vec.x) / (y_vec.y - y_vec.x);
-	c = (float)n_vec.x - (float)k * y_vec.x;
+	k = (float)(nmax - nmin) / (ymax - ymin);
+	c = (float)nmin - (float)k * ymin;
 	return ((k * y + c));
 }
 
