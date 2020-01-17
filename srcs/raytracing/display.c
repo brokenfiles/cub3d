@@ -81,7 +81,7 @@ t_vector	next_hit(t_game *game, t_ray *ray)
 		&& c && (!ft_strchr("DUH1", c)))
 	{
 		if (++number > 1000)
-			quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR_429);
+			quit(EXIT_FAILURE, MSG_RENDERING_ERROR_429);
 		if (ft_strchr("2LC", c) && ray->sp_num < 9)
 			ray->sprites[++ray->sp_num] = set_sprite(hit, &ray->wall, game);
 		ray->pos = next_inter(game->p.pos, ray->pos, ray);

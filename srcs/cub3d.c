@@ -6,17 +6,11 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:21:29 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 10:49:15 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int		close_red_button(t_game *game)
-{
-	quit(game, EXIT_SUCCESS, NULL);
-	return (0);
-}
 
 int		get_flags(int ac, char **av, t_game *game)
 {
@@ -49,24 +43,23 @@ int		main(int ac, char **av)
 	t_game	*game;
 
 	if (ac < 2)
-		return (quit(game, EXIT_FAILURE, MSG_TOO_FEW_ARGUMENTS));
+		return (quit(EXIT_FAILURE, MSG_TOO_FEW_ARGUMENTS));
 	if (!(game = init_game()))
-		return (quit(NULL, EXIT_FAILURE, MSG_CANNOT_ALLOCATE_GAME_ERROR));
+		return (quit(EXIT_FAILURE, MSG_CANNOT_ALLOCATE_GAME_ERROR));
 	if (!(get_flags(ac - 1, av + 1, game)))
-		return (quit(game, EXIT_FAILURE, MSG_ARGUMENTS_ERROR));
+		return (quit(EXIT_FAILURE, MSG_ARGUMENTS_ERROR));
 	if (!(game->ptr = mlx_init()))
-		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
+		return (quit(EXIT_FAILURE, MSG_CANNOT_INIT_MLX_ERROR));
 	if (!parse_map(game, game->level_names[0]))
-		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
+		return (quit(EXIT_FAILURE, MSG_MAP_ERROR));
 	if (!(game->win = mlx_new_window(game->ptr, game->dim.x, game->dim.y, GAME_NAME)))
-		return (quit(game, EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
+		return (quit(EXIT_FAILURE, MSG_CANNOT_INIT_MLX_WINDOW_ERROR));
 	if (!(game->image = new_image(game, game->dim.x, game->dim.y)))
-		return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
-	game->p.vision = game->dim.y / 2;
+		return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 	mlx_hook(game->win, 2, 1L << 0, handle_key, (void *)game);
 	mlx_hook(game->win, 17, 1L << 0, close_red_button, (void *)game);
 	if (!render(game))
-		return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+		return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 	mlx_loop(game->ptr);
 	return (0);
 }

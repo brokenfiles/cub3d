@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 17:45:43 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:31:27 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		load_nbrs(t_game *game)
 		if (!load_tex(game, &game->map->tex.nbrs[index], path))
 		{
 			free(path);
-			return (quit(game, EXIT_FAILURE, "Texture error."));
+			return (quit(EXIT_FAILURE, "Texture error."));
 		}
 		free(path);
 		index++;
@@ -121,8 +121,8 @@ int		get_color(t_game *game, char *line, char c)
 	if (index < 3)
 		return (0);
 	if (c == 'F')
-		game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2]);
+		game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2], 1);
 	else if (c == 'C')
-		game->map->sky_color = convert_rgb(colors[0], colors[1], colors[2]);
+		game->map->sky_color = convert_rgb(colors[0], colors[1], colors[2], 1);
 	return (1);
 }

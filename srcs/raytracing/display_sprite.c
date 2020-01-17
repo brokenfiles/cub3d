@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 21:56:58 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 10:34:01 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *t
 	t_vector	screen;
 	t_vector	im;
 	t_vector	calc;
-	int			color;
+	t_color		c;
 
 	screen.x = form.vector.x;
 	im.x = ft_scale(0.0, 1.0, 0.0, tex->w, inter);
@@ -62,10 +62,10 @@ int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *t
 	while (screen.y <= form.vector.y + (form.dim.y / 2))
 	{
 		im.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
-		//color = get_pixel(tex, im.x, im.y).value;
-		color = convert_rgb(get_pixel(tex, im.x, im.y).rgba.r * (1 - dist * 15 / 255), get_pixel(tex, im.x, im.y).rgba.g * (1 - dist * 15 / 255), get_pixel(tex, im.x, im.y).rgba.b * (1 - dist * 15 / 255)); //ligne à opti
-		if (color != 0x000000)
-			image_set_pixel(game->image, screen.x, screen.y, color);
+		c = get_pixel(tex, im.x, im.y);
+		c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - dist * 15 / 255));
+		if (c.value != 0x000000)
+			image_set_pixel(game->image, screen.x, screen.y, c.value);
 		screen.y++;
 	}
 	return (1);
@@ -91,7 +91,7 @@ int		display_sprite(t_game *game, t_ray *r, int x)
 				vec((float)(game->dim.y / 0.56) / dist,
 				(float)(game->dim.y / 0.56) / dist), 0x0),
 				inter, dist, sprite->tex))
-				return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+				return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 		}
 		index--;
 	}

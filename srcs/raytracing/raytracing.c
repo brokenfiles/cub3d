@@ -27,11 +27,11 @@ int				render(t_game *game)
 		init_ray(&ray, (float)game->p.yaw + angle);
 		hit = next_hit(game, &ray);
 		if (hit.x == 0 && hit.y == 0)
-			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 		ray.dist = (float)sqrt(sq_dist(game->p.pos, hit));
 		ray.inter = (ray.wall % 2 == 0 ? hit.x - (int)hit.x : hit.y - (int)hit.y);
 		if (!print_line(game, form(vec(x, game->p.vision), vec(1, (float)(game->dim.y) / (0.56 * ray.dist)), 0x0), &ray))
-			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 		display_sprite(game, &ray, x);
 		angle -= (game->angle * 2) / game->dim.x;
 		x++;

@@ -16,7 +16,7 @@ int		next_level(t_game *game)
 {
 	free_entire_parsing(game);
 	if (!parse_map(game, game->level_names[game->level]))
-		return (quit(game, EXIT_FAILURE, MSG_MAP_ERROR));
+		return (quit(EXIT_FAILURE, MSG_MAP_ERROR));
 	return (game->level);
 }
 
@@ -43,7 +43,7 @@ int		handle_key(int key, void *param)
 
 	game = (t_game *)param;
 	if (is_key(key, last_key) == 2)
-		quit(game, EXIT_SUCCESS, NULL);
+		quit(EXIT_SUCCESS, NULL);
 	if (is_key(key, last_key) == 3 && game->step == STEP_START)
 		game->step = STEP_PLAYING;
 	if (game->step != STEP_PLAYING)
@@ -59,7 +59,7 @@ int		handle_key(int key, void *param)
 	}
 	if (is_key(key, last_key) == 1 || is_key(key, last_key) == 3)
 		if (!render(game))
-			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 	last_key = key;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 18:47:39 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:49:15 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int free_map(char **map, int counter)
 	return (0);
 }
 
-int quit(t_game *game, int code, char *message)
+int quit(int code, char *message)
 {
 	int index;
 
@@ -46,4 +46,15 @@ int quit(t_game *game, int code, char *message)
 	system("leaks cub3d");
 	exit(code);
 	return (code);
+}
+
+int	fnq(void (*f)(void *), void *mem, int code, char *message)
+{
+	f(mem);
+	return (quit(code, message));
+}
+
+int		close_red_button()
+{
+	return (quit(EXIT_SUCCESS, NULL));
 }

@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 16:13:21 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:31:27 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ int		ft_scale(int ymin, int ymax, int nmin, int nmax, float y)
 	return ((k * y + c));
 }
 
-int		convert_rgb(int r, int g, int b)
+int		convert_rgb(int r, int g, int b, float k)
 {
+	r *= k;
+	g *= k;
+	b *= k;
 	r = (r > 255 ? 255 : r);
 	g = (g > 255 ? 255 : g);
 	b = (b > 255 ? 255 : b);

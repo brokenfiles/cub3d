@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 15:47:49 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:56:25 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ t_image		*get_tex(t_game *game, char c);
 //ERRORS
 void		ft_puterror(char *s);
 int			free_map(char **map, int counter);
-int			quit(t_game *game, int code, char *message);
+int			quit(int code, char *message);
+int			fnq(void (*f)(void *), void *mem, int code, char *message);
+int			close_red_button();
 //HANDLER STRUCT
 t_player	init_player();
 void		reinit_player(t_game *game);
@@ -88,7 +90,7 @@ t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 //OTHER
 float		sq_dist(t_vector origin, t_vector point);
 int			ft_scale(int ymin, int ymax, int nmin, int nmax, float y);
-int			convert_rgb(int r, int g, int b);
+int			convert_rgb(int r, int g, int b, float k);
 t_vector	vec(float x, float y);							//changer leur posi
 t_form		form(t_vector vector, t_vector dim, int color); //changer leur posi
 
@@ -115,7 +117,7 @@ int			is_structure_full(t_game *game);
 char		*to_next_char(char *str, char c);
 //PARSE FREE
 int			free_and_return(void *allocated, int ret);
-int			free_entire_map(char **str);
+void		free_entire_map(void *mem);
 //PARSE TEX
 int			get_color(t_game *game, char *line, char c);
 int			get_texture(t_game *game, char *line, int *tc);

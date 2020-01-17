@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/16 21:53:59 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 10:26:55 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		display_rec_deg(t_game *game, t_form form, t_image **image, int t, int colo
 			r = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.r, c(color).rgba.r, y);
 			g = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.g, c(color).rgba.g, y);
 			b = ft_scale(form.vector.y, form.vector.y + form.dim.y, c(form.color).rgba.b, c(color).rgba.b, y);
-			set_pixel_transparent(game, vec(x, y), c(convert_rgb(r, g, b)), t);
+			set_pixel_transparent(game, vec(x, y), c(convert_rgb(r, g, b, 1)), t);
 			y++;
 		}
 		x++;
@@ -133,7 +133,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	t_vector	img;
 	t_vector	calc;
 	t_image		*tex;
-	int			color;
+	t_color		c;
 
 	set_texture(game, ray, &tex);
 	img.x = ft_scale(0.0, 1.0, 0.0, tex->w, ray->inter);
@@ -146,13 +146,13 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 		screen.y <= form.vector.y + (form.dim.y / 2))
 		{
 			img.y = ft_scale((int)calc.x, (int)calc.y, 0, tex->h, screen.y);
-			color = convert_rgb(get_pixel(tex, img.x, img.y).rgba.r * (1 - ray->dist * 15 / 255), get_pixel(tex, img.x, img.y).rgba.g * (1 - ray->dist * 15 / 255), get_pixel(tex, img.x, img.y).rgba.b * (1 - ray->dist * 15 / 255)); //ligne à opti
-			//color = get_pixel(tex, img.x, img.y).value
+			c = get_pixel(tex, img.x, img.y);
+			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255)); //ligne à opti
 		}
 		else
-			color = (screen.y >= game->p.vision) ?
+			c.value = (screen.y >= game->p.vision) ?
 					game->map->floor_color : game->map->sky_color;
-		image_set_pixel(game->image, form.vector.x, screen.y++, color);
+		image_set_pixel(game->image, form.vector.x, screen.y++, c.value);
 	}
 	return (1);
 }

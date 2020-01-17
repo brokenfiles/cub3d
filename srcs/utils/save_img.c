@@ -92,7 +92,7 @@ int			save_image(t_game *game)
 	{
 		game->save_first_image = 0;
 		if (!save_bitmap(game, "screenshot.bmp"))
-			return (quit(game, EXIT_FAILURE, MSG_RENDERING_ERROR));
+			return (quit(EXIT_FAILURE, MSG_RENDERING_ERROR));
 	}
 	return (1);
 }

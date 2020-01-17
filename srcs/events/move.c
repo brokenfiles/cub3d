@@ -79,8 +79,6 @@ void		kneel(t_game *game, int key)
 {
 	static int kneeling;
 
-	if (key == 49)
-		printf("%d\n", game->p.vision);
 	if (key == 49 && !kneeling)
 	{
 		game->p.vision -= game->dim.y / 2;

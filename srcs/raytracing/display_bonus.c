@@ -19,7 +19,7 @@ int		display_lifebar(t_game *game, int t)
 	t_image		*i;
 
 	i = game->image;
-	color = convert_rgb(150, 255 / (100 / game->p.health), 55);
+	color = convert_rgb(150, 255 / (100 / game->p.health), 55, 1);
 	size = vec((game->dim.x / 2) * (game->p.health / 100), 20);
 	display_rec(game, form(vec(i->w / 4 - 5, i->h - 40),
 			vec(i->w / 2 + 10, 30), 0xFFFFFF), &i, t);

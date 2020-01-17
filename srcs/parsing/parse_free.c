@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 15:10:57 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/17 10:56:25 by jchotel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ int		free_and_return(void *allocated, int ret)
 	return (ret);
 }
 
-int		free_entire_map(char **str)
+void	free_entire_map(void *mem)
 {
-	int i;
+	int		i;
+	char	**str;
 
+	str = (char **)mem;
 	i = 0;
 	while (str[i])
 	{
@@ -31,7 +33,6 @@ int		free_entire_map(char **str)
 	}
 	free(str);
 	str = NULL;
-	return (1);
 }
 
 int		free_entire_parsing(t_game *game)
