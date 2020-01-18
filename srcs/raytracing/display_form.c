@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 17:36:47 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:15:22 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 	t_color		c;
 
 	set_texture(game, ray, &tex);
-	img.x = ft_scale(vec(0.0, 1.0), vec(0.0, tex->w), ray->inter);
+	img.x = ft_scale2(0.0, 1.0, tex->w, ray->inter);
 	calc.x = form.vector.y - (form.dim.y / 2);
 	calc.y = form.vector.y + (form.dim.y / 2);
 	screen.y = 0;
@@ -144,9 +144,9 @@ int		print_line(t_game *game, t_form form, t_ray *ray)
 		if (screen.y > form.vector.y - (form.dim.y / 2) &&
 		screen.y + 1 < form.vector.y + (form.dim.y / 2))
 		{
-			img.y = ft_scale(vec((int)calc.x, (int)calc.y), vec(0, tex->h), screen.y);
+			img.y = ft_scale2((int)calc.x, (int)calc.y, tex->h, screen.y);
 			c = get_pixel(tex, img.x, img.y);
-			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255));
+//			c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - ray->dist * 5 / 255));
 		}
 		else
 			c.value = (screen.y >= game->p.vision) ?

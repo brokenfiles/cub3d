@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 16:56:10 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:05:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char		*ft_itoa(int nbr);
 t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 float		sq_dist(t_vector origin, t_vector point);
 int			ft_scale(t_vector y_x, t_vector n_v, float y);
+int			ft_scale2(int ymin, int ymax, int nmax, float y);
 int			convert_rgb(int r, int g, int b, float k);
 t_vector	vec(float x, float y);
 t_form		form(t_vector vector, t_vector dim, int color);

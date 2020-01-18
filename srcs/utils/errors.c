@@ -37,7 +37,7 @@ int		quit(int code, char *message)
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
-	system("leaks cub3d");
+//	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

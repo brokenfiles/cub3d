@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 11:12:38 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 16:36:03 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/18 13:44:38 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ void	put_image_to_image(t_image *image, t_image *layer, t_vector pos,
 	while (v_l.y + 1 < layer->h * k && pos.y + v_l.y < image->h)
 	{
 		v_sc.y = ft_scale(vec(0, layer->h * k), vec(0, layer->h), v_l.y);
+//		v_sc.y = ft_scale2(0, layer->h * k, 0, layer->h, v_l.y);
 		while (v_l.x + 1 < layer->w * k && pos.x + v_l.x < image->w)
 		{
 			v_sc.x = ft_scale(vec(0, layer->w * k), vec(0, layer->w), v_l.x);
+//			v_sc.x = ft_scale2(0, layer->w * k, 0, layer->w, v_l.x);
 			value = get_pixel(layer, v_sc.x, v_sc.y).value;
 			value != -16777216 ? image_set_pixel(image, pos.x + v_l.x,
 					pos.y + v_l.y, value) : 0;

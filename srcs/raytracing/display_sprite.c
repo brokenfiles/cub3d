@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 17:52:29 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:50:02 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,15 @@ int		print_sprite(t_game *game, t_form form, float inter, float dist, t_image *t
 	t_color		c;
 
 	screen.x = form.vector.x;
-	im.x = ft_scale(vec(0.0, 1.0), vec(0.0, tex->w), inter);
+	form.dim.x = (game->dim.x > form.dim.x ? form.dim.x : game->dim.x);
+	form.dim.y = form.dim.x;
+	im.x = ft_scale2(0.0, 1.0, tex->w, inter);
 	calc.x = form.vector.y - (form.dim.x / 2);
 	calc.y = form.vector.y + (form.dim.x / 2);
 	screen.y = form.vector.y - (form.dim.y / 2);
 	while (screen.y <= form.vector.y + (form.dim.y / 2))
 	{
-		im.y = ft_scale(vec((int)calc.x, (int)calc.y), vec(0, tex->h), screen.y);
+		im.y = ft_scale2((int)calc.x, (int)calc.y, tex->h, screen.y);
 		c = get_pixel(tex, im.x, im.y);
 		c.value = convert_rgb(c.rgba.r, c.rgba.g, c.rgba.b, (1 - dist * 15 / 255));
 		if (c.value != 0x000000)
