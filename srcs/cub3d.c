@@ -22,7 +22,8 @@ int		get_flags(int ac, char **av, t_game *game)
 			game->level_names[game->total_level++] = *av;
 		else
 		{
-			if (ft_strcmp(*av, ARGUMENT_SAVE) == 0)
+			if (ft_strcmp(*av, ARGUMENT_SAVE) == 0 ||
+			ft_strcmp(*av, ARGUMENT_SAVE_2) == 0)
 				game->save_first_image = 1;
 			else if (ft_strcmp(*av, ARGUMENT_DISABLE_MAP) == 0)
 				game->disable_map = 1;

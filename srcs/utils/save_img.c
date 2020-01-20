@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-static void	put_int_in_char(unsigned char *begin, int val)
+void	put_int_in_char(unsigned char *begin, int val)
 {
 	begin[0] = (unsigned char)(val);
 	begin[1] = (unsigned char)(val >> 8);
@@ -20,7 +20,7 @@ static void	put_int_in_char(unsigned char *begin, int val)
 	begin[3] = (unsigned char)(val >> 24);
 }
 
-static int	write_header(int fd, int size, t_game *game)
+int		write_header(int fd, int size, t_game *game)
 {
 	int				index;
 	unsigned char	header[54];
@@ -40,7 +40,7 @@ static int	write_header(int fd, int size, t_game *game)
 	return (!(write(fd, header, 54) < 0));
 }
 
-static int	write_data(int file, t_game *game, int step)
+int		write_data(int file, t_game *game, int step)
 {
 	const unsigned char	zero[3] = {0, 0, 0};
 	int					x;
@@ -65,7 +65,7 @@ static int	write_data(int file, t_game *game, int step)
 	return (1);
 }
 
-int			save_bitmap(t_game *game, char *name)
+int		save_bitmap(t_game *game, char *name)
 {
 	int			size;
 	int			file;
@@ -86,7 +86,7 @@ int			save_bitmap(t_game *game, char *name)
 	return (1);
 }
 
-int			save_image(t_game *game)
+int		save_image(t_game *game)
 {
 	if (game->save_first_image)
 	{

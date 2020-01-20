@@ -17,7 +17,7 @@ t_player	init_player(void)
 	t_player	player;
 
 	player.rot_speed = 5;
-	player.speed = 0.2;
+	player.speed = 0.4;
 	player.health = 100;
 	player.size = 1;
 	player.coins = 0;

@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:50:42 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 14:06:19 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:36:20 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		quit(int code, char *message)
 		ft_puterror(message);
 		ft_puterror("\n");
 	}
-//	system("leaks cub3d");
 	exit(code);
 	return (code);
 }

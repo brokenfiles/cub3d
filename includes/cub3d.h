@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:31:25 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/18 14:05:44 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:19:03 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define CUB3D_H
 
 # include "mlx.h"
-# include "printf.h"
 # include "keys.h"
 # include "libft.h"
 # include "get_next_line.h"
@@ -34,18 +33,19 @@ void		gain_life(t_game *game, int x, int y);
 void		lose_life(t_game *game);
 void		gain_coins(t_game *game, int x, int y);
 void		level_up(t_game *game, int x, int y);
-int			display_step(t_game *game);
+void		display_step(t_game *game);
 t_vector	next_hit(t_game *game, t_ray *ray);
+float		calc_inter2(t_ray *r, t_sprite *sp);
 void		clear_sprites(t_sprite *sprites, int n);
 t_sprite	set_sprite(t_vector hit, int *wall, t_game *game);
 int			display_sprite(t_game *game, t_ray *r, int x);
 int			display_tri(t_game *game, t_form form);
 int			display_rec(t_game *game, t_form form, t_image **image, int t);
 int			display_cir2(t_game *game, t_form forme, int t);
-int			display_rec_deg(t_game *game, t_form form, t_image **image,
+int			display_rec_deg(t_game *game, t_form form,
 		int t, int color);
-int			print_line(t_game *game, t_form form, t_ray *ray);
-int			display_map(t_game *game, t_image **image, int t);
+void		print_line(t_game *game, t_form f, t_ray *ray);
+void		display_map(t_game *game, t_image **image, int t);
 int			display_bonus(t_game *game, int t);
 int			render(t_game *game);
 void		image_set_pixel(t_image *image, int x, int y, int color);
@@ -75,7 +75,7 @@ t_vector	rotation_matrice(t_vector point, t_vector origin, float teta);
 float		sq_dist(t_vector origin, t_vector point);
 int			ft_scale(t_vector y_x, t_vector n_v, float y);
 int			ft_scale2(int ymin, int ymax, int nmax, float y);
-int			convert_rgb(int r, int g, int b, float k);
+int			conv_rgb(int r, int g, int b, float k);
 t_vector	vec(float x, float y);
 t_form		form(t_vector vector, t_vector dim, int color);
 t_color		c(int v);

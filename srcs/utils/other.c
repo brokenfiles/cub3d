@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/18 13:51:56 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/20 11:34:05 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ int		ft_scale(t_vector y_vec, t_vector n_vec, float y)
 {
 	float	k;
 	float	c;
-	float	ymin;
-	float	ymax;
-	float	nmin;
-	float	nmax;
 
 	k = (n_vec.y - n_vec.x) / (y_vec.y - y_vec.x);
 	c = n_vec.x - k * y_vec.x;
@@ -41,7 +37,7 @@ int		ft_scale2(int ymin, int ymax, int nmax, float y)
 	return ((k * y + c));
 }
 
-int		convert_rgb(int r, int g, int b, float k)
+int		conv_rgb(int r, int g, int b, float k)
 {
 	r *= k;
 	g *= k;

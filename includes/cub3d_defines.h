@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 16:57:59 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/17 16:57:59 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/20 13:11:30 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define POS_ONLY							"WENS"
 # define GAME_NAME							"cub3d"
 # define ARGUMENT_SAVE						"-save"
+# define ARGUMENT_SAVE_2					"--save"
 # define ARGUMENT_DISABLE_BONUS				"--disable-bonus"
 # define ARGUMENT_DISABLE_MAP				"--disable-map"
 # define MSG_ARGUMENTS_ERROR				"Wrong arguments."

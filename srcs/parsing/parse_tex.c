@@ -100,9 +100,9 @@ int		get_color(t_game *game, char *line, char c)
 	if (index < 3)
 		return (0);
 	if (c == 'F')
-		game->map->floor_color = convert_rgb(colors[0], colors[1], colors[2],
+		game->map->floor_color = conv_rgb(colors[0], colors[1], colors[2],
 				1);
 	else if (c == 'C')
-		game->map->sky_color = convert_rgb(colors[0], colors[1], colors[2], 1);
+		game->map->sky_color = conv_rgb(colors[0], colors[1], colors[2], 1);
 	return (1);
 }
