@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbondoer <pbondoer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/20 04:19:00 by pbondoer          #+#    #+#             */
-/*   Updated: 2020/01/16 16:10:31 by llaurent         ###   ########.fr       */
+/*   Created: 2020/01/20 19:31:27 by llaurent          #+#    #+#             */
+/*   Updated: 2020/01/20 19:31:27 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_image		*xpm_image(char *xpm, t_game *game)
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
 			&img->endian);
 	img->bpp /= 8;
-	img->w = img->stride / img->bpp;
-	img->h = img->stride / img->bpp;
 	return (img);
 }
 
