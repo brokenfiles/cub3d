@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 14:58:46 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/17 15:17:46 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/20 16:13:08 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			direction_change(t_player *player, int sign)
 {
 	player->yaw += sign * player->rot_speed;
 	if (player->yaw > 360 || player->yaw <= 0)
-		player->yaw = player->yaw >= 0 ? player->yaw % 360 : 360;
+		player->yaw = player->yaw > 0 ? player->yaw % 360 : 360;
 	return (1);
 }
 

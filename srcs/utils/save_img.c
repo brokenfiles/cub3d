@@ -6,7 +6,7 @@
 /*   By: jchotel <jchotel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/28 11:40:07 by jchotel           #+#    #+#             */
-/*   Updated: 2020/01/16 11:09:08 by jchotel          ###   ########.fr       */
+/*   Updated: 2020/01/20 14:47:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,45 +40,39 @@ int		write_header(int fd, int size, t_game *game)
 	return (!(write(fd, header, 54) < 0));
 }
 
-int		write_data(int file, t_game *game, int step)
+int		write_data(int file, t_game *game)
 {
-	const unsigned char	zero[3] = {0, 0, 0};
-	int					x;
-	int					y;
-	int					color;
+	t_vector		pos;
+	int				color;
 
-	y = game->dim.y;
-	while (y > 0)
+	pos.y = game->dim.y;
+	while (pos.y > 0)
 	{
-		x = 0;
-		while (x < game->dim.x)
+		pos.x = 0;
+		while (pos.x < game->dim.x)
 		{
-			color = get_pixel(game->image, x, y).value;
+			color = get_pixel(game->image, pos.x, pos.y).value;
 			if (write(file, &color, 3) < 0)
 				return (0);
-			if (step > 0 && write(file, &zero, step) < 0)
-				return (0);
-			x++;
+			pos.x++;
 		}
-		y--;
+		pos.y--;
 	}
 	return (1);
 }
 
 int		save_bitmap(t_game *game, char *name)
 {
-	int			size;
-	int			file;
-	int			step;
+	int	size;
+	int	file;
 
 	ft_putstr("Saving screenshot...\n");
-	step = 0;
-	size = 54 + (3 * ((int)game->dim.x + step) * (int)game->dim.y);
+	size = 54 + ((int)game->dim.x * (int)game->dim.y);
 	if ((file = open(name, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR)) < 0)
 		return (0);
 	if (!write_header(file, size, game))
 		return (0);
-	if (!write_data(file, game, step))
+	if (!write_data(file, game))
 		return (0);
 	close(file);
 	ft_putstr(name);
