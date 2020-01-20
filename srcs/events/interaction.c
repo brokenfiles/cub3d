@@ -60,6 +60,8 @@ void		interact(t_game *game, int key)
 					(game->p.yaw / 360.0) * (float)(2 * M_PI)));
 			x = (int)(game->p.pos.x + 1 * steps * cos(
 					(game->p.yaw / 360.0) * (float)(2 * M_PI)));
+			if (game->map->map[y][x] == '1')
+				return ;
 			if (game->map->map[y][x] == '2')
 				game->map->map[y][x] = '3';
 			if (game->map->map[y][x] == 'D')

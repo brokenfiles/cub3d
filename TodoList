@@ -1,12 +1,12 @@
 // POUR PUSH
-- Normer
+- Normer ✅️ -- FAIT
 
 // AUTRES
 - attention les portes "UHD" disparaissent lorsqu'on est trop proche
 - afficher les objets en petit dans le cas de la minimap (avec un flag pour l'option)
-- bloquer la hauteur des sprites a l'affichage
+- bloquer la hauteur des sprites a l'affichage ✅️ -- FAIT
 - quest ce quil se passe si on a deux perso sur la carte
-- calcul de tan : sin/cos pour opti
+- calcul de tan : sin/cos pour opti ✅️ -- FAIT
 
 
 //Ligne a ajouter dans next inter pour afficher le quadrillage de vision
