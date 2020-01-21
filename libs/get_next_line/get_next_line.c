@@ -6,11 +6,17 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:36:31 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/20 19:36:31 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/21 15:33:04 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+
+static int	fnr(char *mem, int code)
+{
+	free(mem);
+	return (code);
+}
 
 static int	join_line(int fd, char **string)
 {
@@ -21,10 +27,9 @@ static int	join_line(int fd, char **string)
 	if (!(buffer = ft_strnew(BUFFER_SIZE + 1)))
 		return (ERROR_CODE_GNL);
 	if ((r = read(fd, buffer, BUFFER_SIZE)) <= 0)
-	{
-		free(buffer);
-		return (r);
-	}
+		return (fnr(buffer, r));
+	if (buffer[0] == '\0')
+		return (fnr(buffer, 0));
 	buffer[r] = '\0';
 	if (!(s = ft_strnew(ft_strlen(*string) + (r + 1))))
 		return (ERROR_CODE_GNL);
