@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-./cub3d $1 $2 $3 2> errors.log
+./cub3D $1 $2 $3 2> errors.log
 printf "\033[1;32mlevel $1\033[0;0m\n"
 printf "\033[1;32mlevel $2\033[0;0m\n"
 printf "\033[1;32mlevel $3\033[0;0m\n"

@@ -69,7 +69,7 @@ SRCSC		=	srcs/parsing/parse_map.c\
 				libs/get_next_line/get_next_line_utils.c
 SRCSH		= includes/cub3d.h
 OBJS		= $(SRCSC:%.c=%.o)
-NAME		= cub3d
+NAME		= cub3D
 CC			= gcc
 AR			= ar rc
 RM			= rm -f

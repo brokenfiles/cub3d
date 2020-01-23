@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:30:36 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/20 19:30:36 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/21 19:54:44 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,27 @@ int		fill_the_map(t_game *game, char *line, int *tc, int *map_end)
 		return (game->map->map && (*map_end) == 0 ? 0 : 1);
 }
 
-int		read_map(t_game *game, int fd)
+int		read_map(t_game *game, int fd, int tc)
 {
 	char	*line;
 	int		continue_read;
-	int		tc;
+	int		ret;
 	int		map_end;
 
 	continue_read = 1;
-	tc = 0;
 	map_end = 0;
 	if (!load_nbrs(game))
 		return (0);
 	game->map->map = NULL;
-	while (get_next_line(fd, &line))
+	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		continue_read = fill_the_map(game, line, &tc, &map_end);
 		free(line);
 		if (!continue_read)
 			return (0);
 	}
+	if (ret == -1)
+		return (0);
 	fill_the_map(game, line, &tc, &map_end);
 	free(line);
 	close(fd);
@@ -108,7 +109,7 @@ int		parse_map(t_game *game, char *map_name)
 		return (0);
 	game->map->floor_color = -1;
 	game->map->sky_color = -1;
-	if (!read_map(game, fd) || !game->map->map)
+	if (!read_map(game, fd, 0) || !game->map->map)
 		return (0);
 	if (!(tmp = ft_strnew(ft_strlen(game->map->map[0]))))
 		fnq(free_entire_map, (void *)game->map->map, EXIT_FAILURE,
