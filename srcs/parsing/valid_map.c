@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:30:47 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/20 19:30:47 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:45:11 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int	valid_map(t_game *game)
 		return (0);
 	game->map->lines = index;
 	if (!ft_stronly("1", game->map->map[index - 1]))
-		return (1);
+		return (0);
 	return (1);
 }

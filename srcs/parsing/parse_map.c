@@ -6,7 +6,7 @@
 /*   By: llaurent <llaurent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 19:30:36 by llaurent          #+#    #+#             */
-/*   Updated: 2020/01/21 19:54:44 by llaurent         ###   ########.fr       */
+/*   Updated: 2020/01/28 11:18:32 by llaurent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int		read_map(t_game *game, int fd, int tc)
 	fill_the_map(game, line, &tc, &map_end);
 	free(line);
 	close(fd);
-	if (tc < 5)
-		return (0);
-	return (1);
+	return ((tc < 5) ? 0 : 1);
 }
 
 int		parse_map(t_game *game, char *map_name)
